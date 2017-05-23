@@ -6,12 +6,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import sun.awt.image.FileImageSource;
+import sun.awt.image.ImageFormatException;
+import sun.awt.image.JPEGImageDecoder;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
@@ -62,7 +67,16 @@ public class ExportTest {
         });
         assertFileExists(output+".jpg");
         assertFileEqual(outputFile, exampleFile);
+
+        assertNotCorrupt(outputFile);
 	}
+
+	private void assertNotCorrupt(File img) throws IOException, ImageFormatException {
+        JPEGImageDecoder jpgDecoder = new JPEGImageDecoder(
+                new FileImageSource(img.getAbsolutePath()), new FileInputStream(img)
+        );
+        jpgDecoder.produceImage();
+    }
 
 	private void assertFileEqual(File file1, File file2) throws IOException{
         assertTrue("The files should be equal to each other", Files.equal(file1, file2));
