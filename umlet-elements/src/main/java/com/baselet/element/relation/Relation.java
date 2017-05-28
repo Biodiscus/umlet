@@ -78,6 +78,11 @@ public class Relation extends NewGridElement implements Stickable, RelationPoint
 		}
 	}
 
+	// Extra added getter, otherwise we cannot check if a relation can be moved.
+	public RelationPointHandler getRelationPoints() {
+		return relationPoints;
+	}
+
 	@Override
 	public String getAdditionalAttributes() {
 		return relationPoints.toAdditionalAttributesString();
