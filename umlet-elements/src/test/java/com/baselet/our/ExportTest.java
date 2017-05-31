@@ -58,7 +58,7 @@ public class ExportTest {
     }
 
 
-	@Test
+	@Test(timeout = 1000)
 	public void testJpgExport() throws Exception {
 	    String input = file.getAbsolutePath();
 	    String output = outputFile.getAbsolutePath().replace(".jpg", "");
