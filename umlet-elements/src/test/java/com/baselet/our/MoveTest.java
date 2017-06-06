@@ -12,8 +12,6 @@ import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.css.Rect;
-
 import com.baselet.control.basics.geom.Point;
 import com.baselet.control.basics.geom.Rectangle;
 import com.baselet.control.enums.Direction;
@@ -24,6 +22,9 @@ import com.baselet.element.interfaces.GridElement;
 import com.baselet.element.relation.Relation;
 
 /**
+ *
+ * 4. Move elements
+ *
  * © 2017, Gopper
  */
 public class MoveTest {
@@ -95,7 +96,7 @@ public class MoveTest {
 				Point dragPoint = new Point(dragBox.getX() + 2, dragBox.getY() + 2);
 				element.drag(direction, 100, 100, dragPoint, false, true, null, false);
 				Rectangle newRectangle = relation.getRectangle();
-				assertNotEquals(oldRectangle.hashCode(), newRectangle);
+				assertNotEquals(oldRectangle.hashCode(), newRectangle.hashCode());
 			}
 		}
 	}
