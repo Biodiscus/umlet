@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,11 +39,13 @@ import static org.mockito.Mockito.when;
  */
 public class BuildTest {
 	private File buildFile;
+	private File emptyFile;
 
 
 	@Before
 	public void init() {
 		buildFile = getFile("build.uxf");
+		emptyFile = getFile("emptyWorkspace.uxf");
 
 		assertNotNull("The example UXF file shouldn't be null", buildFile);
 
@@ -51,10 +54,9 @@ public class BuildTest {
 		ConfigHandler.loadConfig();
 	}
 
-	@Test
+	@Test(timeout = 10000)
 	public void build() {
 		DiagramHandler diagram = new DiagramHandler(null);
-
 		Rectangle bounds = new Rectangle(0, 0, 100, 100);
 		String attributes = "TestClass\n";
 		attributes += "--\n--\n";
@@ -72,6 +74,17 @@ public class BuildTest {
 
 			assertEquals(newElement.getPanelAttributes(), buildElement.getPanelAttributes());
 		}
+	}
+
+	@Test(timeout = 10000)
+	public void buildEmpty() {
+		DiagramHandler diagram = new DiagramHandler(null);
+
+		List<GridElement> newElements = diagram.getDrawPanel().getGridElements();
+		diagram = new DiagramHandler(emptyFile);
+		List<GridElement> buildElements = diagram.getDrawPanel().getGridElements();
+		assertEquals("The new elements array shouldn't contain an element", newElements.size(), 0);
+		assertEquals("The build elements array shouldn't contain an element", buildElements.size(), 0);
 	}
 
 	private File getFile(String name) {
