@@ -12,18 +12,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.*;
+import javax.mail.internet.*;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -44,15 +36,19 @@ import com.baselet.control.config.ConfigMail;
 import com.baselet.control.constants.Constants;
 import com.baselet.control.enums.Program;
 import com.baselet.control.util.Path;
+import com.baselet.data.MailMessage;
 import com.baselet.diagram.CurrentDiagram;
 import com.baselet.diagram.Notifier;
 import com.baselet.diagram.io.DiagramFileHandler;
 
 public class MailPanel extends JPanel {
-
 	private static final Logger log = LoggerFactory.getLogger(MailPanel.class);
 
 	private static final long serialVersionUID = 1L;
+
+	private enum Mode {
+		XML, GIF, PDF
+	};
 
 	/**
 	 * Some int and String
@@ -194,7 +190,7 @@ public class MailPanel extends JPanel {
 		tf_cc.setToolTipText(adressToolTip);
 		tf_bcc.setToolTipText(adressToolTip);
 
-		// Fill Attachment Panel
+		// Fill File Panel
 		panel_attachments.add(cb_attachXml);
 		panel_attachments.add(Box.createRigidArea(new Dimension(5, 0)));
 		panel_attachments.add(cb_attachGif);
@@ -211,163 +207,127 @@ public class MailPanel extends JPanel {
 		checkVisibilityOfSmtpAuth();
 	}
 
+	private List<File> getAttachments() throws IOException {
+		List<File> attachments = new LinkedList<File>();
+		final String diagramName = "diagram_" + new SimpleDateFormat("yyyyMMdd_hhmmss").format(new Date());
+		DiagramFileHandler fileHandler = CurrentDiagram.getInstance().getDiagramHandler().getFileHandler();
+
+		if (cb_attachXml.isSelected()) {
+			attachments.add(
+				fileHandler.doSaveTempDiagram(diagramName, Program.getInstance().getExtension())
+			);
+		}
+
+		if (cb_attachGif.isSelected()) {
+			attachments.add(
+				fileHandler.doSaveTempDiagram(diagramName, "gif")
+			);
+		}
+
+		if (cb_attachPdf.isSelected()) {
+			attachments.add(
+				fileHandler.doSaveTempDiagram(diagramName, "pdf")
+			);
+		}
+
+		return attachments;
+	}
+
+	private void showError(String msg, String title) {
+		JOptionPane.showMessageDialog(
+				this,
+				msg,
+				title,
+				JOptionPane.ERROR_MESSAGE,
+				UIManager.getIcon(
+					"OptionPane.errorIcon"
+				)
+		);
+	}
+
+	private Properties getSMTPProperties(MailMessage message) {
+		Properties properties = System.getProperties();
+
+		// Set the SMTP Host
+		properties.put("mail.smtp.host", message.getHost());
+
+		// We want to close the connection immediately after sending
+		properties.put("mail.smtp.quitwait", "false");
+
+		// We want to use encryption if needed
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.ssl.protocols", "SSLv3 TLSv1");
+
+		// If authentication is needed we set it to true
+		if (message.isUseAuthentication()) {
+			properties.put("mail.smtp.auth", "true");
+		}
+		else {
+			properties.put("mail.smtp.auth", "false");
+		}
+
+		return properties;
+	}
+
+	public MailMessage getMailMessage() {
+		MailMessage mailMessage = new MailMessage();
+		mailMessage.setHost(tf_smtp.getText());
+		mailMessage.setUser(tf_smtpUser.getText());
+		mailMessage.setPassword(String.valueOf(pf_smtpPW.getPassword()));
+
+		mailMessage.setToRecipients(removeWhitespaceAndSplitAt(tf_to.getText()));
+		mailMessage.setCCRecipients(removeWhitespaceAndSplitAt(tf_cc.getText()));
+		mailMessage.setBCCRecipients(removeWhitespaceAndSplitAt(tf_bcc.getText()));
+
+		mailMessage.setFrom(tf_from.getText());
+		mailMessage.setSubject(tf_subject.getText());
+		mailMessage.setText(ta_text.getText());
+		mailMessage.setUseAuthentication(false);
+		mailMessage.setAttachments(null);
+
+		Properties props = getSMTPProperties(mailMessage);
+		Session session = Session.getInstance(props);
+		mailMessage.setMailSession(session);
+
+		return mailMessage;
+	}
+
+	// Original 182 LoC
+	// New
 	private void sendMail() {
-
-		/**
-		 * Initialize some variables and objects
-		 */
-
-		String smtpHost = tf_smtp.getText();
-		String smtpUser = tf_smtpUser.getText();
-		String smtpPW = String.valueOf(pf_smtpPW.getPassword());
-		String from = tf_from.getText();
-		String[] to = removeWhitespaceAndSplitAt(tf_to.getText());
-		String[] cc = removeWhitespaceAndSplitAt(tf_cc.getText());
-		String[] bcc = removeWhitespaceAndSplitAt(tf_bcc.getText());
-		String subject = tf_subject.getText();
-		String text = ta_text.getText();
-		boolean useSmtpAuthentication = false;
-		File diagramXml = null;
-		File diagramGif = null;
-		File diagramPdf = null;
-		int nrOfAttachments = 0;
+		MailMessage mail = getMailMessage();
 
 		// Set SMTP Authentication if the user or password field isn't empty
-		if (!smtpUser.isEmpty() || !smtpPW.isEmpty()) {
-			useSmtpAuthentication = true;
+		if (!mail.getUser().isEmpty() || !mail.getPassword().isEmpty()) {
+			mail.setUseAuthentication(true);
 		}
+
 
 		// Create the temp diagrams to send
 		try {
-			final String diagramName = "diagram_" + new SimpleDateFormat("yyyyMMdd_hhmmss").format(new Date());
-			DiagramFileHandler fileHandler = CurrentDiagram.getInstance().getDiagramHandler().getFileHandler();
-			if (cb_attachXml.isSelected()) {
-				nrOfAttachments++;
-				diagramXml = fileHandler.doSaveTempDiagram(diagramName, Program.getInstance().getExtension());
-			}
-			if (cb_attachGif.isSelected()) {
-				nrOfAttachments++;
-				diagramGif = fileHandler.doSaveTempDiagram(diagramName, "gif");
-			}
-			if (cb_attachPdf.isSelected()) {
-				nrOfAttachments++;
-				diagramPdf = fileHandler.doSaveTempDiagram(diagramName, "pdf");
-			}
+			mail.setAttachments(
+				getAttachments()
+			);
+
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "There has been an error with your diagram. Please make sure it's not empty.", "Diagram Error", JOptionPane.ERROR_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
+			showError(
+				"There has been an error with your diagram. Please make sure it's not empty.",
+				"Diagram Error"
+			);
 			return;
 		}
-
-		/**
-		 * Check if all necessary fields are filled
-		 */
-
-		String errorMsg = null;
-		if (smtpHost.isEmpty()) {
-			errorMsg = "The SMTP field must not be empty";
-		}
-		else if (from.isEmpty()) {
-			errorMsg = "The FROM field must not be empty";
-		}
-		else if (to.length == 0) {
-			errorMsg = "The TO field must not be empty";
-		}
-
-		if (errorMsg != null) {
-			JOptionPane.showMessageDialog(this, errorMsg, "Error", JOptionPane.ERROR_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
-			return;
-		}
-
-		/**
-		 * Set up the mail
-		 */
 
 		try {
-			// Get system properties and session
-			Properties props = System.getProperties();
-			Session session = Session.getInstance(props);
+			setupMail(mail);
 
-			// Define message and it's parts
-			MimeMessage message = new MimeMessage(session);
-			MimeBodyPart textPart = new MimeBodyPart();
-			MimeBodyPart[] attachmentPart = new MimeBodyPart[nrOfAttachments];
-			for (int i = 0; i < nrOfAttachments; i++) {
-				attachmentPart[i] = new MimeBodyPart();
+			String errorMsg = validateMail(mail);
+
+			if (errorMsg != null) {
+				showError(errorMsg, "Error");
+				return;
 			}
 
-			// Build multipart message
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(textPart);
-			for (int i = 0; i < nrOfAttachments; i++) {
-				multipart.addBodyPart(attachmentPart[i]);
-			}
-			message.setContent(multipart);
-
-			/**
-			 * Fill the message properties
-			 */
-
-			// Set the SMTP Host
-			props.put("mail.smtp.host", smtpHost);
-
-			// We want to close the connection immediately after sending
-			props.put("mail.smtp.quitwait", "false");
-
-			// We want to use encryption if needed
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.ssl.protocols", "SSLv3 TLSv1");
-
-			// If authentication is needed we set it to true
-			if (useSmtpAuthentication) {
-				props.put("mail.smtp.auth", "true");
-			}
-			else {
-				props.put("mail.smtp.auth", "false");
-			}
-
-			// Set all recipients of any kind (TO, CC, BCC)
-			message.setFrom(new InternetAddress(from));
-			for (String element : to) {
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(element));
-			}
-			for (String element : cc) {
-				message.addRecipient(Message.RecipientType.CC, new InternetAddress(element));
-			}
-			for (String element : bcc) {
-				message.addRecipient(Message.RecipientType.BCC, new InternetAddress(element));
-			}
-
-			// Set subject, text and attachment
-			message.setSubject(subject);
-			textPart.setText(text);
-
-			int i = 0;
-			if (cb_attachXml.isSelected()) {
-				attachmentPart[i++].attachFile(diagramXml);
-			}
-			if (cb_attachGif.isSelected()) {
-				attachmentPart[i++].attachFile(diagramGif);
-			}
-			if (cb_attachPdf.isSelected()) {
-				attachmentPart[i++].attachFile(diagramPdf);
-			}
-
-			/**
-			 * Send message (if no authentication is used, we use the short variant to send a mail
-			 */
-
-			if (useSmtpAuthentication) {
-				Transport transport = session.getTransport("smtp");
-				try {
-					transport.connect(smtpHost, smtpUser, smtpPW);
-					transport.sendMessage(message, message.getAllRecipients());
-				} finally {
-					transport.close();
-				}
-			}
-			else { // No SMTP Authentication
-				Transport.send(message);
-			}
+			sendMail(mail);
 
 			Notifier.getInstance().showInfo("Email sent");
 			closePanel();
@@ -375,24 +335,115 @@ public class MailPanel extends JPanel {
 
 		catch (MessagingException e) {
 			log.error("SMTP Error", e);
-			JOptionPane.showMessageDialog(this, "There has been an error with your smtp server." + Constants.NEWLINE + "Please recheck your smtp server and login data.", "SMTP Error", JOptionPane.ERROR_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
+			showError("There has been an error with your smtp server." + Constants.NEWLINE + "Please recheck your smtp server and login data.", "SMTP Error");
 		} catch (IOException e) {
 			log.error("Mail Error", e);
-			JOptionPane.showMessageDialog(this, "There has been an error sending your mail." + Constants.NEWLINE + "Please recheck your input data.", "Sending Error", JOptionPane.ERROR_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
+			showError("There has been an error sending your mail." + Constants.NEWLINE + "Please recheck your input data.", "Sending Error");
 		} catch (Throwable e) {
 			log.error("Mail Error", e);
-			JOptionPane.showMessageDialog(this, "There has been an error sending your mail." + Constants.NEWLINE + "Please recheck your input data.", "Sending Error", JOptionPane.ERROR_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
+			showError("There has been an error sending your mail." + Constants.NEWLINE + "Please recheck your input data.", "Sending Error");
 		} finally {
-			if (diagramXml != null) {
-				Path.safeDeleteFile(diagramXml, false);
-			}
-			if (diagramGif != null) {
-				Path.safeDeleteFile(diagramGif, false);
-			}
-			if (diagramPdf != null) {
-				Path.safeDeleteFile(diagramPdf, false);
+			if(mail.getAttachments() != null && !mail.getAttachments().isEmpty()) {
+				for(File file : mail.getAttachments()) {
+					Path.safeDeleteFile(file, false);
+				}
 			}
 		}
+	}
+
+	private String validateMail(MailMessage mail) {
+		if (mail.getHost().isEmpty()) {
+			return "The SMTP field must not be empty";
+		} else if (mail.getFrom().isEmpty()) {
+			return "The FROM field must not be empty";
+		} else if (mail.getToRecipients().length == 0) {
+			return "The TO field must not be empty";
+		} else {
+			return null;
+		}
+	}
+
+	private void sendMail(MailMessage mail) throws MessagingException {
+		MimeMessage message = mail.getMessage();
+
+		if (mail.isUseAuthentication()) {
+			Transport transport = mail.getMailSession().getTransport("smtp");
+			try {
+				transport.connect(mail.getHost(), mail.getUser(), mail.getPassword());
+				transport.sendMessage(message, message.getAllRecipients());
+			} finally {
+				transport.close();
+			}
+		}
+		else { // No SMTP Authentication
+			Transport.send(message);
+		}
+	}
+
+	private void setRecipients(MimeMessage mimeMessage, MailMessage mailMessage) throws MessagingException {
+		mimeMessage.setFrom(
+			new InternetAddress(mailMessage.getFrom())
+		);
+
+		for(String to : mailMessage.getToRecipients()) {
+			mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		}
+
+		for(String cc : mailMessage.getCCRecipients()) {
+			mimeMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+		}
+
+		for(String bcc : mailMessage.getBCCRecipients()) {
+			mimeMessage.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+		}
+	}
+
+	private void setupMail(MailMessage mail) throws MessagingException, IOException {
+		MimeMessage message = getMimeMessage(mail);
+
+		// Set all recipients of any kind (TO, CC, BCC)
+		setRecipients(message, mail);
+
+		message.setSubject(mail.getSubject());
+	}
+
+	public MimeMessage getMimeMessage(MailMessage mail) throws MessagingException, IOException {
+		int attachmentLength = mail.getAttachments().size();
+
+		MimeBodyPart textPart = new MimeBodyPart();
+		textPart.setText(mail.getText());
+
+		MimeBodyPart[] attachmentParts = new MimeBodyPart[attachmentLength];
+
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(textPart);
+
+		for(int i = 0; i < attachmentLength; i ++) {
+			MimeBodyPart attachmentPart = new MimeBodyPart();
+			attachmentParts[i] = attachmentPart;
+
+			multipart.addBodyPart(attachmentPart);
+
+		}
+
+		MimeMessage mimeMessage = new MimeMessage(mail.getMailSession());
+
+		mimeMessage.setContent(multipart);
+
+
+		if(mail.getAttachments() != null) {
+			int currentAttachment = 0;
+			Iterator<File> iterator = mail.getAttachments().iterator();
+			while(iterator.hasNext()) {
+				File file = iterator.next();
+
+				attachmentParts[currentAttachment ++].attachFile(
+					file
+				);
+			}
+		}
+
+		return mimeMessage;
 	}
 
 	/**
