@@ -292,8 +292,6 @@ public class MailPanel extends JPanel {
 		return mailMessage;
 	}
 
-	// Original 182 LoC
-	// New
 	private void sendMail() {
 		MailMessage mail = getMailMessage();
 
@@ -607,4 +605,60 @@ public class MailPanel extends JPanel {
 		}
 	}
 
+
+	public JTextField getFrom() {
+		return tf_from;
+	}
+
+	public JTextField getSMTP() {
+		return tf_smtp;
+	}
+
+	public JCheckBox getIsSMTPAuth() {
+		return cb_smtp_auth;
+	}
+
+	public JTextField getSMTPUser() {
+		return tf_smtpUser;
+	}
+
+	public JPasswordField getSMTPPassword() {
+		return pf_smtpPW;
+	}
+
+	public JCheckBox getIsSavePassword() {
+		return cb_pwSave;
+	}
+
+	public JTextField getTo() {
+		return tf_to;
+	}
+
+	public JTextField getCC() {
+		return tf_cc;
+	}
+
+	public JTextField getBCC() {
+		return tf_bcc;
+	}
+
+	public JTextField getSubject() {
+		return tf_subject;
+	}
+
+	public JTextArea getText() {
+		return ta_text;
+	}
+
+	public JCheckBox getAttachXml() {
+		return cb_attachXml;
+	}
+
+	public JCheckBox getAttachGif() {
+		return cb_attachGif;
+	}
+
+	public JCheckBox getAttachPdf() {
+		return cb_attachPdf;
+	}
 }
