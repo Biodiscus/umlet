@@ -282,7 +282,7 @@ public class MailPanel extends JPanel {
 		mailMessage.setFrom(tf_from.getText());
 		mailMessage.setSubject(tf_subject.getText());
 		mailMessage.setText(ta_text.getText());
-		mailMessage.setUseAuthentication(false);
+		mailMessage.setUseAuthentication(cb_smtp_auth.isSelected());
 		mailMessage.setAttachments(null);
 
 		Properties props = getSMTPProperties(mailMessage);
@@ -482,7 +482,7 @@ public class MailPanel extends JPanel {
 		panel.add(c);
 	}
 
-	private String[] removeWhitespaceAndSplitAt(String inputString) {
+	public String[] removeWhitespaceAndSplitAt(String inputString) {
 		if (inputString.isEmpty()) {
 			return new String[] {};
 		}
