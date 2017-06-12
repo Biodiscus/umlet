@@ -25,7 +25,7 @@ public class Actor extends NewGridElement {
 			int right = SharedUtils.realignToGrid(false, hCenter + DrawHelper.armLength(dimension), true);
 			int head = (int) DrawHelper.headToLegLength(dimension);
 
-			StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+			StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 			p.addPoint(left, 0);
 			p.addPoint(right, 0);
 			p.addPoint(right, head);

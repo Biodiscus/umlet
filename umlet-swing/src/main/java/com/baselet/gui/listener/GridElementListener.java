@@ -192,7 +192,7 @@ public class GridElementListener extends UniversalListener {
 		GridElementListener eListener = handler.getEntityListener(e);
 		Command cmd;
 		int gridSize = CurrentDiagram.getInstance().getDiagramHandler().getGridSize();
-		cmd = new AddElement(e, me.getRectangle().x + gridSize * 2, me.getRectangle().y + gridSize * 2);
+		cmd = new AddElement(e, me.getRectangle().getX() + gridSize * 2, me.getRectangle().getY() + gridSize * 2);
 		controller.executeCommand(cmd);
 		selector.selectOnly(e);
 		eListener.FIRST_DRAG = true;
@@ -243,7 +243,7 @@ public class GridElementListener extends UniversalListener {
 	private void dragLasso(MouseEvent me, GridElement e) {
 		selector.setSelectorFrameActive(true);
 
-		selector.getSelectorFrame().setDisplacement(e.getRectangle().x, e.getRectangle().y);
+		selector.getSelectorFrame().setDisplacement(e.getRectangle().getX(), e.getRectangle().getY());
 		selector.getSelectorFrame().resizeTo(me.getX(), me.getY()); // Subtract difference between entityx/entityy and the position of the mouse cursor
 
 		selector.deselectAll(); // If lasso is active the clicked and therefore automatically selected entity gets unselected
@@ -252,9 +252,8 @@ public class GridElementListener extends UniversalListener {
 	/**
 	 * Dragging entities must be a Macro, because undo should undo the full move (and not only a small part which would
 	 * happen with many short Move actions) and it must consider sticking relations at the dragging-start and later
+	 * @param isShiftKeyDown
 	 * @param mainElement
-	 * @param directions
-	 * @param b
 	 */
 	private void dragEntity(boolean isShiftKeyDown, GridElement mainElement) {
 

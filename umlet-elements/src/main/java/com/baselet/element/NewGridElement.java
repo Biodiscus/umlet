@@ -218,14 +218,14 @@ public abstract class NewGridElement implements GridElement {
 		if (x <= 5 && x >= 0) {
 			returnSet.add(Direction.LEFT);
 		}
-		else if (x <= getRectangle().width && x >= getRectangle().width - 5) {
+		else if (x <= getRectangle().getWidth() && x >= getRectangle().getWidth() - 5) {
 			returnSet.add(Direction.RIGHT);
 		}
 
 		if (y <= 5 && y >= 0) {
 			returnSet.add(Direction.UP);
 		}
-		else if (y <= getRectangle().height && y >= getRectangle().height - 5) {
+		else if (y <= getRectangle().getHeight() && y >= getRectangle().getHeight() - 5) {
 			returnSet.add(Direction.DOWN);
 		}
 		return returnSet;
@@ -267,7 +267,7 @@ public abstract class NewGridElement implements GridElement {
 
 	@Override
 	public void setLocationDifference(int diffx, int diffy) {
-		setLocation(getRectangle().x + diffx, getRectangle().y + diffy);
+		setLocation(getRectangle().getX() + diffx, getRectangle().getY() + diffy);
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public abstract class NewGridElement implements GridElement {
 
 	@Override
 	public void setSize(int width, int height) {
-		if (width != getRectangle().width || height != getRectangle().height) { // only change size if it is really different
+		if (width != getRectangle().getWidth() || height != getRectangle().getHeight()) { // only change size if it is really different
 			Rectangle rect = getRectangle();
 			rect.setSize(width, height);
 			setRectangle(rect);
@@ -304,11 +304,11 @@ public abstract class NewGridElement implements GridElement {
 	 */
 	@Override
 	public Dimension getRealSize() {
-		return new Dimension(zoom(getRectangle().width), zoom(getRectangle().height));
+		return new Dimension(zoom(getRectangle().getWidth()), zoom(getRectangle().getHeight()));
 	}
 
 	public Rectangle getRealRectangle() {
-		return new Rectangle(zoom(getRectangle().x), zoom(getRectangle().y), zoom(getRectangle().width), zoom(getRectangle().height));
+		return new Rectangle(zoom(getRectangle().getX()), zoom(getRectangle().getY()), zoom(getRectangle().getWidth()), zoom(getRectangle().getHeight()));
 	}
 
 	private int zoom(int val) {
@@ -379,7 +379,7 @@ public abstract class NewGridElement implements GridElement {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
-		setRectangle(new Rectangle(oldRect.x + diffPos.getX(), oldRect.y + diffPos.getY(), oldRect.getWidth() + diffSize.getX(), oldRect.getHeight() + diffSize.getY()));
+		setRectangle(new Rectangle(oldRect.getX() + diffPos.getX(), oldRect.getY() + diffPos.getY(), oldRect.getWidth() + diffSize.getX(), oldRect.getHeight() + diffSize.getY()));
 		moveStickables(stickables, undoable, oldRect, stickingPolygonBeforeLocationChange, oldAddAttr);
 	}
 

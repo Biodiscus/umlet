@@ -17,7 +17,7 @@ public class PointDoubleStickingPolygonGenerator implements StickingPolygonGener
 
 	@Override
 	public StickingPolygon generateStickingBorder(Rectangle rect) {
-		StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+		StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 		p.addPoint(points);
 		return p;
 	}

@@ -2,10 +2,10 @@ package com.baselet.control.basics.geom;
 
 public class Rectangle {
 
-	public int x;
-	public int y;
-	public int width;
-	public int height;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
 
 	public Rectangle() {
 		super();
@@ -145,12 +145,11 @@ public class Rectangle {
 
 	public static Rectangle mergeToLeft(Rectangle left, Rectangle right) {
 		if (left == null) {
-			left = right;
-		}
-		else {
+			return right;
+		} else {
 			left.merge(right);
+			return left;
 		}
-		return left;
 	}
 
 	public Rectangle copy() {
