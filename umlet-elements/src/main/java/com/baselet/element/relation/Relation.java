@@ -125,14 +125,13 @@ public class Relation extends NewGridElement implements Stickable, RelationPoint
 
 	@Override
 	public Set<Direction> getResizeArea(int x, int y) {
-		return new HashSet<Direction>();
+		return new HashSet<>();
 	}
 
 	@Override
 	public boolean isSelectableOn(Point point) {
 		Point relativePoint = toRelative(point);
-		boolean isSelectableOn = relationPoints.getSelection(pointAtDefaultZoom(relativePoint)) != RelationSelection.NOTHING;
-		return isSelectableOn;
+		return relationPoints.getSelection(pointAtDefaultZoom(relativePoint)) != RelationSelection.NOTHING;
 	}
 
 	@Override
