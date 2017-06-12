@@ -1,13 +1,6 @@
 package com.baselet.element;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,9 +52,29 @@ public abstract class NewGridElement implements GridElement {
 
 	private List<String> panelAttributes;
 
+	/**
+	 * ugly workaround to avoid that the Resize().execute() call which calls setSize() on this model updates the model during the
+	 * calculated model update from autoresize. Otherwise the drawer cache would get messed up (it gets cleaned up 2 times in a row and afterwards everything gets drawn 2 times).
+	 * Best testcase is an autoresize element with a background. Write some text and everytime autresize triggers, the background is drawn twice.
+	 */
+	private boolean autoresizePossiblyInProgress = false;
+	private static List<CursorDirection> cursorList;
+
 	protected PropertiesParserState state;
 
 	protected final UndoHistory undoStack = new UndoHistory();
+
+	static {
+		cursorList = new LinkedList<>();
+		cursorList.add(new CursorDirection(CursorOwn.NE, Direction.UP, Direction.RIGHT));
+		cursorList.add(new CursorDirection(CursorOwn.NW, Direction.UP, Direction.LEFT));
+		cursorList.add(new CursorDirection(CursorOwn.SW, Direction.DOWN, Direction.LEFT));
+		cursorList.add(new CursorDirection(CursorOwn.SE, Direction.DOWN, Direction.RIGHT));
+		cursorList.add(new CursorDirection(CursorOwn.N, Direction.UP));
+		cursorList.add(new CursorDirection(CursorOwn.E, Direction.RIGHT));
+		cursorList.add(new CursorDirection(CursorOwn.S, Direction.DOWN));
+		cursorList.add(new CursorDirection(CursorOwn.W, Direction.LEFT));
+	}
 
 	public void init(Rectangle bounds, String panelAttributes, String additionalAttributes, Component component, DrawHandlerInterface handler) {
 		this.component = component;
@@ -90,16 +103,9 @@ public abstract class NewGridElement implements GridElement {
 		updateModelFromText();
 	}
 
-	public void setPanelAttributesHelper(String panelAttributes) {
+	private void setPanelAttributesHelper(String panelAttributes) {
 		this.panelAttributes = Arrays.asList(panelAttributes.split("\n", -1)); // split with -1 to retain empty lines at the end
 	}
-
-	/**
-	 * ugly workaround to avoid that the Resize().execute() call which calls setSize() on this model updates the model during the
-	 * calculated model update from autoresize. Otherwise the drawer cache would get messed up (it gets cleaned up 2 times in a row and afterwards everything gets drawn 2 times).
-	 * Best testcase is an autoresize element with a background. Write some text and everytime autresize triggers, the background is drawn twice.
-	 */
-	private boolean autoresizePossiblyInProgress = false;
 
 	@Override
 	public void updateModelFromText() {
@@ -210,34 +216,33 @@ public abstract class NewGridElement implements GridElement {
 
 	@Override
 	public Set<Direction> getResizeArea(int x, int y) {
-		Set<Direction> returnSet = new HashSet<Direction>();
 		if (state.getElementStyle() == ElementStyle.NORESIZE || state.getElementStyle() == ElementStyle.AUTORESIZE) {
-			return returnSet;
+			return new HashSet<>();
 		}
 
-		if (x <= 5 && x >= 0) {
-			returnSet.add(Direction.LEFT);
-		}
-		else if (x <= getRectangle().getWidth() && x >= getRectangle().getWidth() - 5) {
-			returnSet.add(Direction.RIGHT);
-		}
-
-		if (y <= 5 && y >= 0) {
-			returnSet.add(Direction.UP);
-		}
-		else if (y <= getRectangle().getHeight() && y >= getRectangle().getHeight() - 5) {
-			returnSet.add(Direction.DOWN);
-		}
-		return returnSet;
+		return getDirections(x, y);
 	}
 
-	/**
-	 * @deprecated use {@link #generateStickingBorder()} instead, because typically the stickingpolygon is created for the own Rectangle, and the other method guarantees that the correct zoom level is applied (important to make alternative StickingPolygonGenerators like PointDoubleStickingPolygonGenerator work)
-	 */
-	@Deprecated
-	@Override
-	public final StickingPolygon generateStickingBorder(Rectangle rect) {
-		return state.getStickingPolygonGenerator().generateStickingBorder(rect);
+	private boolean between(int val, int start, int end) {
+		return val >= start && val <= end;
+	}
+
+	private Set<Direction> getDirections(int x, int y) {
+		Set<Direction> directions = new HashSet<>();
+
+		if(between(x, 0, 5)) {
+			directions.add(Direction.LEFT);
+		} else if(between(x, getRectangle().getWidth() - 5, getRealRectangle().getWidth())) {
+			directions.add(Direction.RIGHT);
+		}
+
+		if(between(y, 0, 5)) {
+			directions.add(Direction.UP);
+		} else if(between(y, getRectangle().getHeight() - 5, getRealRectangle().getHeight())) {
+			directions.add(Direction.DOWN);
+		}
+
+		return directions;
 	}
 
 	/**
@@ -246,15 +251,14 @@ public abstract class NewGridElement implements GridElement {
 	 */
 	@Override
 	public final StickingPolygon generateStickingBorder() {
-		return generateStickingBorder(getRealRectangle()); // ALWAYS generate the stickingBorder as if zoom were 100%
+		return state.getStickingPolygonGenerator().generateStickingBorder(getRealRectangle()); // ALWAYS generate the stickingBorder as if zoom were 100%
 	}
 
-	private final void drawStickingPolygon(DrawHandler drawer) {
-		Rectangle rect = new Rectangle(0, 0, getRealSize().width, getRealSize().height);
-		StickingPolygon poly = this.generateStickingBorder(rect);
+	private void drawStickingPolygon(DrawHandler drawer) {
+		StickingPolygon poly = this.generateStickingBorder();
 		drawer.setLineType(LineType.DASHED);
 		drawer.setForegroundColor(ColorOwn.STICKING_POLYGON);
-		Vector<? extends Line> lines = poly.getStickLines();
+		List<? extends Line> lines = poly.getStickLines();
 		drawer.drawLines(lines.toArray(new Line[lines.size()]));
 		drawer.setLineType(LineType.SOLID);
 		drawer.resetColorSettings();
@@ -324,7 +328,7 @@ public abstract class NewGridElement implements GridElement {
 
 	@Override
 	public List<AutocompletionText> getAutocompletionList() {
-		List<AutocompletionText> returnList = new ArrayList<AutocompletionText>();
+		List<AutocompletionText> returnList = new ArrayList<>();
 		addAutocompletionTexts(returnList, state.getSettings().getFacetsForFirstRun());
 		addAutocompletionTexts(returnList, state.getSettings().getFacetsForSecondRun());
 		return returnList;
@@ -332,9 +336,7 @@ public abstract class NewGridElement implements GridElement {
 
 	private void addAutocompletionTexts(List<AutocompletionText> returnList, List<? extends Facet> facets) {
 		for (Facet f : facets) {
-			for (AutocompletionText t : f.getAutocompletionStrings()) {
-				returnList.add(t);
-			}
+			returnList.addAll(f.getAutocompletionStrings());
 		}
 	}
 
@@ -398,6 +400,7 @@ public abstract class NewGridElement implements GridElement {
 				boolean mouseDown = diffPos.getY() > 0 && diffPos.getY() > diffPos.getX();
 				boolean mouseLeft = diffPos.getX() < 0 && diffPos.getX() < diffPos.getY();
 				boolean mouseUp = diffPos.getY() < 0 && diffPos.getY() < diffPos.getX();
+
 				if (mouseToRight || mouseLeft) {
 					diffPos.setY(diffPos.getX());
 				}
@@ -405,18 +408,17 @@ public abstract class NewGridElement implements GridElement {
 					diffPos.setX(diffPos.getY());
 				}
 			}
+
 			if (resizeDirection.contains(Direction.LEFT) && resizeDirection.contains(Direction.RIGHT)) {
 				rect.setX(rect.getX() - diffPos.getX() / 2);
 				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
-			}
-			else if (resizeDirection.contains(Direction.LEFT)) {
+			} else if (resizeDirection.contains(Direction.LEFT)) {
 				int newWidth = rect.getWidth() - diffPos.getX();
 				if (newWidth >= minSize()) {
 					rect.setX(rect.getX() + diffPos.getX());
 					rect.setWidth(newWidth);
 				}
-			}
-			else if (resizeDirection.contains(Direction.RIGHT)) {
+			} else if (resizeDirection.contains(Direction.RIGHT)) {
 				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
 			}
 
@@ -427,6 +429,7 @@ public abstract class NewGridElement implements GridElement {
 					rect.setHeight(newHeight);
 				}
 			}
+
 			if (resizeDirection.contains(Direction.DOWN)) {
 				rect.setHeight(Math.max(rect.getHeight() + diffPos.getY(), minSize()));
 			}
@@ -458,10 +461,10 @@ public abstract class NewGridElement implements GridElement {
 	}
 
 	private boolean diagonalResize(Collection<Direction> resizeDirection) {
-		return resizeDirection.contains(Direction.UP) && resizeDirection.contains(Direction.RIGHT) ||
-				resizeDirection.contains(Direction.UP) && resizeDirection.contains(Direction.LEFT) ||
-				resizeDirection.contains(Direction.DOWN) && resizeDirection.contains(Direction.LEFT) ||
-				resizeDirection.contains(Direction.DOWN) && resizeDirection.contains(Direction.RIGHT);
+		boolean checkUp = containsDirections(resizeDirection, Direction.UP, Direction.RIGHT) || containsDirections(resizeDirection, Direction.UP, Direction.LEFT);
+		boolean checkDown = containsDirections(resizeDirection, Direction.DOWN, Direction.RIGHT) || containsDirections(resizeDirection, Direction.DOWN, Direction.LEFT);
+
+		return checkUp || checkDown;
 	}
 
 	protected DrawHandlerInterface getHandler() {
@@ -512,39 +515,30 @@ public abstract class NewGridElement implements GridElement {
 		return getCursorStatic(this, point, resizeDirections);
 	}
 
+	private static boolean containsDirections(Collection<Direction> resizeDirections, Direction ... directions) {
+		Set<Direction> directionsSet = new HashSet<>(Arrays.asList(directions));
+		return resizeDirections.containsAll(directionsSet);
+	}
+
+	private static CursorOwn getCursorForDirections(Set<Direction> directions) {
+		for(CursorDirection cursor : cursorList) {
+			if(cursor.contains(directions)) {
+				return cursor.getCursor();
+			}
+		}
+
+		return CursorOwn.DEFAULT;
+	}
+
 	public static CursorOwn getCursorStatic(GridElement e, Point point, Set<Direction> resizeDirections) {
 		if (!e.isSelectableOn(point)) {
 			return CursorOwn.DEFAULT;
-		}
-		else {
+		} else {
 			if (resizeDirections.isEmpty()) {
 				return CursorOwn.HAND;
+			} else {
+				return getCursorForDirections(resizeDirections);
 			}
-			else if (resizeDirections.contains(Direction.UP) && resizeDirections.contains(Direction.RIGHT)) {
-				return CursorOwn.NE;
-			}
-			else if (resizeDirections.contains(Direction.UP) && resizeDirections.contains(Direction.LEFT)) {
-				return CursorOwn.NW;
-			}
-			else if (resizeDirections.contains(Direction.DOWN) && resizeDirections.contains(Direction.LEFT)) {
-				return CursorOwn.SW;
-			}
-			else if (resizeDirections.contains(Direction.DOWN) && resizeDirections.contains(Direction.RIGHT)) {
-				return CursorOwn.SE;
-			}
-			else if (resizeDirections.contains(Direction.UP)) {
-				return CursorOwn.N;
-			}
-			else if (resizeDirections.contains(Direction.RIGHT)) {
-				return CursorOwn.E;
-			}
-			else if (resizeDirections.contains(Direction.DOWN)) {
-				return CursorOwn.S;
-			}
-			else if (resizeDirections.contains(Direction.LEFT)) {
-				return CursorOwn.W;
-			}
-			return CursorOwn.DEFAULT;
 		}
 	}
 
