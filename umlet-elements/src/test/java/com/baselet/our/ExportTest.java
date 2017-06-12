@@ -9,10 +9,14 @@ import sun.awt.image.FileImageSource;
 import sun.awt.image.ImageFormatException;
 import sun.awt.image.JPEGImageDecoder;
 import static org.junit.Assert.*;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 /**
  * 1. Export diagram
@@ -23,28 +27,18 @@ public class ExportTest {
     private File file;
     private File outputFile;
     private File exampleFile1;
-    private File exampleFile2;
-    private File exampleFile3;
 
 	@Before
 	public void init() {
 	    String name = "example.uxf";
 	    String exampleName1 = "example1.jpg";
-	    String exampleName2 = "example2.jpg";
-	    String exampleName3 = "example3.jpg";
-	    String outputName = "example4.jpg";
+	    String outputName = "example2.jpg";
 
 	    file = getFile(name);
 	    assertNotNull("The example UXF file shouldn't be null", file);
 
 	    exampleFile1 = getFile(exampleName1);
         assertNotNull("The example1 JPG file shouldn't be null", exampleName1);
-
-		exampleFile2 = getFile(exampleName2);
-		assertNotNull("The example2 JPG file shouldn't be null", exampleName2);
-
-		exampleFile3 = getFile(exampleName3);
-		assertNotNull("The example3 JPG file shouldn't be null", exampleName3);
 
 	    outputFile = new File(
             file.getAbsolutePath().replace(name, outputName)
@@ -71,7 +65,7 @@ public class ExportTest {
             "-output=" + output
         });
         assertFileExists(output+".jpg");
-        assertFileEqual(outputFile, exampleFile1, exampleFile2, exampleFile3);
+		assertImageEquals(outputFile, exampleFile1);
 
         assertNotCorrupt(outputFile);
 	}
@@ -83,12 +77,32 @@ public class ExportTest {
         jpgDecoder.produceImage();
     }
 
-	private void assertFileEqual(File file1, File example1, File example2, File example3) throws IOException{
-		boolean first = Files.equal(file1, example1);
-		boolean second = Files.equal(file1, example2);
-		boolean third = Files.equal(file1, example3);
-		assertTrue("The files should be equal to each other", first || second || third);
-    }
+	private void assertImageEquals(File image1, File image2) throws IOException {
+		imageEquals(image1, image2, 0.75F);
+	}
+
+    private void imageEquals(File image1, File image2, float minimumPercentage) throws IOException {
+		BufferedImage img1 = ImageIO.read(image1);
+		BufferedImage img2 = ImageIO.read(image2);
+
+		assertEquals("Heights should be the same", img1.getHeight(), img2.getHeight());
+		assertEquals("Widths should be the same", img1.getWidth(), img2.getWidth());
+
+		int len = img1.getWidth() * img1.getHeight();
+		int correctMatches = 0;
+		for (int i = 0; i < len; i++) {
+			int x = i % img1.getWidth();
+			int y = (int) Math.floor(i / img1.getWidth());
+
+			if(img1.getRGB(x, y) == img2.getRGB(x, y)) {
+				correctMatches ++;
+			}
+		}
+
+		float percentage = (float)correctMatches / len;
+		assertTrue("The correct pixels should equal: "+minimumPercentage+", but was: "+percentage, percentage >= minimumPercentage);
+	}
+
 
 	private void assertFileExists(String loc) {
         // Check if the location is set by checking for it's null value and if the length is at least larger than 0.
