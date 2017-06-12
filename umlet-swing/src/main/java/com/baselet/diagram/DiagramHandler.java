@@ -6,6 +6,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -52,41 +54,41 @@ public class DiagramHandler {
 	private OldRelationListener relationListener;
 	private GridElementListener gridElementListener;
 
+	public DiagramHandler(File diagram) {
+		this(diagram, false);
+	}
+
+    protected DiagramHandler(File diagram, boolean nolistener) {
+        gridSize = Constants.DEFAULTGRIDSIZE;
+        isChanged = false;
+        enabled = true;
+        drawpanel = createDrawPanel();
+        controller = new Controller(this);
+        fontHandler = new FontHandler(this);
+        fileHandler = DiagramFileHandler.createInstance(this, diagram);
+        if (!nolistener) {
+            setListener(new DiagramListener(this));
+        }
+        if (diagram != null) {
+            fileHandler.doOpen();
+        }
+
+        boolean extendedPopupMenu = false;
+        BaseGUI gui = CurrentGui.getInstance().getGui();
+        if (gui != null) {
+            gui.setValueOfZoomDisplay(getGridSize());
+            extendedPopupMenu = gui.hasExtendedContextMenu();
+        }
+
+        initDiagramPopupMenu(extendedPopupMenu);
+    }
+
 	public static DiagramHandler forExport(FontHandler fontHandler) {
 		DiagramHandler returnHandler = new DiagramHandler(null, false);
 		if (fontHandler != null) {
 			returnHandler.fontHandler = fontHandler;
 		}
 		return returnHandler;
-	}
-
-	public DiagramHandler(File diagram) {
-		this(diagram, false);
-	}
-
-	protected DiagramHandler(File diagram, boolean nolistener) {
-		gridSize = Constants.DEFAULTGRIDSIZE;
-		isChanged = false;
-		enabled = true;
-		drawpanel = createDrawPanel();
-		controller = new Controller(this);
-		fontHandler = new FontHandler(this);
-		fileHandler = DiagramFileHandler.createInstance(this, diagram);
-		if (!nolistener) {
-			setListener(new DiagramListener(this));
-		}
-		if (diagram != null) {
-			fileHandler.doOpen();
-		}
-
-		boolean extendedPopupMenu = false;
-		BaseGUI gui = CurrentGui.getInstance().getGui();
-		if (gui != null) {
-			gui.setValueOfZoomDisplay(getGridSize());
-			extendedPopupMenu = gui.hasExtendedContextMenu();
-		}
-
-		initDiagramPopupMenu(extendedPopupMenu);
 	}
 
 	protected DrawPanel createDrawPanel() {
@@ -185,6 +187,7 @@ public class DiagramHandler {
 			try {
 				printJob.print();
 			} catch (PrinterException pe) {
+			    log.error(ErrorMessages.ERROR_PRINTING, pe);
 				displayError(ErrorMessages.ERROR_PRINTING);
 			}
 		}
@@ -237,7 +240,7 @@ public class DiagramHandler {
 	public String getName() {
 		String name = fileHandler.getFileName();
 		if (name.contains(".")) {
-			name = name.substring(0, name.lastIndexOf("."));
+			name = name.substring(0, name.lastIndexOf('.'));
 		}
 		return name;
 	}
@@ -322,7 +325,7 @@ public class DiagramHandler {
 	}
 
 	public static void zoomEntity(int fromFactor, int toFactor, GridElement e) {
-		Vector<GridElement> vec = new Vector<GridElement>();
+		List<GridElement> vec = new LinkedList<>();
 		vec.add(e);
 		zoomEntities(fromFactor, toFactor, vec);
 	}
@@ -365,12 +368,11 @@ public class DiagramHandler {
 		 */
 
 		int oldGridSize = getGridSize();
+		boolean factorZoom = factor < 1 || factor > 20; // Only zoom between 10% and 200% is allowed
+		boolean factorSame = factor == oldGridSize; // Only zoom if gridsize has changed
 
-		if (factor < 1 || factor > 20) {
-			return; // Only zoom between 10% and 200% is allowed
-		}
-		if (factor == oldGridSize) {
-			return; // Only zoom if gridsize has changed
+		if (factorZoom || factorSame) {
+			return;
 		}
 
 		setGridSize(factor);
@@ -384,63 +386,67 @@ public class DiagramHandler {
 		// AB: Zoom origin
 		getDrawPanel().zoomOrigin(oldGridSize, gridSize);
 
+        if(!manualZoom) {
+            return;
+        }
+
 		/**
 		 * The zoomed diagram will shrink to the upper left corner and grow to the lower right
 		 * corner but we want to have the zoom center in the middle of the actual visible drawpanel
 		 * so we have to change the coordinates of the entities again
 		 */
 
-		if (manualZoom) {
-			// calculate mouse position relative to UMLet scrollpane
-			Point mouseLocation = Converter.convert(MouseInfo.getPointerInfo().getLocation());
-			Point viewportLocation = Converter.convert(getDrawPanel().getScrollPane().getViewport().getLocationOnScreen());
-			float x = mouseLocation.x - viewportLocation.x;
-			float y = mouseLocation.y - viewportLocation.y;
+        // calculate mouse position relative to UMLet scrollpane
+        Point mouseLocation = Converter.convert(MouseInfo.getPointerInfo().getLocation());
+        Point viewportLocation = Converter.convert(getDrawPanel().getScrollPane().getViewport().getLocationOnScreen());
+        float x = mouseLocation.x - viewportLocation.x;
+        float y = mouseLocation.y - viewportLocation.y;
 
-			// And add any space on the upper left corner which is not visible but reachable by scrollbar
-			x += getDrawPanel().getScrollPane().getViewport().getViewPosition().getX();
-			y += getDrawPanel().getScrollPane().getViewport().getViewPosition().getY();
+        // And add any space on the upper left corner which is not visible but reachable by scrollbar
+        x += getDrawPanel().getScrollPane().getViewport().getViewPosition().getX();
+        y += getDrawPanel().getScrollPane().getViewport().getViewPosition().getY();
 
-			// The result is the point where we want to center the zoom of the diagram
-			float diffx, diffy;
-			diffx = x - x * gridSize / oldGridSize;
-			diffy = y - y * gridSize / oldGridSize;
+        // The result is the point where we want to center the zoom of the diagram
+        float diffx;
+        float diffy;
 
-			// AB: Move origin in opposite direction
-			log.debug("diffX/diffY: " + diffx + "/" + diffy);
-			log.debug("Manual Zoom Delta: " + realignToGrid(false, diffx) + "/" + realignToGrid(false, diffy));
-			getDrawPanel().moveOrigin(realignToGrid(false, -diffx), realignToGrid(false, -diffy));
+        diffx = x - x * gridSize / oldGridSize;
+        diffy = y - y * gridSize / oldGridSize;
 
-			for (GridElement e : getDrawPanel().getGridElements()) {
-				e.setLocationDifference(realignToGrid(false, diffx), realignToGrid(false, diffy));
-			}
+        // AB: Move origin in opposite direction
+        log.debug("diffX/diffY: " + diffx + "/" + diffy);
+        log.debug("Manual Zoom Delta: " + realignToGrid(false, diffx) + "/" + realignToGrid(false, diffy));
+        getDrawPanel().moveOrigin(realignToGrid(false, -diffx), realignToGrid(false, -diffy));
 
-			/**
-			 * Now we have to do some additional "clean up" stuff which is related to the zoom
-			 */
+        for (GridElement e : getDrawPanel().getGridElements()) {
+            e.setLocationDifference(realignToGrid(false, diffx), realignToGrid(false, diffy));
+        }
 
-			getDrawPanel().updatePanelAndScrollbars();
+        /**
+         * Now we have to do some additional "clean up" stuff which is related to the zoom
+         */
 
-			// Set changed only if diagram is not empty (otherwise no element has been changed)
-			if (!drawpanel.getGridElements().isEmpty()) {
-				setChanged(true);
-			}
+        getDrawPanel().updatePanelAndScrollbars();
 
-			BaseGUI gui = CurrentGui.getInstance().getGui();
-			if (gui != null) {
-				gui.setValueOfZoomDisplay(factor);
-			}
+        // Set changed only if diagram is not empty (otherwise no element has been changed)
+        if (!drawpanel.getGridElements().isEmpty()) {
+            setChanged(true);
+        }
 
-			float zoomFactor = CurrentDiagram.getInstance().getDiagramHandler().getZoomFactor() * 100;
-			String zoomtext;
-			if (CurrentDiagram.getInstance().getDiagramHandler() instanceof PaletteHandler) {
-				zoomtext = "Palette zoomed to " + Integer.toString((int) zoomFactor) + "%";
-			}
-			else {
-				zoomtext = "Diagram zoomed to " + Integer.toString((int) zoomFactor) + "%";
-			}
-			Notifier.getInstance().showInfo(zoomtext);
-		}
+        BaseGUI gui = CurrentGui.getInstance().getGui();
+        if (gui != null) {
+            gui.setValueOfZoomDisplay(factor);
+        }
+
+        float zoomFactor = CurrentDiagram.getInstance().getDiagramHandler().getZoomFactor() * 100;
+        String zoomtext;
+        if (CurrentDiagram.getInstance().getDiagramHandler() instanceof PaletteHandler) {
+            zoomtext = "Palette zoomed to " + Integer.toString((int) zoomFactor) + "%";
+        } else {
+            zoomtext = "Diagram zoomed to " + Integer.toString((int) zoomFactor) + "%";
+        }
+
+        Notifier.getInstance().showInfo(zoomtext);
 	}
 
 	private void displayError(String error) {
