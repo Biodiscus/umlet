@@ -89,12 +89,12 @@ public class Relation extends NewGridElement implements Stickable, RelationPoint
 	}
 
 	@Override
-	public void drag(Collection<Direction> resizeDirection, int diffX, int diffY, Point mousePosBeforeDragRelative, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
+	public void drag(Collection<Direction> resizeDirection, Point diffPos, Point mousePosBeforeDragRelative, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
 		String oldAddAttr = getAdditionalAttributes();
 		Rectangle oldRect = getRectangle();
-		RelationSelection returnSelection = relationPoints.getSelectionAndMovePointsIfNecessary(pointAtDefaultZoom(mousePosBeforeDragRelative), toDefaultZoom(diffX), toDefaultZoom(diffY), firstDrag);
+		RelationSelection returnSelection = relationPoints.getSelectionAndMovePointsIfNecessary(pointAtDefaultZoom(mousePosBeforeDragRelative), toDefaultZoom(diffPos.getX()), toDefaultZoom(diffPos.getY()), firstDrag);
 		if (returnSelection == RelationSelection.DRAG_BOX) {
-			setLocationDifference(diffX, diffY);
+			setLocationDifference(diffPos.getX(), diffPos.getY());
 		}
 		if (returnSelection != RelationSelection.NOTHING) {
 			updateModelFromText();

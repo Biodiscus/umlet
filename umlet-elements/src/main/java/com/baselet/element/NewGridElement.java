@@ -367,7 +367,7 @@ public abstract class NewGridElement implements GridElement {
 			diffwInt = SharedUtils.realignTo(false, diffwInt / 2.0, true, getGridSize()) * 2;
 			directions = Arrays.asList(Direction.RIGHT, Direction.LEFT, Direction.DOWN);
 		}
-		drag(directions, diffwInt, diffhInt, new Point(0, 0), false, true, handler.getStickableMap(), false);
+		drag(directions, new Point(diffwInt, diffhInt), new Point(0, 0), false, true, handler.getStickableMap(), false);
 	}
 
 	private double unzoom(double diffw) {
@@ -375,60 +375,60 @@ public abstract class NewGridElement implements GridElement {
 	}
 
 	@Override
-	public void setRectangleDifference(int diffx, int diffy, int diffw, int diffh, boolean firstDrag, StickableMap stickables, boolean undoable) {
+	public void setRectangleDifference(Point diffPos, Point diffSize, boolean firstDrag, StickableMap stickables, boolean undoable) {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
-		setRectangle(new Rectangle(oldRect.x + diffx, oldRect.y + diffy, oldRect.getWidth() + diffw, oldRect.getHeight() + diffh));
+		setRectangle(new Rectangle(oldRect.x + diffPos.getX(), oldRect.y + diffPos.getY(), oldRect.getWidth() + diffSize.getX(), oldRect.getHeight() + diffSize.getY()));
 		moveStickables(stickables, undoable, oldRect, stickingPolygonBeforeLocationChange, oldAddAttr);
 	}
 
 	@Override
-	public void drag(Collection<Direction> resizeDirection, int diffX, int diffY, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
+	public void drag(Collection<Direction> resizeDirection, Point diffPos, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
 		if (resizeDirection.isEmpty()) { // Move GridElement
-			setLocationDifference(diffX, diffY);
+			setLocationDifference(diffPos.getX(), diffPos.getY());
 		}
 		else { // Resize GridElement
 			Rectangle rect = getRectangle();
 			if (isShiftKeyDown && diagonalResize(resizeDirection)) { // Proportional Resize
-				boolean mouseToRight = diffX > 0 && diffX > diffY;
-				boolean mouseDown = diffY > 0 && diffY > diffX;
-				boolean mouseLeft = diffX < 0 && diffX < diffY;
-				boolean mouseUp = diffY < 0 && diffY < diffX;
+				boolean mouseToRight = diffPos.getX() > 0 && diffPos.getX() > diffPos.getY();
+				boolean mouseDown = diffPos.getY() > 0 && diffPos.getY() > diffPos.getX();
+				boolean mouseLeft = diffPos.getX() < 0 && diffPos.getX() < diffPos.getY();
+				boolean mouseUp = diffPos.getY() < 0 && diffPos.getY() < diffPos.getX();
 				if (mouseToRight || mouseLeft) {
-					diffY = diffX;
+					diffPos.setY(diffPos.getX());
 				}
 				if (mouseDown || mouseUp) {
-					diffX = diffY;
+					diffPos.setX(diffPos.getY());
 				}
 			}
 			if (resizeDirection.contains(Direction.LEFT) && resizeDirection.contains(Direction.RIGHT)) {
-				rect.setX(rect.getX() - diffX / 2);
-				rect.setWidth(Math.max(rect.getWidth() + diffX, minSize()));
+				rect.setX(rect.getX() - diffPos.getX() / 2);
+				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
 			}
 			else if (resizeDirection.contains(Direction.LEFT)) {
-				int newWidth = rect.getWidth() - diffX;
+				int newWidth = rect.getWidth() - diffPos.getX();
 				if (newWidth >= minSize()) {
-					rect.setX(rect.getX() + diffX);
+					rect.setX(rect.getX() + diffPos.getX());
 					rect.setWidth(newWidth);
 				}
 			}
 			else if (resizeDirection.contains(Direction.RIGHT)) {
-				rect.setWidth(Math.max(rect.getWidth() + diffX, minSize()));
+				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
 			}
 
 			if (resizeDirection.contains(Direction.UP)) {
-				int newHeight = rect.getHeight() - diffY;
+				int newHeight = rect.getHeight() - diffPos.getY();
 				if (newHeight >= minSize()) {
-					rect.setY(rect.getY() + diffY);
+					rect.setY(rect.getY() + diffPos.getY());
 					rect.setHeight(newHeight);
 				}
 			}
 			if (resizeDirection.contains(Direction.DOWN)) {
-				rect.setHeight(Math.max(rect.getHeight() + diffY, minSize()));
+				rect.setHeight(Math.max(rect.getHeight() + diffPos.getY(), minSize()));
 			}
 
 			setRectangle(rect);
