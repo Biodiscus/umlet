@@ -37,7 +37,6 @@
 	<modules>
 		<module>umlet-elements</module>
 		<module>umlet-res</module>
-		<module>umlet-swing</module>
 		<module>umlet-standalone</module>
 		<module>umlet-eclipse-plugin-deps</module>
 		<module>umlet-eclipse-plugin</module>
