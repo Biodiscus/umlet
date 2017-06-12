@@ -1,8 +1,10 @@
 package com.baselet.our.cucumber.step;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.net.URL;
 
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +25,20 @@ public class SaveStep {
 
 	@Given("^a Diagram with a Element positioned at '(\\d+),(\\d+)'$")
 	public void aDiagramWithAElementPositionedAt(int arg0, int arg1) throws Throwable {
-		ufxTempFile = new File("test.ufx");
-		ufxTempFile.createNewFile();
+		ufxTempFile = getFile("emptyWorkspace.ufx");
 		diagramToSave = new DiagramHandler(ufxTempFile);
 
 		Class classObject = new Class();
 		classObject.setRectangle(new Rectangle(arg0, arg1, 1000, 1000));
 		diagramToSave.getDrawPanel().addElement(classObject);
 	}
+
+	private File getFile(String name) {
+		ClassLoader loader = getClass().getClassLoader();
+		URL url = loader.getResource(name);
+		return new File(url.getFile());
+	}
+
 
 	@When("^the Diagram has been saved$")
 	public void theDiagramHasBeenSaved() throws Throwable {
