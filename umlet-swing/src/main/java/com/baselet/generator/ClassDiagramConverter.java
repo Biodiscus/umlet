@@ -111,8 +111,8 @@ public class ClassDiagramConverter {
 
 		for (SortableElement e : elements) {
 			new AddElement(e.getElement(),
-					handler.realignToGrid(e.getElement().getRectangle().x),
-					handler.realignToGrid(e.getElement().getRectangle().y), false).execute(handler);
+					handler.realignToGrid(e.getElement().getRectangle().getX()),
+					handler.realignToGrid(e.getElement().getRectangle().getY()), false).execute(handler);
 		}
 		handler.setChanged(true);
 	}
@@ -120,7 +120,7 @@ public class ClassDiagramConverter {
 	/**
 	 * Adjusts a Class GridElement to the minimum size where all text is visible.
 	 *
-	 * @param clazz
+	 * @param strings
 	 * @return
 	 */
 	private Rectangle adjustSize(List<String> strings) {

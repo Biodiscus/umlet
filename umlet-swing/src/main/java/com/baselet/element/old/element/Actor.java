@@ -41,7 +41,7 @@ public class Actor extends OldGridElement {
 			String s = tmp.elementAt(i);
 			if (s.equals("--")) {
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
-				g2.drawLine(getRectangle().width / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos, getRectangle().width / 2 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos);
+				g2.drawLine(getRectangle().getWidth() / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos, getRectangle().getWidth() / 2 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos);
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else {
@@ -49,12 +49,12 @@ public class Actor extends OldGridElement {
 				TextLayout l = new TextLayout(s, HandlerElementMap.getHandlerForElement(this).getFontHandler().getFont(), g2.getFontRenderContext());
 				Rectangle2D r2d = l.getBounds();
 				int width = (int) r2d.getWidth();
-				int xPos = getRectangle().width / 2 - width / 2;
+				int xPos = getRectangle().getWidth() / 2 - width / 2;
 				if (xPos < 0) {
 					ADAPT_SIZE = true;
 					break;
 				}
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width * 0.5, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() * 0.5, yPos, AlignHorizontal.CENTER);
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 		}
@@ -64,12 +64,12 @@ public class Actor extends OldGridElement {
 			new OldResize(this, 0, 0, HandlerElementMap.getHandlerForElement(this).getGridSize(), 0).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
-		if (yPos > getRectangle().height) {
+		if (yPos > getRectangle().getHeight()) {
 			new OldResize(this, 0, 0, 0, 20).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
 
-		int startx = getRectangle().width / 2;
+		int startx = getRectangle().getWidth() / 2;
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);

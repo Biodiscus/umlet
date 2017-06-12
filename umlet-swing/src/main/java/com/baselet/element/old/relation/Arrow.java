@@ -154,6 +154,6 @@ public class Arrow extends Rectangle {
 
 	@Override
 	public String toString() {
-		return "Type: " + _arrowType + " / Coordinates: " + x + "," + y;
+		return "Type: " + _arrowType + " / Coordinates: " + getX() + "," + getY();
 	}
 }

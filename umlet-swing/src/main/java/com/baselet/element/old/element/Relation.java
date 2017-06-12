@@ -492,7 +492,7 @@ public class Relation extends OldGridElement {
 			// rFixed=(Rectangle)shapes.elementAt(i);
 			rMovable = shapes.elementAt(i + 1);
 
-			/* if (i==0) { // The hotspot of the first element is set Point p=(Point)points.elementAt(0); rFixed.setLocation(p.x-hotspotx,p.y-hotspoty); } */
+			/* if (i==0) { // The hotspot of the first element is set Point p=(Point)points.elementAt(0); rFixed.setLocation(p.getX()-hotspotx,p.getY()-hotspoty); } */
 
 			Vector<Point> tmp = getIntersectingLineSegment(tmpArea, points);
 			Point startIntersectingLine = tmp.elementAt(0);
@@ -631,7 +631,7 @@ public class Relation extends OldGridElement {
 		// Assume that the rect contains all relation points
 		for (Point p : getLinePoints()) {
 			// We must add the displacement from the top left corner of the drawpanel to the point coordinates
-			Point realPoint = new Point(p.getX() + getRectangle().x, p.getY() + getRectangle().y);
+			Point realPoint = new Point(p.getX() + getRectangle().getX(), p.getY() + getRectangle().getY());
 			// If only one point is not in the selection rectangle, the method returns false
 			if (!rect1.contains(realPoint)) {
 				return false;
@@ -690,9 +690,9 @@ public class Relation extends OldGridElement {
 		for (GridElement other : HandlerElementMap.getHandlerForElement(this).getDrawPanel().getGridElements()) {
 			Selector s = HandlerElementMap.getHandlerForElement(other).getDrawPanel().getSelector();
 			if (other != this && other instanceof Relation && s.isSelected(other)) {
-				int xDist = getRectangle().x - other.getRectangle().x;
-				int yDist = getRectangle().y - other.getRectangle().y;
-				Point modifiedP = new Point(p.x + xDist, p.y + yDist); // the point must be modified, because the other relation has other coordinates
+				int xDist = getRectangle().getX() - other.getRectangle().getX();
+				int yDist = getRectangle().getY() - other.getRectangle().getY();
+				Point modifiedP = new Point((int)p.getX() + xDist, (int)p.getY() + yDist); // the point must be modified, because the other relation has other coordinates
 				boolean containsHelper = ((Relation) other).calcContains(modifiedP);
 				if (s.isSelected(other) && containsHelper) {
 					return false;
@@ -1029,7 +1029,7 @@ public class Relation extends OldGridElement {
 					g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 				}
 				g2.drawLine(pm.getX(), pm.getY(), p2.getX(), p2.getY());
-				// g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+				// g2.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 				// G. Mueller end
 
 				// ##########################################################################################
@@ -1310,10 +1310,10 @@ public class Relation extends OldGridElement {
 					g2.setColor(fgColor);
 					g2.draw(myPg);
 
-					// g2.drawLine((int)arrow.getX()+(int)arrow.getArrowEndA().x,
-					// (int)arrow.getY()+(int)arrow.getArrowEndA().y,
-					// (int)arrow.getX()+(int)arrow.getArrowEndB().x,
-					// (int)arrow.getY()+(int)arrow.getArrowEndB().y);
+					// g2.drawLine((int)arrow.getX()+(int)arrow.getArrowEndA().getX(),
+					// (int)arrow.getY()+(int)arrow.getArrowEndA().getY(),
+					// (int)arrow.getX()+(int)arrow.getArrowEndB().getX(),
+					// (int)arrow.getY()+(int)arrow.getArrowEndB().getY());
 				} // end B. Buckl
 				else if (arrow.getString().equals("x")) {
 					int[] ax = new int[4];
@@ -1803,13 +1803,13 @@ public class Relation extends OldGridElement {
 		maxy += maxy % gridSize;
 
 		if (maxx != 0 || maxy != 0) {
-			int diffx = maxx - getRectangle().width;
-			int diffy = maxy - getRectangle().height;
-			this.setSize(getRectangle().width + diffx, getRectangle().height + diffy);
+			int diffx = maxx - getRectangle().getWidth();
+			int diffy = maxy - getRectangle().getHeight();
+			this.setSize(getRectangle().getWidth() + diffx, getRectangle().getHeight() + diffy);
 		}
 		if (minx != 0 | miny != 0) {
 			setLocationDifference(minx, miny);
-			this.setSize(getRectangle().width + -minx, getRectangle().height + -miny);
+			this.setSize(getRectangle().getWidth() + -minx, getRectangle().getHeight() + -miny);
 			for (int i = 0; i < getLinePoints().size(); i++) {
 				Point p = getLinePoints().elementAt(i);
 				p.setX(p.getX() + -minx);
@@ -1831,12 +1831,12 @@ public class Relation extends OldGridElement {
 	}
 
 	public PointDouble getAbsoluteCoorStart() {
-		PointDouble ret = new PointDouble(getRectangle().x + getStartPoint().getX(), getRectangle().y + getStartPoint().getY());
+		PointDouble ret = new PointDouble(getRectangle().getX() + getStartPoint().getX(), getRectangle().getY() + getStartPoint().getY());
 		return ret;
 	}
 
 	public PointDouble getAbsoluteCoorEnd() {
-		PointDouble ret = new PointDouble(getRectangle().x + getEndPoint().getX(), getRectangle().y + getEndPoint().getY());
+		PointDouble ret = new PointDouble(getRectangle().getX() + getEndPoint().getX(), getRectangle().getY() + getEndPoint().getY());
 		return ret;
 	}
 

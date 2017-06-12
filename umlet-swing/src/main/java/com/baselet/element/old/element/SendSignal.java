@@ -23,10 +23,10 @@ public class SendSignal extends OldGridElement {
 
 		Polygon poly = new Polygon();
 		poly.addPoint(0, 0);
-		poly.addPoint(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
-		poly.addPoint(getRectangle().width - 1, getRectangle().height / 2);
-		poly.addPoint(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().height - 1);
-		poly.addPoint(0, getRectangle().height - 1);
+		poly.addPoint(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
+		poly.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() / 2);
+		poly.addPoint(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().getHeight() - 1);
+		poly.addPoint(0, getRectangle().getHeight() - 1);
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
@@ -41,12 +41,12 @@ public class SendSignal extends OldGridElement {
 		g2.drawPolygon(poly);
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
-		int yPos = getRectangle().height / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
+		int yPos = getRectangle().getHeight() / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
 
 		for (int i = 0; i < tmp.size(); i++) {
 			String s = tmp.elementAt(i);
 			yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
-			HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+			HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 			yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 		}
 		// g2.drawLine(0,0,this.getWidth()-this.getHandler().getFontHandler().getFontsize(),0);

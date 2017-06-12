@@ -50,8 +50,8 @@ public class Paste extends Command {
 		int minY = Integer.MAX_VALUE;
 
 		for (GridElement e : entities) {
-			minX = Math.min(e.getRectangle().x, minX);
-			minY = Math.min(e.getRectangle().y, minY);
+			minX = Math.min(e.getRectangle().getX(), minX);
+			minY = Math.min(e.getRectangle().getY(), minY);
 		}
 
 		for (GridElement e : entities) {
@@ -68,8 +68,8 @@ public class Paste extends Command {
 
 		for (GridElement e : entities) {
 			new AddElement(e,
-					handler.realignToGrid(e.getRectangle().x + offsetX),
-					handler.realignToGrid(e.getRectangle().y + offsetY), false).execute(handler);
+					handler.realignToGrid(e.getRectangle().getX() + offsetX),
+					handler.realignToGrid(e.getRectangle().getY() + offsetY), false).execute(handler);
 		}
 
 		handler.getDrawPanel().getSelector().deselectAll();

@@ -23,10 +23,10 @@ public abstract class Layout {
 		int maxHeight = 0;
 		int sumWidth = 0;
 		for (SortableElement e : elements) {
-			if (e.getElement().getRectangle().height > maxHeight) {
-				maxHeight = e.getElement().getRectangle().height;
+			if (e.getElement().getRectangle().getHeight() > maxHeight) {
+				maxHeight = e.getElement().getRectangle().getHeight();
 			}
-			sumWidth += e.getElement().getRectangle().width;
+			sumWidth += e.getElement().getRectangle().getWidth();
 		}
 		// start with a rectangle with one row with all elements in it and determine
 		// the multiplicator by solving: (x / m) / (y * m) = desired relation of width to height
@@ -42,13 +42,13 @@ public abstract class Layout {
 		int maxHeightThisRow = 0;
 		for (SortableElement e : elements) {
 			e.getElement().setLocation(curX, curY);
-			if (e.getElement().getRectangle().height > maxHeightThisRow) {
-				maxHeightThisRow = e.getElement().getRectangle().height;
+			if (e.getElement().getRectangle().getHeight() > maxHeightThisRow) {
+				maxHeightThisRow = e.getElement().getRectangle().getHeight();
 			}
 			// determine outer x-bounds of all elements placed
 			Rectangle dim = e.getElement().getRectangle();
-			if (curX + dim.width > d.width) {
-				d.width = curX + e.getElement().getRectangle().width;
+			if (curX + dim.getWidth() > d.width) {
+				d.width = curX + e.getElement().getRectangle().getWidth();
 			}
 			if (curX > desiredWidth) {
 				++rows;
@@ -57,7 +57,7 @@ public abstract class Layout {
 				maxHeightThisRow = 0;
 			}
 			else {
-				curX += e.getElement().getRectangle().width + GRIDSIZE;
+				curX += e.getElement().getRectangle().getWidth() + GRIDSIZE;
 			}
 			// determine outer y-bounds of alle elements placed
 			if (elements.indexOf(e) == elements.size() - 1) {// element is the last one

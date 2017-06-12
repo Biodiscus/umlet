@@ -24,7 +24,7 @@ public class Socket extends OldGridElement {
 
 		int fnt = (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() / 2;
 		this.setSize(fnt + 2, fnt + 2);
-		int h = getRectangle().height;
+		int h = getRectangle().getHeight();
 
 		g2.drawArc(0, 0, h - 1, h - 1, 90, 180);
 		g2.drawOval((int) (4 * zoom), (int) (4 * zoom), h - (int) (9 * zoom), h - (int) (9 * zoom));

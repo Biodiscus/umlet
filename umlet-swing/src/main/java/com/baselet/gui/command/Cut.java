@@ -52,8 +52,8 @@ public class Cut extends Command {
 
 		for (GridElement e : entities) {
 			new AddElement(e,
-					handler.realignToGrid(true, e.getRectangle().x + offsetX),
-					handler.realignToGrid(true, e.getRectangle().y + offsetY), false).execute(handler);
+					handler.realignToGrid(true, e.getRectangle().getX() + offsetX),
+					handler.realignToGrid(true, e.getRectangle().getY() + offsetY), false).execute(handler);
 		}
 		handler.getDrawPanel().repaint();
 

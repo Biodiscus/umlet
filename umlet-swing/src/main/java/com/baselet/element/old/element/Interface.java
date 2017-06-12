@@ -47,7 +47,7 @@ public class Interface extends OldGridElement {
 			String s = tmp.elementAt(i);
 			if (s.equals("--")) {
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
-				g2.drawLine(0, yPos, getRectangle().width, yPos);
+				g2.drawLine(0, yPos, getRectangle().getWidth(), yPos);
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else {
@@ -55,12 +55,12 @@ public class Interface extends OldGridElement {
 				TextLayout l = new TextLayout(s, HandlerElementMap.getHandlerForElement(this).getFontHandler().getFont(), g2.getFontRenderContext());
 				Rectangle2D r2d = l.getBounds();
 				int width = (int) r2d.getWidth();
-				int xPos = getRectangle().width / 2 - width / 2;
+				int xPos = getRectangle().getWidth() / 2 - width / 2;
 				if (xPos < 0) {
 					ADAPT_SIZE = true;
 					break;
 				}
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 		}
@@ -70,14 +70,14 @@ public class Interface extends OldGridElement {
 			new OldResize(this, 0, 0, HandlerElementMap.getHandlerForElement(this).getGridSize(), 0).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
-		if (yPos > getRectangle().height) {
+		if (yPos > getRectangle().getHeight()) {
 			new OldResize(this, 0, 0, 0, 20).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g.fillOval(getRectangle().width / 2 - (int) (10 * zoom), 0, (int) (20 * zoom), (int) (20 * zoom));
+		g.fillOval(getRectangle().getWidth() / 2 - (int) (10 * zoom), 0, (int) (20 * zoom), (int) (20 * zoom));
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -86,7 +86,7 @@ public class Interface extends OldGridElement {
 			g2.setColor(fgColorBase);
 		}
 
-		g.drawOval(getRectangle().width / 2 - (int) (10 * zoom), 0, (int) (20 * zoom), (int) (20 * zoom));
+		g.drawOval(getRectangle().getWidth() / 2 - (int) (10 * zoom), 0, (int) (20 * zoom), (int) (20 * zoom));
 		/* if (_selected) { g.drawOval(this.getWidth()/2-Constants.getFontsize()+1, 1, 2*Constants.getFontsize()-2, 2*Constants.getFontsize()-2); } */
 	}
 

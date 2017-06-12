@@ -478,7 +478,7 @@ public class ActivityDiagramText extends OldGridElement {
 
 		// draw diagram
 		this.setSize(width, height);
-		graphics.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		graphics.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		root_container.paint();
 
 		// draw goto elements
