@@ -68,6 +68,8 @@ public class Path {
 		}
 		else if (SystemInfo.OS == Os.LINUX || SystemInfo.OS == Os.UNIX) {
 			configDir = xgdConfigDirectory();
+		} else {
+			configDir = xgdConfigDirectory(); // Needed for a jenkins server?
 		}
 
 		return configDir;
