@@ -75,8 +75,8 @@ public class PaletteEntityListener extends GridElementListener {
 
 	private void moveDraggedEntities() {
 		for (GridElement copiedEntity : copiedEntities) {
-			int x = getNewCoordinate().x - getOldCoordinate().x;
-			int y = getNewCoordinate().y - getOldCoordinate().y;
+			int x = getNewCoordinate().getX() - getOldCoordinate().getX();
+			int y = getNewCoordinate().getY() - getOldCoordinate().getY();
 			x = CurrentDiagram.getInstance().getDiagramHandler().realignToGrid(false, x);
 			y = CurrentDiagram.getInstance().getDiagramHandler().realignToGrid(false, y);
 			copiedEntity.setLocationDifference(x, y);

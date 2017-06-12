@@ -374,18 +374,18 @@ public class PlotDrawHandler {
 				for (int i = 0; i < points.size() - 1; i++) {
 					Point point1 = points.get(i);
 					Point point2 = points.get(i + 1);
-					base.drawLine(point1.x, point1.y, point2.x, point2.y);
+					base.drawLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
 				}
 			}
 			else {
 				for (int i = 0; i < points.size(); i++) {
 					Point point = points.get(i);
-					base.drawCircle(point.x, point.y, 2);
+					base.drawCircle(point.getX(), point.getY(), 2);
 				}
 			}
 			// print titleCol
 			base.setForegroundColor(ColorOwn.forStringOrNull(colors.get(cIndex), Transparency.FOREGROUND).darken(75));
-			base.print(title[valueIndex], points.get(points.size() - 1).x, points.get(points.size() - 1).y, AlignHorizontal.CENTER);
+			base.print(title[valueIndex], points.get(points.size() - 1).getX(), points.get(points.size() - 1).getY(), AlignHorizontal.CENTER);
 
 			cIndex++;
 		}
@@ -481,12 +481,12 @@ public class PlotDrawHandler {
 			int height = canvas.getInnerVerticalDrawspace();
 			int width = canvas.getInnerHorizontalDrawspace();
 
-			base.drawArc(ulCorner.x + width / 2.0 - diameter / 2.0, ulCorner.y + height / 2.0 - diameter / 2.0, diameter, diameter, startAngle.floatValue(), arcAngle.floatValue(), false);
+			base.drawArc(ulCorner.getX() + width / 2.0 - diameter / 2.0, ulCorner.getY() + height / 2.0 - diameter / 2.0, diameter, diameter, startAngle.floatValue(), arcAngle.floatValue(), false);
 			base.setForegroundColor(currentFg);
 
 			double radians = (360 - startAngle + (360 - arcAngle / 2)) * Math.PI / 180.0;
-			int value_x = (int) (diameter / 2.0 * Math.cos(radians) + ulCorner.x + diameter / 2.0 + width / 2.0 - diameter / 2.0);
-			int value_y = (int) (diameter / 2.0 * Math.sin(radians) + ulCorner.y + diameter / 2.0 + height / 2.0 - diameter / 2.0);
+			int value_x = (int) (diameter / 2.0 * Math.cos(radians) + ulCorner.getX() + diameter / 2.0 + width / 2.0 - diameter / 2.0);
+			int value_y = (int) (diameter / 2.0 * Math.sin(radians) + ulCorner.getY() + diameter / 2.0 + height / 2.0 - diameter / 2.0);
 
 			base.setForegroundColor(ColorOwn.forStringOrNull(colors.get(cIndex), Transparency.FOREGROUND).darken(75));
 			base.print(desc[i], value_x, value_y, AlignHorizontal.CENTER);

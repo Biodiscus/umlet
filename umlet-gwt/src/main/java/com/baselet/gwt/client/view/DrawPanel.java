@@ -394,7 +394,7 @@ public abstract class DrawPanel extends SimplePanel implements CommandTarget, Ha
 
 	@Override
 	public void onShowMenu(Point point) {
-		Point relativePoint = new Point(point.x - getAbsoluteLeft(), point.y - getAbsoluteTop());
+		Point relativePoint = new Point(point.getX() - getAbsoluteLeft(), point.getY() - getAbsoluteTop());
 		if (getGridElementOnPosition(relativePoint) == null) { // gridelement check must be made with relative coordinates
 			diagramContextMenu.show(point);
 		}

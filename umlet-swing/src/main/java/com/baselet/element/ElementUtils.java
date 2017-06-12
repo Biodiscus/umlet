@@ -25,7 +25,7 @@ public class ElementUtils {
 		JComponent component = (JComponent) gridElement.getComponent();
 		java.awt.Rectangle rectangle = component.getVisibleRect();
 		Point absolute = new Point(gridElement.getRectangle().getX() + p.getX(), gridElement.getRectangle().getY() + p.getY());
-		if (!rectangle.contains(p.x, p.y)) {
+		if (!rectangle.contains(p.getX(), p.getY())) {
 			return false;
 		}
 
@@ -50,7 +50,7 @@ public class ElementUtils {
 			JComponent otherComponent = (JComponent) other.getComponent();
 			if (other.getLayer() > gridElement.getLayer()) { // elements with higher layer can "overwrite" contains-value of this
 				// move point to coordinate system of other entity
-				Point other_p = new Point(p.x + gridElement.getRectangle().x - other.getRectangle().x, p.y + gridElement.getRectangle().y - other.getRectangle().y);
+				Point other_p = new Point(p.getX() + gridElement.getRectangle().x - other.getRectangle().x, p.getY() + gridElement.getRectangle().y - other.getRectangle().y);
 				if (otherComponent.contains(Converter.convert(other_p))) {
 					return false;
 				}

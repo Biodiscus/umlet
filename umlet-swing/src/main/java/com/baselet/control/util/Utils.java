@@ -22,9 +22,9 @@ public abstract class Utils {
 
 	public static Point normalize(Point p, int pixels) {
 		Point ret = new Point();
-		double d = Math.sqrt(p.x * p.x + p.y * p.y);
-		ret.x = (int) (p.x / d * pixels);
-		ret.y = (int) (p.y / d * pixels);
+		double d = Math.sqrt(p.getX() * p.getX() + p.getY() * p.getY());
+		ret.setX((int) (p.getX() / d * pixels));
+		ret.setY((int) (p.getY() / d * pixels));
 		return ret;
 	}
 

@@ -92,7 +92,7 @@ public class OldResize extends Command {
 			r = lp.getRelation();
 			p = r.getLinePoints().get(lp.getLinePointId());
 
-			diff = from.getLine(lp.getStickingLineId()).diffToLine(to.getLine(lp.getStickingLineId()), p.x + r.getRectangle().x, p.y + r.getRectangle().y);
+			diff = from.getLine(lp.getStickingLineId()).diffToLine(to.getLine(lp.getStickingLineId()), p.getX() + r.getRectangle().x, p.getY() + r.getRectangle().y);
 
 			DiagramHandler handler = HandlerElementMap.getHandlerForElement(entity);
 			move_commands.add(new OldMoveLinePoint(lp.getRelation(), lp.getLinePointId(), handler.realignToGrid(diff.x), handler.realignToGrid(diff.y)));

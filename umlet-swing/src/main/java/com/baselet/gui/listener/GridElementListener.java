@@ -231,7 +231,7 @@ public class GridElementListener extends UniversalListener {
 	}
 
 	private void initializeLasso() {
-		lassoToleranceRectangle = new Rectangle(mousePressedPoint.x - lassoTolerance, mousePressedPoint.y - lassoTolerance, lassoTolerance * 2, lassoTolerance * 2);
+		lassoToleranceRectangle = new Rectangle(mousePressedPoint.getX() - lassoTolerance, mousePressedPoint.getY() - lassoTolerance, lassoTolerance * 2, lassoTolerance * 2);
 		LASSO_ACTIVE = true;
 		SelectorFrame selframe = selector.getSelectorFrame();
 		selframe.setLocation(Converter.convert(mousePressedPoint));
@@ -261,8 +261,8 @@ public class GridElementListener extends UniversalListener {
 
 		Point newp = getNewCoordinate();
 		Point oldp = getOldCoordinate();
-		int diffx = newp.x - oldp.x;
-		int diffy = newp.y - oldp.y;
+		int diffx = newp.getX() - oldp.getX();
+		int diffy = newp.getY() - oldp.getY();
 
 		List<GridElement> elementsToMove = selector.getSelectedElements();
 		if (!resizeDirections.isEmpty()) {

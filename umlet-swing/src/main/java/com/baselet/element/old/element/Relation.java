@@ -87,8 +87,8 @@ public class Relation extends OldGridElement {
 		else {
 			Point p1 = getLinePoints().elementAt(getLinePoints().size() / 2);
 			Point p2 = getLinePoints().elementAt(getLinePoints().size() / 2 - 1);
-			ret.x = (p1.x + p2.x) / 2;
-			ret.y = (p1.y + p2.y) / 2;
+			ret.setX((p1.getX() + p2.getX()) / 2);
+			ret.setY((p1.getY() + p2.getY()) / 2);
 		}
 		return ret;
 	}
@@ -110,8 +110,8 @@ public class Relation extends OldGridElement {
 
 		for (int i = 0; i < getLinePoints().size(); i++) {
 			Point p = getLinePoints().elementAt(i);
-			String s1 = "" + p.x;
-			String s2 = "" + p.y;
+			String s1 = "" + p.getX();
+			String s2 = "" + p.getY();
 			tmp.add(s1);
 			tmp.add(s2);
 		}
@@ -417,13 +417,13 @@ public class Relation extends OldGridElement {
 		int centerDiffX = -rMovable.getWidth() / 2;
 		int centerDiffY = -rMovable.getHeight() / 2;
 
-		int vectorX = pEnd.x - pStart.x;
-		int vectorY = pEnd.y - pStart.y;
+		int vectorX = pEnd.getX() - pStart.getX();
+		int vectorY = pEnd.getY() - pStart.getY();
 
-		int startx = pStart.x;
-		int starty = pStart.y;
-		int endx = pEnd.x;
-		int endy = pEnd.y;
+		int startx = pStart.getX();
+		int starty = pStart.getY();
+		int endx = pEnd.getX();
+		int endy = pEnd.getY();
 
 		for (@SuppressWarnings("unused")
 		int i = 0;; i++) {
@@ -463,7 +463,7 @@ public class Relation extends OldGridElement {
 		for (int i = points.size() - 1; i > 0; i--) {
 			Point p1 = points.elementAt(i);
 			Point p2 = points.elementAt(i - 1);
-			if (p1.x == p2.x & p1.y == p2.y) {
+			if (p1.getX() == p2.getX() & p1.getY() == p2.getY()) {
 				points.removeElementAt(i);
 			}
 		}
@@ -484,7 +484,7 @@ public class Relation extends OldGridElement {
 			Rectangle r = shapes.elementAt(i);
 			if (i == 0) { // The hotspot of the first element is set
 				Point p = points.elementAt(0);
-				r.setLocation(p.x - hotspotx, p.y - hotspoty);
+				r.setLocation(p.getX() - hotspotx, p.getY() - hotspoty);
 			}
 			Area a = new Area(Converter.convert(r));
 			tmpArea.add(a);
@@ -504,11 +504,11 @@ public class Relation extends OldGridElement {
 			if (rMovable instanceof Arrow) {
 				Arrow arrow = (Arrow) rMovable;
 
-				Point diffA = new Point(-startIntersectingLine.x + endIntersectingLine.x, -startIntersectingLine.y + endIntersectingLine.y);
-				Point diffB1 = new Point(diffA.y, -diffA.x);
-				Point diffB2 = new Point(-diffB1.x, -diffB1.y);
-				Point a1 = new Point(2 * diffA.x + diffB1.x, 2 * diffA.y + diffB1.y);
-				Point a2 = new Point(2 * diffA.x + diffB2.x, 2 * diffA.y + diffB2.y);
+				Point diffA = new Point(-startIntersectingLine.getX() + endIntersectingLine.getX(), -startIntersectingLine.getY() + endIntersectingLine.getY());
+				Point diffB1 = new Point(diffA.getY(), -diffA.getX());
+				Point diffB2 = new Point(-diffB1.getX(), -diffB1.getY());
+				Point a1 = new Point(2 * diffA.getX() + diffB1.getX(), 2 * diffA.getY() + diffB1.getY());
+				Point a2 = new Point(2 * diffA.getX() + diffB2.getX(), 2 * diffA.getY() + diffB2.getY());
 
 				a1 = Utils.normalize(a1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
 				a2 = Utils.normalize(a2, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
@@ -528,13 +528,13 @@ public class Relation extends OldGridElement {
 					Point end = endIntersectingLine;
 					// vectorA is the vector between the two points which is the
 					// line between the points...
-					Point vectorA = new Point(-start.x + end.x, -start.y + end.y);
+					Point vectorA = new Point(-start.getX() + end.getX(), -start.getY() + end.getY());
 					// vector down is a vector standing 90 degrees on the line,
 					// vector up is the same in the opposite direction..
-					Point vectorDown = new Point(vectorA.y, -vectorA.x);
-					Point vectorUp = new Point(-vectorDown.x, -vectorDown.y);
-					Point newA1 = new Point(4 * vectorA.x + vectorDown.x, 4 * vectorA.y + vectorDown.y);
-					Point newA2 = new Point(4 * vectorA.x + vectorUp.x, 4 * vectorA.y + diffB2.y);
+					Point vectorDown = new Point(vectorA.getY(), -vectorA.getX());
+					Point vectorUp = new Point(-vectorDown.getX(), -vectorDown.getY());
+					Point newA1 = new Point(4 * vectorA.getX() + vectorDown.getX(), 4 * vectorA.getY() + vectorDown.getY());
+					Point newA2 = new Point(4 * vectorA.getX() + vectorUp.getX(), 4 * vectorA.getY() + diffB2.getY());
 
 					// this calculates the proportion of the two dimensions of
 					// the point compared to each other
@@ -617,7 +617,7 @@ public class Relation extends OldGridElement {
 			}
 
 			// ATTENTION: this Recangle will become the rFixed in the next loop
-			rMovable.setLocation(res.x, res.y);
+			rMovable.setLocation(res.getX(), res.getY());
 		}
 
 		return true;
@@ -792,7 +792,7 @@ public class Relation extends OldGridElement {
 		else if (s > 2) {
 			Point p1 = getLinePoints().elementAt(getLinePoints().size() / 2);
 			Point p2 = getLinePoints().elementAt(getLinePoints().size() / 2 + 1);
-			mid = new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+			mid = new Point((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 		}
 		else {
 			return null;
@@ -800,10 +800,10 @@ public class Relation extends OldGridElement {
 
 		int size = (int) (SELECTBOXSIZE * zoom);
 		size = size / 2;
-		p.addPoint(mid.x - size, mid.y - size);
-		p.addPoint(mid.x + size, mid.y - size);
-		p.addPoint(mid.x + size, mid.y + size);
-		p.addPoint(mid.x - size, mid.y + size);
+		p.addPoint(mid.getX() - size, mid.getY() - size);
+		p.addPoint(mid.getX() + size, mid.getY() - size);
+		p.addPoint(mid.getX() + size, mid.getY() + size);
+		p.addPoint(mid.getX() - size, mid.getY() + size);
 		return p;
 	}
 
@@ -1020,15 +1020,15 @@ public class Relation extends OldGridElement {
 				Point p1 = getLinePoints().elementAt(i);
 				Point p2 = getLinePoints().elementAt(i + 1);
 				// G.Mueller start
-				Point pm = new Point(p1.x - (p1.x - p2.x) / 2, p1.y - (p1.y - p2.y) / 2);
-				g2.drawLine(p1.x, p1.y, pm.x, pm.y);
+				Point pm = new Point(p1.getX() - (p1.getX() - p2.getX()) / 2, p1.getY() - (p1.getY() - p2.getY()) / 2);
+				g2.drawLine(p1.getX(), p1.getY(), pm.getX(), pm.getY());
 				if (lineType.equals("-.")) {
 					g2.setStroke(Utils.getStroke(LineType.DASHED, 1));
 				}
 				if (lineType.equals(".-")) {
 					g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 				}
-				g2.drawLine(pm.x, pm.y, p2.x, p2.y);
+				g2.drawLine(pm.getX(), pm.getY(), p2.getX(), p2.getY());
 				// g2.drawLine(p1.x, p1.y, p2.x, p2.y);
 				// G. Mueller end
 
@@ -1038,19 +1038,19 @@ public class Relation extends OldGridElement {
 					Point px1 = getLinePoints().elementAt(i);
 					Point px2 = getLinePoints().elementAt(i + 1);
 
-					Point mitte = new Point(px1.x - (px1.x - px2.x) / 2, px1.y - (px1.y - px2.y) / 2);
+					Point mitte = new Point(px1.getX() - (px1.getX() - px2.getX()) / 2, px1.getY() - (px1.getY() - px2.getY()) / 2);
 
 					AffineTransform at = g2.getTransform();
 					AffineTransform at2 = (AffineTransform) at.clone();
-					int cx = mitte.x;
-					int cy = mitte.y;
-					double winkel = Utils.getAngle(px1.x, px1.y, px2.x,
-							px2.y);
+					int cx = mitte.getX();
+					int cy = mitte.getY();
+					double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(),
+                            px2.getY());
 					at2.rotate(winkel, cx, cy);
 					g2.setTransform(at2);
 					g2.setColor(fgColor);
 					g2.setStroke(Utils.getStroke(LineType.SOLID, 2));
-					g2.drawArc(mitte.x, mitte.y - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom), 90, 180);
+					g2.drawArc(mitte.getX(), mitte.getY() - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom), 90, 180);
 					g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 					g2.setTransform(at);
 
@@ -1058,28 +1058,28 @@ public class Relation extends OldGridElement {
 				else if (eerRelDir.indexOf("EER") >= 0) {
 					Point px1 = getLinePoints().elementAt(i);
 					Point px2 = getLinePoints().elementAt(i + 1);
-					Point mitte = new Point(px1.x - (px1.x - px2.x) / 2, px1.y - (px1.y - px2.y) / 2);
+					Point mitte = new Point(px1.getX() - (px1.getX() - px2.getX()) / 2, px1.getY() - (px1.getY() - px2.getY()) / 2);
 					int recSize = (int) (20 * zoom);
-					Point r1 = new Point(mitte.x, mitte.y - recSize);
-					Point r2 = new Point(mitte.x + recSize, mitte.y);
-					Point r3 = new Point(mitte.x, mitte.y + recSize);
-					Point r4 = new Point(mitte.x - recSize, mitte.y);
+					Point r1 = new Point(mitte.getX(), mitte.getY() - recSize);
+					Point r2 = new Point(mitte.getX() + recSize, mitte.getY());
+					Point r3 = new Point(mitte.getX(), mitte.getY() + recSize);
+					Point r4 = new Point(mitte.getX() - recSize, mitte.getY());
 
 					Polygon po1 = new Polygon();
-					po1.addPoint(r1.x, r1.y);
-					po1.addPoint(r2.x, r2.y);
-					po1.addPoint(r3.x, r3.y);
+					po1.addPoint(r1.getX(), r1.getY());
+					po1.addPoint(r2.getX(), r2.getY());
+					po1.addPoint(r3.getX(), r3.getY());
 
 					Polygon po2 = new Polygon();
-					po2.addPoint(r1.x, r1.y);
-					po2.addPoint(r3.x, r3.y);
-					po2.addPoint(r4.x, r4.y);
+					po2.addPoint(r1.getX(), r1.getY());
+					po2.addPoint(r3.getX(), r3.getY());
+					po2.addPoint(r4.getX(), r4.getY());
 
 					AffineTransform at = g2.getTransform();
 					AffineTransform at2 = (AffineTransform) at.clone();
-					int cx = mitte.x;
-					int cy = mitte.y;
-					double winkel = Utils.getAngle(px1.x, px1.y, px2.x, px2.y);
+					int cx = mitte.getX();
+					int cy = mitte.getY();
+					double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(), px2.getY());
 					at2.rotate(winkel, cx, cy);
 					g2.setTransform(at2);
 
@@ -1110,36 +1110,36 @@ public class Relation extends OldGridElement {
 				else if (clientServer != null && clientServer.indexOf("rovide") >= 0) {
 					Point px1 = getLinePoints().elementAt(i);
 					Point px2 = getLinePoints().elementAt(i + 1);
-					Point mitte = new Point(px1.x - (px1.x - px2.x) / 2, px1.y - (px1.y - px2.y) / 2);
+					Point mitte = new Point(px1.getX() - (px1.getX() - px2.getX()) / 2, px1.getY() - (px1.getY() - px2.getY()) / 2);
 
 					AffineTransform at = g2.getTransform();
 					AffineTransform at2 = (AffineTransform) at.clone();
-					int cx = mitte.x;
-					int cy = mitte.y;
-					double winkel = Utils.getAngle(px1.x, px1.y, px2.x,
-							px2.y);
+					int cx = mitte.getX();
+					int cy = mitte.getY();
+					double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(),
+                            px2.getY());
 					at2.rotate(winkel, cx, cy);
 					g2.setTransform(at2);
 
-					Point outerArc = new Point(mitte.x - (int) (15 * zoom), mitte.y - (int) (15 * zoom));
+					Point outerArc = new Point(mitte.getX() - (int) (15 * zoom), mitte.getY() - (int) (15 * zoom));
 					Point innerCircle = new Point();
 
 					g2.setColor(Color.white);
-					g2.fillOval(outerArc.x, outerArc.y, (int) (30 * zoom), (int) (30 * zoom));
+					g2.fillOval(outerArc.getX(), outerArc.getY(), (int) (30 * zoom), (int) (30 * zoom));
 					g2.setColor(fgColor);
 					g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 
 					if (clientServer.equals("provideRequire")) {
-						g2.drawArc(outerArc.x, outerArc.y, (int) (30 * zoom), (int) (30 * zoom), 90, 180);
-						innerCircle = new Point(mitte.x - (int) (5 * zoom), mitte.y - (int) (10 * zoom));
+						g2.drawArc(outerArc.getX(), outerArc.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, 180);
+						innerCircle = new Point(mitte.getX() - (int) (5 * zoom), mitte.getY() - (int) (10 * zoom));
 					}
 					else if (clientServer.equals("requireProvide")) {
-						g2.drawArc(outerArc.x, outerArc.y, (int) (30 * zoom), (int) (30 * zoom), 90, -180);
+						g2.drawArc(outerArc.getX(), outerArc.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, -180);
 
-						innerCircle = new Point(mitte.x - (int) (15 * zoom), mitte.y - (int) (10 * zoom));
+						innerCircle = new Point(mitte.getX() - (int) (15 * zoom), mitte.getY() - (int) (10 * zoom));
 					}
 
-					g2.drawOval(innerCircle.x, innerCircle.y, (int) (20 * zoom), (int) (20 * zoom));
+					g2.drawOval(innerCircle.getX(), innerCircle.getY(), (int) (20 * zoom), (int) (20 * zoom));
 					g2.setTransform(at);
 				}
 				// A.Mueller end
@@ -1148,55 +1148,55 @@ public class Relation extends OldGridElement {
 
 					Point px1 = getLinePoints().elementAt(i);
 					Point px2 = getLinePoints().elementAt(i + 1);
-					Point mitte = new Point(px1.x - (px1.x - px2.x) / 2, px1.y - (px1.y - px2.y) / 2);
+					Point mitte = new Point(px1.getX() - (px1.getX() - px2.getX()) / 2, px1.getY() - (px1.getY() - px2.getY()) / 2);
 
 					AffineTransform at = g2.getTransform();
 					AffineTransform at2 = (AffineTransform) at.clone();
-					int cx = mitte.x;
-					int cy = mitte.y;
-					double winkel = Utils.getAngle(px1.x, px1.y, px2.x, px2.y);
+					int cx = mitte.getX();
+					int cy = mitte.getY();
+					double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(), px2.getY());
 					at2.rotate(winkel, cx, cy);
 					g2.setTransform(at2);
 
-					Point circle = new Point(mitte.x - (int) (15 * zoom), mitte.y - (int) (15 * zoom));
+					Point circle = new Point(mitte.getX() - (int) (15 * zoom), mitte.getY() - (int) (15 * zoom));
 					if (middleArrow.equals("delegation")) {
 						g2.setColor(Color.white);
-						g2.fillOval(circle.x + (int) (5 * zoom), circle.y + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+						g2.fillOval(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
 						g2.setColor(fgColor);
 						g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
-						g2.drawOval(circle.x + (int) (5 * zoom), circle.y + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+						g2.drawOval(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
 					}
 					if (middleArrow.startsWith("delegationArrow")) {
 						g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 						if (middleArrow.equals("delegationArrowRight")) {
-							g2.drawLine(circle.x + (int) (5 * zoom), circle.y + (int) (15 * zoom), circle.x - (int) (5 * zoom), circle.y + (int) (9 * zoom));
-							g2.drawLine(circle.x + (int) (5 * zoom), circle.y + (int) (15 * zoom), circle.x - (int) (5 * zoom), circle.y + (int) (20 * zoom));
+							g2.drawLine(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (15 * zoom), circle.getX() - (int) (5 * zoom), circle.getY() + (int) (9 * zoom));
+							g2.drawLine(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (15 * zoom), circle.getX() - (int) (5 * zoom), circle.getY() + (int) (20 * zoom));
 						}
 						if (middleArrow.equals("delegationArrowLeft")) {
-							g2.drawLine(circle.x + (int) (25 * zoom), circle.y + (int) (15 * zoom), circle.x + (int) (35 * zoom), circle.y + (int) (9 * zoom));
-							g2.drawLine(circle.x + (int) (25 * zoom), circle.y + (int) (15 * zoom), circle.x + (int) (35 * zoom), circle.y + (int) (20 * zoom));
+							g2.drawLine(circle.getX() + (int) (25 * zoom), circle.getY() + (int) (15 * zoom), circle.getX() + (int) (35 * zoom), circle.getY() + (int) (9 * zoom));
+							g2.drawLine(circle.getX() + (int) (25 * zoom), circle.getY() + (int) (15 * zoom), circle.getX() + (int) (35 * zoom), circle.getY() + (int) (20 * zoom));
 						}
 
 						g2.setColor(Color.white);
-						g2.fillOval(circle.x + (int) (5 * zoom), circle.y + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+						g2.fillOval(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
 						g2.setColor(fgColor);
 						g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
-						g2.drawOval(circle.x + (int) (5 * zoom), circle.y + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+						g2.drawOval(circle.getX() + (int) (5 * zoom), circle.getY() + (int) (5 * zoom), (int) (20 * zoom), (int) (20 * zoom));
 
 					}
 					if (middleArrow.equals("delegationStart")) {
 						g2.setColor(Color.white);
-						g2.fillArc(circle.x, circle.y, (int) (30 * zoom), (int) (30 * zoom), 90, 180);
+						g2.fillArc(circle.getX(), circle.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, 180);
 						g2.setColor(fgColor);
 						g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
-						g2.drawArc(circle.x, circle.y, (int) (30 * zoom), (int) (30 * zoom), 90, 180);
+						g2.drawArc(circle.getX(), circle.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, 180);
 					}
 					if (middleArrow.equals("delegationEnd")) {
 						g2.setColor(Color.white);
-						g2.fillArc(circle.x, circle.y, (int) (30 * zoom), (int) (30 * zoom), 90, -180);
+						g2.fillArc(circle.getX(), circle.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, -180);
 						g2.setColor(fgColor);
 						g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
-						g2.drawArc(circle.x, circle.y, (int) (30 * zoom), (int) (30 * zoom), 90, -180);
+						g2.drawArc(circle.getX(), circle.getY(), (int) (30 * zoom), (int) (30 * zoom), 90, -180);
 					}
 
 					g2.setTransform(at);
@@ -1219,7 +1219,7 @@ public class Relation extends OldGridElement {
 
 				Point p1 = getLinePoints().elementAt(i);
 				Point p2 = getLinePoints().elementAt(i + 1);
-				g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+				g2.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 			}
 		}
 
@@ -1229,7 +1229,7 @@ public class Relation extends OldGridElement {
 				Point p = getLinePoints().elementAt(i);
 				int start = (int) (SELECTCIRCLESIZE / 15 * 10 * zoom);
 				int width = (int) (SELECTCIRCLESIZE / 15 * 20 * zoom);
-				g2.drawOval(p.x - start, p.y - start, width, width);
+				g2.drawOval(p.getX() - start, p.getY() - start, width, width);
 			}
 
 			// DRAW Moveall Rect
@@ -1261,21 +1261,21 @@ public class Relation extends OldGridElement {
 
 				if (arrow.getString().equals("crowsFoot")) {
 
-					g2.drawLine(arrow.getX(), arrow.getY() + arrow.getArrowEndA().y,
-							arrow.getX() + arrow.getArrowEndA().x, arrow.getY());
-					g2.drawLine(arrow.getX(), arrow.getY() + arrow.getArrowEndB().y,
-							arrow.getX() + arrow.getArrowEndB().x, arrow.getY());
+					g2.drawLine(arrow.getX(), arrow.getY() + arrow.getArrowEndA().getY(),
+							arrow.getX() + arrow.getArrowEndA().getX(), arrow.getY());
+					g2.drawLine(arrow.getX(), arrow.getY() + arrow.getArrowEndB().getY(),
+							arrow.getX() + arrow.getArrowEndB().getX(), arrow.getY());
 
 					// A.Mueller Start
 				}
 				else if (!arrow.getString().equals("n") && !arrow.getString().equals("require") && !arrow.getString().equals("provide") && !arrow.getString().startsWith("package") && !arrow.getString().startsWith("comp")) {
 					// A.Mueller end
 					g2.drawLine(arrow.getX(), arrow.getY(),
-							arrow.getX() + arrow.getArrowEndA().x,
-							arrow.getY() + arrow.getArrowEndA().y);
+							arrow.getX() + arrow.getArrowEndA().getX(),
+							arrow.getY() + arrow.getArrowEndA().getY());
 					g2.drawLine(arrow.getX(), arrow.getY(),
-							arrow.getX() + arrow.getArrowEndB().x,
-							arrow.getY() + arrow.getArrowEndB().y);
+							arrow.getX() + arrow.getArrowEndB().getX(),
+							arrow.getY() + arrow.getArrowEndB().getY());
 					// A.Mueller start
 				}
 				// A.Mueller end
@@ -1285,11 +1285,11 @@ public class Relation extends OldGridElement {
 					int[] ax = new int[3];
 					int[] ay = new int[3];
 					ax[0] = arrow.getX();
-					ax[1] = arrow.getX() + arrow.getArrowEndA().x;
-					ax[2] = arrow.getX() + arrow.getArrowEndB().x;
+					ax[1] = arrow.getX() + arrow.getArrowEndA().getX();
+					ax[2] = arrow.getX() + arrow.getArrowEndB().getX();
 					ay[0] = arrow.getY();
-					ay[1] = arrow.getY() + arrow.getArrowEndA().y;
-					ay[2] = arrow.getY() + arrow.getArrowEndB().y;
+					ay[1] = arrow.getY() + arrow.getArrowEndA().getY();
+					ay[2] = arrow.getY() + arrow.getArrowEndB().getY();
 					Polygon myPg = new Polygon(ax, ay, 3);
 					g2.fill(myPg);
 					g2.draw(myPg);
@@ -1299,11 +1299,11 @@ public class Relation extends OldGridElement {
 					int[] ax = new int[3];
 					int[] ay = new int[3];
 					ax[0] = arrow.getX();
-					ax[1] = arrow.getX() + arrow.getArrowEndA().x;
-					ax[2] = arrow.getX() + arrow.getArrowEndB().x;
+					ax[1] = arrow.getX() + arrow.getArrowEndA().getX();
+					ax[2] = arrow.getX() + arrow.getArrowEndB().getX();
 					ay[0] = arrow.getY();
-					ay[1] = arrow.getY() + arrow.getArrowEndA().y;
-					ay[2] = arrow.getY() + arrow.getArrowEndB().y;
+					ay[1] = arrow.getY() + arrow.getArrowEndA().getY();
+					ay[2] = arrow.getY() + arrow.getArrowEndB().getY();
 					Polygon myPg = new Polygon(ax, ay, 3);
 					g2.setColor(bgColor);
 					g2.fill(myPg);
@@ -1320,10 +1320,10 @@ public class Relation extends OldGridElement {
 					int[] ay = new int[4];
 					ax[0] = arrow.getX();
 					ay[0] = arrow.getY();
-					ax[1] = arrow.getX() + arrow.getArrowEndA().x;
-					ay[1] = arrow.getY() + arrow.getArrowEndA().y;
-					ax[3] = arrow.getX() + arrow.getArrowEndB().x;
-					ay[3] = arrow.getY() + arrow.getArrowEndB().y;
+					ax[1] = arrow.getX() + arrow.getArrowEndA().getX();
+					ay[1] = arrow.getY() + arrow.getArrowEndA().getY();
+					ax[3] = arrow.getX() + arrow.getArrowEndB().getX();
+					ay[3] = arrow.getY() + arrow.getArrowEndB().getY();
 
 					ax[2] = -arrow.getX() + ax[1] + ax[3];
 					ay[2] = -arrow.getY() + ay[1] + ay[3];
@@ -1341,10 +1341,10 @@ public class Relation extends OldGridElement {
 					int[] ay = new int[4];
 					ax[0] = arrow.getX();
 					ay[0] = arrow.getY();
-					ax[1] = arrow.getX() + arrow.getArrowEndA().x;
-					ay[1] = arrow.getY() + arrow.getArrowEndA().y;
-					ax[3] = arrow.getX() + arrow.getArrowEndB().x;
-					ay[3] = arrow.getY() + arrow.getArrowEndB().y;
+					ax[1] = arrow.getX() + arrow.getArrowEndA().getX();
+					ay[1] = arrow.getY() + arrow.getArrowEndA().getY();
+					ax[3] = arrow.getX() + arrow.getArrowEndB().getX();
+					ay[3] = arrow.getY() + arrow.getArrowEndB().getY();
 
 					ax[2] = -arrow.getX() + ax[1] + ax[3];
 					ay[2] = -arrow.getY() + ay[1] + ay[3];
@@ -1355,27 +1355,27 @@ public class Relation extends OldGridElement {
 				else if (arrow.getString().equals("n")) {
 					Point a1 = arrow.getCrossEndA();
 					Point a2 = arrow.getCrossEndB();
-					g2.drawLine(arrow.getX() + arrow.getArrowEndA().x,
-							arrow.getY() + arrow.getArrowEndA().y,
-							arrow.getX() + a2.x,
-							arrow.getY() + a2.y);
-					g2.drawLine(arrow.getX() + arrow.getArrowEndB().x,
-							arrow.getY() + arrow.getArrowEndB().y,
-							arrow.getX() + a1.x,
-							arrow.getY() + a1.y);
+					g2.drawLine(arrow.getX() + arrow.getArrowEndA().getX(),
+							arrow.getY() + arrow.getArrowEndA().getY(),
+							arrow.getX() + a2.getX(),
+							arrow.getY() + a2.getY());
+					g2.drawLine(arrow.getX() + arrow.getArrowEndB().getX(),
+							arrow.getY() + arrow.getArrowEndB().getY(),
+							arrow.getX() + a1.getX(),
+							arrow.getY() + a1.getY());
 
 				}
 				else if (arrow.getString().equals("require")) {
 
-					int width = arrow.getCrossEndB().x - arrow.getCrossEndA().x;
-					int height = arrow.getCrossEndB().y - arrow.getCrossEndA().y;
-					g2.drawOval(arrow.getX() + arrow.getCrossEndA().x, arrow.getY() + arrow.getCrossEndA().y, width, height);
+					int width = arrow.getCrossEndB().getX() - arrow.getCrossEndA().getX();
+					int height = arrow.getCrossEndB().getY() - arrow.getCrossEndA().getY();
+					g2.drawOval(arrow.getX() + arrow.getCrossEndA().getX(), arrow.getY() + arrow.getCrossEndA().getY(), width, height);
 
 				}
 				else if (arrow.getString().equals("provide")) {
-					int width = arrow.getCrossEndB().x - arrow.getCrossEndA().x;
-					int height = arrow.getCrossEndB().y - arrow.getCrossEndA().y;
-					g2.drawArc(arrow.getX() + arrow.getCrossEndA().x, arrow.getY() + arrow.getCrossEndA().y, width, height, arrow.getArcStart(), arrow.getArcEnd());
+					int width = arrow.getCrossEndB().getX() - arrow.getCrossEndA().getX();
+					int height = arrow.getCrossEndB().getY() - arrow.getCrossEndA().getY();
+					g2.drawArc(arrow.getX() + arrow.getCrossEndA().getX(), arrow.getY() + arrow.getCrossEndA().getY(), width, height, arrow.getArcStart(), arrow.getArcEnd());
 					// A.Mueller End
 					// G.Mueller Start
 				}
@@ -1393,17 +1393,17 @@ public class Relation extends OldGridElement {
 					}
 					AffineTransform at = g2.getTransform();
 					AffineTransform at2 = (AffineTransform) at.clone();
-					int cx = px1.x;
-					int cy = px1.y;
-					double winkel = Utils.getAngle(px1.x, px1.y, px2.x, px2.y);
+					int cx = px1.getX();
+					int cy = px1.getY();
+					double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(), px2.getY());
 					at2.rotate(winkel, cx, cy);
 					g2.setTransform(at2);
 					g2.setColor(bgColor);
-					g2.fillOval(px1.x, px1.y - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+					g2.fillOval(px1.getX(), px1.getY() - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom));
 					g2.setColor(fgColor);
-					g2.drawOval(px1.x, px1.y - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom));
-					g2.drawLine(px1.x + (int) (10 * zoom), px1.y - (int) (5 * zoom), px1.x + (int) (10 * zoom), px1.y + (int) (5 * zoom));
-					g2.drawLine(px1.x + (int) (15 * zoom), px1.y, px1.x + (int) (5 * zoom), px1.y);
+					g2.drawOval(px1.getX(), px1.getY() - (int) (10 * zoom), (int) (20 * zoom), (int) (20 * zoom));
+					g2.drawLine(px1.getX() + (int) (10 * zoom), px1.getY() - (int) (5 * zoom), px1.getX() + (int) (10 * zoom), px1.getY() + (int) (5 * zoom));
+					g2.drawLine(px1.getX() + (int) (15 * zoom), px1.getY(), px1.getX() + (int) (5 * zoom), px1.getY());
 					g2.setTransform(at);
 
 					// ***
@@ -1418,11 +1418,11 @@ public class Relation extends OldGridElement {
 						px2 = getLinePoints().elementAt(1);
 						AffineTransform at = g2.getTransform();
 						AffineTransform at2 = (AffineTransform) at.clone();
-						double winkel = Utils.getAngle(px1.x, px1.y, px2.x, px2.y);
-						at2.rotate(winkel, px1.x, px1.y);
+						double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(), px2.getY());
+						at2.rotate(winkel, px1.getX(), px1.getY());
 						g2.setTransform(at2);
-						int[] x_cord = { px1.x, px1.x + (int) (13 * zoom), px1.x + (int) (13 * zoom) };
-						int[] y_cord = { px1.y, px1.y - (int) (7 * zoom), px1.y + (int) (7 * zoom) };
+						int[] x_cord = {px1.getX(), px1.getX() + (int) (13 * zoom), px1.getX() + (int) (13 * zoom) };
+						int[] y_cord = {px1.getY(), px1.getY() - (int) (7 * zoom), px1.getY() + (int) (7 * zoom) };
 						Polygon x = new Polygon(x_cord, y_cord, 3);
 						g2.fillPolygon(x);
 						g2.setTransform(at);
@@ -1432,11 +1432,11 @@ public class Relation extends OldGridElement {
 						px2 = getLinePoints().elementAt(getLinePoints().size() - 2);
 						AffineTransform at = g2.getTransform();
 						AffineTransform at2 = (AffineTransform) at.clone();
-						double winkel = Utils.getAngle(px2.x, px2.y, px1.x, px1.y);
-						at2.rotate(winkel, px1.x, px1.y);
+						double winkel = Utils.getAngle(px2.getX(), px2.getY(), px1.getX(), px1.getY());
+						at2.rotate(winkel, px1.getX(), px1.getY());
 						g2.setTransform(at2);
-						int[] x_cord = { px1.x, px1.x - (int) (13 * zoom), px1.x - (int) (13 * zoom) };
-						int[] y_cord = { px1.y, px1.y - (int) (7 * zoom), px1.y + (int) (7 * zoom) };
+						int[] x_cord = {px1.getX(), px1.getX() - (int) (13 * zoom), px1.getX() - (int) (13 * zoom) };
+						int[] y_cord = {px1.getY(), px1.getY() - (int) (7 * zoom), px1.getY() + (int) (7 * zoom) };
 						Polygon x = new Polygon(x_cord, y_cord, 3);
 						g2.fillPolygon(x);
 						g2.setTransform(at);
@@ -1473,52 +1473,52 @@ public class Relation extends OldGridElement {
 						px1 = getStartPoint();
 						px2 = getLinePoints().elementAt(1);
 						g2.setColor(bgColor);
-						g2.fillRect(px1.x - s / 2, px1.y - s / 2, s, s);
+						g2.fillRect(px1.getX() - s / 2, px1.getY() - s / 2, s, s);
 						g2.setColor(fgColor);
-						g2.drawRect(px1.x - s / 2, px1.y - s / 2, s, s);
+						g2.drawRect(px1.getX() - s / 2, px1.getY() - s / 2, s, s);
 						if (csdStartText.equals(">")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x + arrowOneSize, px1.x - arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX() + arrowOneSize, px1.getX() - arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY(), px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdStartText.equals("<")) {
-							int[] tmpX = { px1.x + arrowOneSize, px1.x - arrowOneSize, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() + arrowOneSize, px1.getX() - arrowOneSize, px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY(), px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdStartText.equals("v")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y + arrowOneSize, px1.y - arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX(), px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY() + arrowOneSize, px1.getY() - arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdStartText.equals("^")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y + arrowOneSize, px1.y - arrowOneSize, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX(), px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() + arrowOneSize, px1.getY() - arrowOneSize, px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdStartText.equals("=")) {
-							g2.drawLine(px1.x - arrowTwoSize, px1.y - arrowTwoSeparator, px1.x + arrowTwoSize, px1.y - arrowTwoSeparator);
-							g2.drawLine(px1.x + arrowTwoSize, px1.y - arrowTwoSeparator, px1.x + 1, px1.y - arrowTwoSize);
-							g2.drawLine(px1.x - arrowTwoSize, px1.y + arrowTwoSeparator, px1.x + arrowTwoSize, px1.y + arrowTwoSeparator);
-							g2.drawLine(px1.x - arrowTwoSize, px1.y + arrowTwoSeparator, px1.x - 1, px1.y + arrowTwoSize);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() - arrowTwoSeparator, px1.getX() + arrowTwoSize, px1.getY() - arrowTwoSeparator);
+							g2.drawLine(px1.getX() + arrowTwoSize, px1.getY() - arrowTwoSeparator, px1.getX() + 1, px1.getY() - arrowTwoSize);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() + arrowTwoSeparator, px1.getX() + arrowTwoSize, px1.getY() + arrowTwoSeparator);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() + arrowTwoSeparator, px1.getX() - 1, px1.getY() + arrowTwoSize);
 						}
 						else {
 							if (!csdStartText.equals("")) {
-								HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, csdStartText, px1.x, px1.y + (int) (6 * zoom), AlignHorizontal.CENTER);
+								HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, csdStartText, px1.getX(), px1.getY() + (int) (6 * zoom), AlignHorizontal.CENTER);
 							}
 						}
 
 						if (beginArrow.equals("compStartdel")) {
 							AffineTransform at = g2.getTransform();
 							AffineTransform at2 = (AffineTransform) at.clone();
-							int cx = px1.x;
-							int cy = px1.y;
-							double winkel = Utils.getAngle(px1.x, px1.y, px2.x,
-									px2.y);
+							int cx = px1.getX();
+							int cy = px1.getY();
+							double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(),
+                                    px2.getY());
 							at2.rotate(winkel, cx, cy);
 							g2.setTransform(at2);
-							g2.drawLine((int) (px1.x + s / 2 + 2 * zoom), px1.y, px1.x + s / 2 + arrowThreeLength, px1.y - arrowThreeSize);
-							g2.drawLine((int) (px1.x + s / 2 + 2 * zoom), px1.y, px1.x + s / 2 + arrowThreeLength, px1.y + arrowThreeSize);
+							g2.drawLine((int) (px1.getX() + s / 2 + 2 * zoom), px1.getY(), px1.getX() + s / 2 + arrowThreeLength, px1.getY() - arrowThreeSize);
+							g2.drawLine((int) (px1.getX() + s / 2 + 2 * zoom), px1.getY(), px1.getX() + s / 2 + arrowThreeLength, px1.getY() + arrowThreeSize);
 							g2.setTransform(at);
 						}
 
@@ -1542,52 +1542,52 @@ public class Relation extends OldGridElement {
 						px2 = getLinePoints().elementAt(
 								getLinePoints().size() - 2);
 						g2.setColor(bgColor);
-						g2.fillRect(px1.x - s / 2, px1.y - s / 2, s, s);
+						g2.fillRect(px1.getX() - s / 2, px1.getY() - s / 2, s, s);
 						g2.setColor(fgColor);
-						g2.drawRect(px1.x - s / 2, px1.y - s / 2, s, s);
+						g2.drawRect(px1.getX() - s / 2, px1.getY() - s / 2, s, s);
 						if (csdEndText.equals(">")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x + arrowOneSize, px1.x - arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX() + arrowOneSize, px1.getX() - arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY(), px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdEndText.equals("<")) {
-							int[] tmpX = { px1.x + arrowOneSize, px1.x - arrowOneSize, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() + arrowOneSize, px1.getX() - arrowOneSize, px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY(), px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdEndText.equals("v")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y - arrowOneSize, px1.y + arrowOneSize, px1.y - arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX(), px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() - arrowOneSize, px1.getY() + arrowOneSize, px1.getY() - arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdEndText.equals("^")) {
-							int[] tmpX = { px1.x - arrowOneSize, px1.x, px1.x + arrowOneSize };
-							int[] tmpY = { px1.y + arrowOneSize, px1.y - arrowOneSize, px1.y + arrowOneSize };
+							int[] tmpX = { px1.getX() - arrowOneSize, px1.getX(), px1.getX() + arrowOneSize };
+							int[] tmpY = { px1.getY() + arrowOneSize, px1.getY() - arrowOneSize, px1.getY() + arrowOneSize };
 							g2.fillPolygon(tmpX, tmpY, 3);
 						}
 						else if (csdEndText.equals("=")) {
-							g2.drawLine(px1.x - arrowTwoSize, px1.y - arrowTwoSeparator, px1.x + arrowTwoSize, px1.y - arrowTwoSeparator);
-							g2.drawLine(px1.x + arrowTwoSize, px1.y - arrowTwoSeparator, px1.x + 1, px1.y - arrowTwoSize);
-							g2.drawLine(px1.x - arrowTwoSize, px1.y + arrowTwoSeparator, px1.x + arrowTwoSize, px1.y + arrowTwoSeparator);
-							g2.drawLine(px1.x - arrowTwoSize, px1.y + arrowTwoSeparator, px1.x - 1, px1.y + arrowTwoSize);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() - arrowTwoSeparator, px1.getX() + arrowTwoSize, px1.getY() - arrowTwoSeparator);
+							g2.drawLine(px1.getX() + arrowTwoSize, px1.getY() - arrowTwoSeparator, px1.getX() + 1, px1.getY() - arrowTwoSize);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() + arrowTwoSeparator, px1.getX() + arrowTwoSize, px1.getY() + arrowTwoSeparator);
+							g2.drawLine(px1.getX() - arrowTwoSize, px1.getY() + arrowTwoSeparator, px1.getX() - 1, px1.getY() + arrowTwoSize);
 						}
 						else {
 							if (!csdEndText.equals("")) {
-								HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, csdEndText, px1.x, px1.y + (int) (6 * zoom), AlignHorizontal.CENTER);
+								HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, csdEndText, px1.getX(), px1.getY() + (int) (6 * zoom), AlignHorizontal.CENTER);
 							}
 						}
 
 						if (endArrow.equals("compEnddel")) {
 							AffineTransform at = g2.getTransform();
 							AffineTransform at2 = (AffineTransform) at.clone();
-							int cx = px1.x;
-							int cy = px1.y;
-							double winkel = Utils.getAngle(px1.x, px1.y, px2.x,
-									px2.y);
+							int cx = px1.getX();
+							int cy = px1.getY();
+							double winkel = Utils.getAngle(px1.getX(), px1.getY(), px2.getX(),
+                                    px2.getY());
 							at2.rotate(winkel, cx, cy);
 							g2.setTransform(at2);
-							g2.drawLine((int) (px1.x + s / 2 + 2 * zoom), px1.y, px1.x + s / 2 + arrowThreeLength, px1.y - arrowThreeSize);
-							g2.drawLine((int) (px1.x + s / 2 + 2 * zoom), px1.y, px1.x + s / 2 + arrowThreeLength, px1.y + arrowThreeSize);
+							g2.drawLine((int) (px1.getX() + s / 2 + 2 * zoom), px1.getY(), px1.getX() + s / 2 + arrowThreeLength, px1.getY() - arrowThreeSize);
+							g2.drawLine((int) (px1.getX() + s / 2 + 2 * zoom), px1.getY(), px1.getX() + s / 2 + arrowThreeLength, px1.getY() + arrowThreeSize);
 							g2.setTransform(at);
 						}
 
@@ -1647,10 +1647,10 @@ public class Relation extends OldGridElement {
 		if (getStrings() != null) {
 			if (getStrings().size() > 0) {
 				Point start = getCenterOfLine();
-				int yPos = start.y - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts(); // B. Buckl
+				int yPos = start.getY() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts(); // B. Buckl
 				// added
 				// -this.getHandler().getDistTextToText()
-				int xPos = start.x;
+				int xPos = start.getX();
 				for (int i = 0; i < getStrings().size(); i++) {
 					String s = getStrings().elementAt(i);
 
@@ -1744,8 +1744,8 @@ public class Relation extends OldGridElement {
 		if (getStrings() != null) {
 			if (getStrings().size() > 0) {
 				Point start = getCenterOfLine();
-				int yPos = start.y;
-				int xPos = start.x;
+				int yPos = start.getY();
+				int xPos = start.getX();
 				for (int i = 0; i < getStrings().size(); i++) {
 					String s = getStrings().elementAt(i);
 					int width = (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getTextWidth(s);
@@ -1769,23 +1769,23 @@ public class Relation extends OldGridElement {
 		int maxy = Integer.MIN_VALUE;
 		for (int i = 0; i < getLinePoints().size(); i++) {
 			Point p = getLinePoints().elementAt(i);
-			minx = Math.min(minx, p.x);
-			miny = Math.min(miny, p.y);
-			maxx = Math.max(maxx, p.x);
-			maxy = Math.max(maxy, p.y);
+			minx = Math.min(minx, p.getX());
+			miny = Math.min(miny, p.getY());
+			maxx = Math.max(maxx, p.getX());
+			maxy = Math.max(maxy, p.getY());
 
 			// Subtract or add the SELECTCIRCLESIZE to avoid cutting the circles at the end of the relation
-			minx = (int) Math.min(minx, p.x - SELECTCIRCLESIZE * zoom);
-			miny = (int) Math.min(miny, p.y - SELECTCIRCLESIZE * zoom);
-			maxx = (int) Math.max(maxx, p.x + SELECTCIRCLESIZE * zoom);
-			maxy = (int) Math.max(maxy, p.y + SELECTCIRCLESIZE * zoom);
+			minx = (int) Math.min(minx, p.getX() - SELECTCIRCLESIZE * zoom);
+			miny = (int) Math.min(miny, p.getY() - SELECTCIRCLESIZE * zoom);
+			maxx = (int) Math.max(maxx, p.getX() + SELECTCIRCLESIZE * zoom);
+			maxy = (int) Math.max(maxy, p.getY() + SELECTCIRCLESIZE * zoom);
 		}
 		for (int i = 0; i < criticalPoints.size(); i++) {
 			Point p = criticalPoints.elementAt(i);
-			minx = Math.min(minx, p.x);
-			miny = Math.min(miny, p.y);
-			maxx = Math.max(maxx, p.x);
-			maxy = Math.max(maxy, p.y);
+			minx = Math.min(minx, p.getX());
+			miny = Math.min(miny, p.getY());
+			maxx = Math.max(maxx, p.getX());
+			maxy = Math.max(maxy, p.getY());
 		}
 
 		// BUGFIX ZOOM: We must consider the gridsize for the min and max value to avoid rounding errors
@@ -1812,8 +1812,8 @@ public class Relation extends OldGridElement {
 			this.setSize(getRectangle().width + -minx, getRectangle().height + -miny);
 			for (int i = 0; i < getLinePoints().size(); i++) {
 				Point p = getLinePoints().elementAt(i);
-				p.x += -minx;
-				p.y += -miny;
+				p.setX(p.getX() + -minx);
+				p.setY(p.getY() + -miny);
 			}
 		}
 
@@ -1831,12 +1831,12 @@ public class Relation extends OldGridElement {
 	}
 
 	public PointDouble getAbsoluteCoorStart() {
-		PointDouble ret = new PointDouble(getRectangle().x + getStartPoint().x, getRectangle().y + getStartPoint().y);
+		PointDouble ret = new PointDouble(getRectangle().x + getStartPoint().getX(), getRectangle().y + getStartPoint().getY());
 		return ret;
 	}
 
 	public PointDouble getAbsoluteCoorEnd() {
-		PointDouble ret = new PointDouble(getRectangle().x + getEndPoint().x, getRectangle().y + getEndPoint().y);
+		PointDouble ret = new PointDouble(getRectangle().x + getEndPoint().getX(), getRectangle().y + getEndPoint().getY());
 		return ret;
 	}
 
@@ -1900,7 +1900,7 @@ public class Relation extends OldGridElement {
 				first = p;
 			}
 			else {
-				if (first.x != p.x || first.y != p.y) {
+				if (first.getX() != p.getX() || first.getY() != p.getY()) {
 					return false;
 				}
 			}

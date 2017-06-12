@@ -6,10 +6,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -399,8 +397,8 @@ public class DiagramHandler {
         // calculate mouse position relative to UMLet scrollpane
         Point mouseLocation = Converter.convert(MouseInfo.getPointerInfo().getLocation());
         Point viewportLocation = Converter.convert(getDrawPanel().getScrollPane().getViewport().getLocationOnScreen());
-        float x = mouseLocation.x - viewportLocation.x;
-        float y = mouseLocation.y - viewportLocation.y;
+        float x = mouseLocation.getX() - viewportLocation.getX();
+        float y = mouseLocation.getY() - viewportLocation.getY();
 
         // And add any space on the upper left corner which is not visible but reachable by scrollbar
         x += getDrawPanel().getScrollPane().getViewport().getViewPosition().getX();
