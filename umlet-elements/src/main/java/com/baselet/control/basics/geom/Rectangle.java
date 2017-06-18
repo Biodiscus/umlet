@@ -1,11 +1,9 @@
 package com.baselet.control.basics.geom;
 
-public class Rectangle {
+public class Rectangle extends Point {
 
-	public int x;
-	public int y;
-	public int width;
-	public int height;
+	private int width;
+	private int height;
 
 	public Rectangle() {
 		super();
@@ -24,43 +22,29 @@ public class Rectangle {
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
+		setX(x);
+		setY(y);
 		this.width = width;
 		this.height = height;
 	}
 
-	public int getX() {
-		return x;
-	}
 
 	public int getX2() {
-		return x + width;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
+		return getX() + width;
 	}
 
 	public int getY2() {
-		return y + height;
+		return getY() + height;
 	}
 
 	public PointDouble getUpperLeftCorner() {
-		return new PointDouble(x, y);
+		return new PointDouble(getX(), getY());
 	}
 
 	public PointDouble getCenter() {
-		return new PointDouble(x + width / 2, y + height / 2);
+		return new PointDouble(getX() + width / 2, getY() + height / 2);
 	}
 
-	public void setY(int y) {
-		this.y = y;
-	}
 
 	public int getWidth() {
 		return width;
@@ -82,14 +66,9 @@ public class Rectangle {
 		this.height = height;
 	}
 
-	public void move(int diffX, int diffY) {
-		x += diffX;
-		y += diffY;
-	}
-
 	public void addBorder(int border) {
-		x -= border;
-		y -= border;
+		setX(getX() - border);
+		setY(getY() - border);
 		width += border * 2;
 		height += border * 2;
 	}
@@ -103,8 +82,8 @@ public class Rectangle {
 	}
 
 	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+		setX(x);
+		setY(y);
 	}
 
 	public void setSize(int width, int height) {
@@ -145,28 +124,27 @@ public class Rectangle {
 
 	public static Rectangle mergeToLeft(Rectangle left, Rectangle right) {
 		if (left == null) {
-			left = right;
-		}
-		else {
+			return right;
+		} else {
 			left.merge(right);
+			return left;
 		}
-		return left;
 	}
 
 	public Rectangle copy() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(getX(), getY(), width, height);
 	}
 
 	public Rectangle copyInverted() {
-		return new Rectangle(-x, -y, -width, -height);
+		return new Rectangle(-getX(), -getY(), -width, -height);
 	}
 
 	public Rectangle subtract(Rectangle other) {
-		return new Rectangle(x - other.x, y - other.y, width - other.width, height - other.height);
+		return new Rectangle(getX() - other.getX(), getY() - other.getY(), width - other.width, height - other.height);
 	}
 
 	public Rectangle add(Rectangle other) {
-		return new Rectangle(x + other.x, y + other.y, width + other.width, height + other.height);
+		return new Rectangle(getX() + other.getX(), getY() + other.getY(), width + other.width, height + other.height);
 	}
 
 	@Override
@@ -175,22 +153,18 @@ public class Rectangle {
 		int result = 1;
 		result = prime * result + height;
 		result = prime * result + width;
-		result = prime * result + x;
-		result = prime * result + y;
+		result = prime * result + getX();
+		result = prime * result + getX();
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
+		boolean base = super.equals(obj);
+		if(!base) {
+			return base;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
+
 		Rectangle other = (Rectangle) obj;
 		if (height != other.height) {
 			return false;
@@ -198,18 +172,13 @@ public class Rectangle {
 		if (width != other.width) {
 			return false;
 		}
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
+
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Rectangle [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
+		return "Rectangle [x=" + getX() + ", y=" + getY() + ", width=" + width + ", height=" + height + "]";
 	}
 
 }

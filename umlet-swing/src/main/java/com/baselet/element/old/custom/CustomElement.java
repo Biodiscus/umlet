@@ -173,9 +173,9 @@ public abstract class CustomElement extends OldGridElement {
 		}
 
 		// width and height must be zoomed back to 100% before any custom code is applied
-		temp = getRectangle().width;
+		temp = getRectangle().getWidth();
 		width = Math.round(temp / zoom); // use Math.round cause (int) would round down from 239.99998 to 240
-		temp = getRectangle().height;
+		temp = getRectangle().getHeight();
 		height = Math.round(temp / zoom);
 
 		// Set width and height on grid (used for manually resized custom elements mainly

@@ -29,7 +29,7 @@ public class Taxonomy_of_Actors extends OldGridElement {
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.fillRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -37,7 +37,7 @@ public class Taxonomy_of_Actors extends OldGridElement {
 		else {
 			g2.setColor(fgColorBase);
 		}
-		g2.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 
@@ -108,8 +108,8 @@ public class Taxonomy_of_Actors extends OldGridElement {
 		float zoom = HandlerElementMap.getHandlerForElement(this).getZoomFactor();
 		float dockHeight = 50 * zoom;
 
-		g2.drawLine(nextDock.x, nextDock.y, nextDock.x, (int) (dockHeight / 2 + yPos + 0.5));
-		g2.drawLine(nextDock.x, (int) (dockHeight / 2 + yPos + 0.5), (int) (xPos - 4 * zoom + 0.5), (int) (dockHeight / 2 + yPos + 0.5));
+		g2.drawLine((int)nextDock.getX(), (int)nextDock.getY(), (int)nextDock.getX(), (int) (dockHeight / 2 + yPos + 0.5));
+		g2.drawLine((int)nextDock.getX(), (int) (dockHeight / 2 + yPos + 0.5), (int) (xPos - 4 * zoom + 0.5), (int) (dockHeight / 2 + yPos + 0.5));
 	}
 
 	private void drawActor(Graphics2D g2, float xPos, float yPos, String name) {
@@ -129,8 +129,8 @@ public class Taxonomy_of_Actors extends OldGridElement {
 	private void drawDockAnchor(Graphics2D g2, Point nextDock) {
 		float zoom = HandlerElementMap.getHandlerForElement(this).getZoomFactor();
 
-		int[] xkanten = { nextDock.x, nextDock.x + (int) (6 * zoom), nextDock.x - (int) (6 * zoom) };
-		int[] ykanten = { nextDock.y - (int) (9 * zoom), nextDock.y, nextDock.y };
+		int[] xkanten = { (int)nextDock.getX(), (int)nextDock.getX() + (int) (6 * zoom), (int)nextDock.getX() - (int) (6 * zoom) };
+		int[] ykanten = { (int)nextDock.getY() - (int) (9 * zoom), (int)nextDock.getY(), (int)nextDock.getY() };
 		int kanten_zahl = 3;
 		g2.drawPolygon(new Polygon(xkanten, ykanten, kanten_zahl));
 	}

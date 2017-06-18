@@ -19,7 +19,7 @@ public class SeqObjectActive extends OldGridElement {
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.fillRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -28,7 +28,7 @@ public class SeqObjectActive extends OldGridElement {
 			g2.setColor(fgColorBase);
 		}
 
-		g2.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 
 	}
 

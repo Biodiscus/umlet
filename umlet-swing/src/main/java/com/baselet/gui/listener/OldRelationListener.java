@@ -86,8 +86,8 @@ public class OldRelationListener extends GridElementListener {
 			_where = i;
 			Point p = r.getLinePoints().elementAt(i);
 
-			_x = p.x / HandlerElementMap.getHandlerForElement(_relation).getGridSize();
-			_y = p.y / HandlerElementMap.getHandlerForElement(_relation).getGridSize();
+			_x = p.getX() / HandlerElementMap.getHandlerForElement(_relation).getGridSize();
+			_y = p.getY() / HandlerElementMap.getHandlerForElement(_relation).getGridSize();
 		}
 
 		@Override
@@ -202,15 +202,15 @@ public class OldRelationListener extends GridElementListener {
 		if (IS_DRAGGING_LINEPOINT) {
 			Vector<Point> tmp = r.getLinePoints();
 			Point p = tmp.elementAt(LINEPOINT);
-			delta_x = (r.getRectangle().x + p.x) % gridSize;
-			delta_y = (r.getRectangle().y + p.y) % gridSize;
+			delta_x = (r.getRectangle().getX() + p.getX()) % gridSize;
+			delta_y = (r.getRectangle().getY() + p.getY()) % gridSize;
 		}
 
 		Point newp = getNewCoordinate();
 		Point oldp = getOldCoordinate();
 
-		int diffx = newp.x - oldp.x - delta_x;
-		int diffy = newp.y - oldp.y - delta_y;
+		int diffx = newp.getX() - oldp.getX() - delta_x;
+		int diffy = newp.getY() - oldp.getY() - delta_y;
 
 		if (IS_DRAGGING_LINEPOINT & LINEPOINT >= 0) {
 			controller.executeCommand(

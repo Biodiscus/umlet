@@ -44,33 +44,33 @@ public class Align extends Command {
 		// AB: determine fix points first item (the "dominantly selected" item)
 		GridElement entity = dominantEntity;
 
-		int left = entity.getRectangle().x;
-		int right = left + entity.getRectangle().width;
-		int top = entity.getRectangle().y;
-		int bottom = top + entity.getRectangle().height;
+		int left = entity.getRectangle().getX();
+		int right = left + entity.getRectangle().getWidth();
+		int top = entity.getRectangle().getY();
+		int bottom = top + entity.getRectangle().getHeight();
 
 		DrawPanel p = handler.getDrawPanel();
 		for (GridElement e : entities) {
 			Rectangle rectangle = e.getRectangle();
-			int x = rectangle.x;
-			int y = rectangle.y;
+			int x = rectangle.getX();
+			int y = rectangle.getY();
 
 			switch (edge) {
 				case LEFT:
 					x = left;
 					break;
 				case RIGHT:
-					x = right - e.getRectangle().width;
+					x = right - e.getRectangle().getWidth();
 					break;
 				case TOP:
 					y = top;
 					break;
 				case BOTTOM:
-					y = bottom - e.getRectangle().height;
+					y = bottom - e.getRectangle().getHeight();
 					break;
 			}
 
-			orgLocations.put(e, new Point(rectangle.x, rectangle.y));
+			orgLocations.put(e, new Point(rectangle.getX(), rectangle.getY()));
 			e.setLocation(handler.realignToGrid(true, x), handler.realignToGrid(true, y));
 		}
 
@@ -92,14 +92,14 @@ public class Align extends Command {
 		int oldZoom = handler.getGridSize();
 		handler.setGridAndZoom(Constants.DEFAULTGRIDSIZE, false);
 
-		int offsetX = origin.x - handler.getDrawPanel().getOrigin().x;
-		int offsetY = origin.y - handler.getDrawPanel().getOrigin().y;
+		int offsetX = (int)(origin.getX() - handler.getDrawPanel().getOrigin().getX());
+		int offsetY = (int)(origin.getY() - handler.getDrawPanel().getOrigin().getY());
 
 		for (GridElement entity : entities) {
 
 			Point orgLocation = orgLocations.get(entity);
 
-			entity.setLocation(handler.realignToGrid(true, orgLocation.x + offsetX), handler.realignToGrid(true, orgLocation.y + offsetY));
+			entity.setLocation(handler.realignToGrid(true, orgLocation.getX() + offsetX), handler.realignToGrid(true, orgLocation.getY() + offsetY));
 		}
 
 		// And zoom back to the oldGridsize after execution

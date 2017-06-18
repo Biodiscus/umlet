@@ -20,19 +20,19 @@ public class UseCase extends NewGridElement {
 	private final StickingPolygonGenerator stickingPolygonGenerator = new StickingPolygonGenerator() {
 		@Override
 		public StickingPolygon generateStickingBorder(Rectangle rect) {
-			StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+			StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 
-			p.addPoint(rect.width / 4.0, 0);
-			p.addPoint(rect.width * 3.0 / 4, 0);
+			p.addPoint(rect.getWidth() / 4.0, 0);
+			p.addPoint(rect.getWidth() * 3.0 / 4, 0);
 
-			p.addPoint(rect.width, rect.height / 4.0);
-			p.addPoint(rect.width, rect.height * 3.0 / 4);
+			p.addPoint(rect.getWidth(), rect.getHeight() / 4.0);
+			p.addPoint(rect.getWidth(), rect.getHeight() * 3.0 / 4);
 
-			p.addPoint(rect.width * 3.0 / 4, rect.height);
-			p.addPoint(rect.width / 4.0, rect.height);
+			p.addPoint(rect.getWidth() * 3.0 / 4, rect.getHeight());
+			p.addPoint(rect.getWidth() / 4.0, rect.getHeight());
 
-			p.addPoint(0, rect.height * 3.0 / 4);
-			p.addPoint(0, (int) (rect.height / 4.0), true);
+			p.addPoint(0, rect.getHeight() * 3.0 / 4);
+			p.addPoint(0, (int) (rect.getHeight() / 4.0), true);
 
 			return p;
 		}

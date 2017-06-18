@@ -15,8 +15,8 @@ public class StateSubDiagram extends State {
 
 		float zoom = HandlerElementMap.getHandlerForElement(this).getZoomFactor();
 		Graphics2D g2 = (Graphics2D) g;
-		int w = getRectangle().width;
-		int h = getRectangle().height;
+		int w = getRectangle().getWidth();
+		int h = getRectangle().getHeight();
 
 		// draw substate sign
 		g2.drawRoundRect(w - (int) (65 * zoom), h - (int) (16 * zoom), (int) (20 * zoom), (int) (10 * zoom), (int) (8 * zoom), (int) (8 * zoom));

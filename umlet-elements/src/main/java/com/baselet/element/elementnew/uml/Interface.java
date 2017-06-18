@@ -18,7 +18,7 @@ public class Interface extends NewGridElement {
 	private final StickingPolygonGenerator interfacePolygonGenerator = new StickingPolygonGenerator() {
 		@Override
 		public StickingPolygon generateStickingBorder(Rectangle rect) {
-			StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+			StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 			p.addRectangle(circleRect());
 			return p;
 		}
@@ -34,7 +34,7 @@ public class Interface extends NewGridElement {
 		DrawHandler drawer = state.getDrawer();
 		state.getBuffer().setTopMin(TOP_DISTANCE + CIRCLE_SIZE);// space reserved for the top circle
 		Rectangle circleRect = circleRect();
-		drawer.drawCircle(circleRect.x + CIRCLE_SIZE * 0.5, circleRect.y + CIRCLE_SIZE * 0.5, CIRCLE_SIZE * 0.5);
+		drawer.drawCircle(circleRect.getX() + CIRCLE_SIZE * 0.5, circleRect.getY() + CIRCLE_SIZE * 0.5, CIRCLE_SIZE * 0.5);
 
 		state.setStickingPolygonGenerator(interfacePolygonGenerator);
 	}

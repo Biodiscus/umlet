@@ -32,10 +32,10 @@ public class EER_Rel_Diamond extends OldGridElement {
 
 		// Define the elements outline using a polygon, rectangle, oval, etc.
 		Polygon poly = new Polygon();
-		poly.addPoint(getRectangle().width / 2, 0);
-		poly.addPoint(getRectangle().width - 1, getRectangle().height / 2);
-		poly.addPoint(getRectangle().width / 2, getRectangle().height - 1);
-		poly.addPoint(0, getRectangle().height / 2);
+		poly.addPoint(getRectangle().getWidth() / 2, 0);
+		poly.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() / 2);
+		poly.addPoint(getRectangle().getWidth() / 2, getRectangle().getHeight() - 1);
+		poly.addPoint(0, getRectangle().getHeight() / 2);
 
 		g2.setComposite(composites[1]); // set aplha composite for drawing the background color
 		g2.setColor(bgColor);
@@ -55,11 +55,11 @@ public class EER_Rel_Diamond extends OldGridElement {
 		// text printing and to react to special strings (like the "--" string
 		// in the UML class elements which draw a line).
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
-		int yPos = getRectangle().height / 2 - ((int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize()) * tmp.size() / 2;
+		int yPos = getRectangle().getHeight() / 2 - ((int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize()) * tmp.size() / 2;
 		for (int i = 0; i < tmp.size(); i++) {
 			String s = tmp.elementAt(i);
 			yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
-			HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+			HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 			yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 		}
 

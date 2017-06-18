@@ -50,7 +50,7 @@ public class Search extends Command {
 				break;
 			}
 			else if (p == null) {
-				p = new Point(e.getRectangle().x - panelview.x - 10, e.getRectangle().y - panelview.y - 10);
+				p = new Point(e.getRectangle().getX() - panelview.getX() - 10, e.getRectangle().getY() - panelview.getY() - 10);
 			}
 		}
 

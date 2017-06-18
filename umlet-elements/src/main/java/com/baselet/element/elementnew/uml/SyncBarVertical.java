@@ -33,7 +33,7 @@ public class SyncBarVertical extends NewGridElement {
 		state.setStickingPolygonGenerator(new StickingPolygonGenerator() {
 			@Override
 			public StickingPolygon generateStickingBorder(Rectangle rect) {
-				StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+				StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 				double lt = state.getDrawer().getLineWidth();
 				double halfWidth = getRealSize().getWidth() * 0.5;
 				p.addRectangle(new Rectangle(halfWidth - lt * 0.5, 0.0, lt, (double) getRealSize().getHeight()));

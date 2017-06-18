@@ -53,8 +53,8 @@ public abstract class UniversalListener extends ComponentAdapter implements Mous
 		disableElementMovement = false;
 		CurrentGui.getInstance().getGui().requestFocus(); // to avoid beeing stuck in the propertyPanel
 		Point off = getOffset(me);
-		_xOffset = off.x;
-		_yOffset = off.y;
+		_xOffset = off.getX();
+		_yOffset = off.getY();
 
 		// everytime a mouse is pressed within a listener the gui gets the current diagram!
 		CurrentDiagram.getInstance().setCurrentDiagramHandlerAndZoom(handler);
@@ -98,8 +98,8 @@ public abstract class UniversalListener extends ComponentAdapter implements Mous
 		}
 
 		Point off = getOffset(me);
-		int xNewOffset = off.x;
-		int yNewOffset = off.y;
+		int xNewOffset = off.getX();
+		int yNewOffset = off.getY();
 		int gridSize = CurrentDiagram.getInstance().getDiagramHandler().getGridSize();
 
 		new_x_eff = gridSize * ((xNewOffset - gridSize / 2) / gridSize);
@@ -136,8 +136,8 @@ public abstract class UniversalListener extends ComponentAdapter implements Mous
 		Point newp = getNewCoordinate();
 		Point oldp = getOldCoordinate();
 
-		int diffx = newp.x - oldp.x;
-		int diffy = newp.y - oldp.y;
+		int diffx = newp.getX() - oldp.getX();
+		int diffy = newp.getY() - oldp.getY();
 
 		if (diffx != 0 || diffy != 0) {
 			Vector<Command> moveCommands = new Vector<Command>();

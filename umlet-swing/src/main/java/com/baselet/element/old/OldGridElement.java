@@ -238,7 +238,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 
 	@Override
 	public Dimension getRealSize() {
-		return new Dimension(getRectangle().width / getDiagramHandler().getGridSize() * Constants.DEFAULTGRIDSIZE, getRectangle().height / getDiagramHandler().getGridSize() * Constants.DEFAULTGRIDSIZE);
+		return new Dimension(getRectangle().getWidth() / getDiagramHandler().getGridSize() * Constants.DEFAULTGRIDSIZE, getRectangle().getHeight() / getDiagramHandler().getGridSize() * Constants.DEFAULTGRIDSIZE);
 	}
 
 	@Override
@@ -247,14 +247,14 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 		if (x <= 5 && x >= 0) {
 			returnSet.add(Direction.LEFT);
 		}
-		else if (x <= getRectangle().width && x >= getRectangle().width - 5) {
+		else if (x <= getRectangle().getWidth() && x >= getRectangle().getWidth() - 5) {
 			returnSet.add(Direction.RIGHT);
 		}
 
 		if (y <= 5 && y >= 0) {
 			returnSet.add(Direction.UP);
 		}
-		else if (y <= getRectangle().height && y >= getRectangle().height - 5) {
+		else if (y <= getRectangle().getHeight() && y >= getRectangle().getHeight() - 5) {
 			returnSet.add(Direction.DOWN);
 		}
 		return returnSet;
@@ -262,7 +262,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 
 	@Override
 	public void setLocationDifference(int diffx, int diffy) {
-		this.setLocation(getRectangle().x + diffx, getRectangle().y + diffy);
+		this.setLocation(getRectangle().getX() + diffx, getRectangle().getY() + diffy);
 	}
 
 	/**
@@ -293,7 +293,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setFont(getDiagramHandler().getFontHandler().getFont());
 			g2.setColor(Color.red);
-			getDiagramHandler().getFontHandler().writeText(g2, "in progress...", getRectangle().width / 2 - 40, getRectangle().height / 2 + (int) getDiagramHandler().getFontHandler().getFontSize() / 2, AlignHorizontal.LEFT);
+			getDiagramHandler().getFontHandler().writeText(g2, "in progress...", getRectangle().getWidth() / 2 - 40, getRectangle().getHeight() / 2 + (int) getDiagramHandler().getFontHandler().getFontSize() / 2, AlignHorizontal.LEFT);
 		}
 		else {
 			repaint();
@@ -320,7 +320,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 
 	@Override
 	public StickingPolygon generateStickingBorder(Rectangle rect) {
-		return generateStickingBorder(rect.x, rect.y, rect.width, rect.height);
+		return generateStickingBorder(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	public StickingPolygon generateStickingBorder(int x, int y, int width, int height) {
@@ -330,7 +330,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 	}
 
 	public final void drawStickingPolygon(Graphics2D g2) {
-		Rectangle rect = new Rectangle(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		Rectangle rect = new Rectangle(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		StickingPolygon poly = this.generateStickingBorder(rect);
 		if (poly != null) {
 			Color c = g2.getColor();
@@ -452,7 +452,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 
 	@Override
 	public void setRectangle(Rectangle rect) {
-		setBounds(rect.x, rect.y, rect.width, rect.height);
+		setBounds(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
 	@Override
@@ -486,51 +486,51 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 	}
 
 	@Override
-	public void drag(Collection<Direction> resizeDirection, int diffX, int diffY, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
+	public void drag(Collection<Direction> resizeDirection, Point diffPos, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable) {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
 		if (resizeDirection.isEmpty()) { // Move GridElement
-			setLocationDifference(diffX, diffY);
+			setLocationDifference(diffPos.getX(), diffPos.getY());
 		}
 		else { // Resize GridElement
 			Rectangle rect = getRectangle();
 			if (isShiftKeyDown && diagonalResize(resizeDirection)) { // Proportional Resize
-				boolean mouseToRight = diffX > 0 && diffX > diffY;
-				boolean mouseDown = diffY > 0 && diffY > diffX;
-				boolean mouseLeft = diffX < 0 && diffX < diffY;
-				boolean mouseUp = diffY < 0 && diffY < diffX;
+				boolean mouseToRight = diffPos.getX() > 0 && diffPos.getX() > diffPos.getY();
+				boolean mouseDown = diffPos.getY() > 0 && diffPos.getY() > diffPos.getX();
+				boolean mouseLeft = diffPos.getX() < 0 && diffPos.getX() < diffPos.getY();
+				boolean mouseUp = diffPos.getY() < 0 && diffPos.getY() < diffPos.getX();
 				if (mouseToRight || mouseLeft) {
-					diffY = diffX;
+					diffPos.setY(diffPos.getX());
 				}
 				if (mouseDown || mouseUp) {
-					diffX = diffY;
+					diffPos.setX(diffPos.getY());
 				}
 			}
 			if (resizeDirection.contains(Direction.LEFT) && resizeDirection.contains(Direction.RIGHT)) {
-				rect.setX(rect.getX() - diffX / 2);
-				rect.setWidth(Math.max(rect.getWidth() + diffX, minSize()));
+				rect.setX(rect.getX() - diffPos.getX() / 2);
+				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
 			}
 			else if (resizeDirection.contains(Direction.LEFT)) {
-				int newWidth = rect.getWidth() - diffX;
+				int newWidth = rect.getWidth() - diffPos.getX();
 				if (newWidth >= minSize()) {
-					rect.setX(rect.getX() + diffX);
+					rect.setX(rect.getX() + diffPos.getX());
 					rect.setWidth(newWidth);
 				}
 			}
 			else if (resizeDirection.contains(Direction.RIGHT)) {
-				rect.setWidth(Math.max(rect.getWidth() + diffX, minSize()));
+				rect.setWidth(Math.max(rect.getWidth() + diffPos.getX(), minSize()));
 			}
 
 			if (resizeDirection.contains(Direction.UP)) {
-				int newHeight = rect.getHeight() - diffY;
+				int newHeight = rect.getHeight() - diffPos.getY();
 				if (newHeight >= minSize()) {
-					rect.setY(rect.getY() + diffY);
+					rect.setY(rect.getY() + diffPos.getY());
 					rect.setHeight(newHeight);
 				}
 			}
 			if (resizeDirection.contains(Direction.DOWN)) {
-				rect.setHeight(Math.max(rect.getHeight() + diffY, minSize()));
+				rect.setHeight(Math.max(rect.getHeight() + diffPos.getY(), minSize()));
 			}
 
 			setRectangle(rect);
@@ -572,11 +572,11 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 	}
 
 	@Override
-	public void setRectangleDifference(int diffx, int diffy, int diffw, int diffh, boolean firstDrag, StickableMap stickables, boolean undoable) {
+	public void setRectangleDifference(Point diffPos, Point diffSize, boolean firstDrag, StickableMap stickables, boolean undoable) {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
-		setRectangle(new Rectangle(oldRect.x + diffx, oldRect.y + diffy, oldRect.getWidth() + diffw, oldRect.getHeight() + diffh));
+		setRectangle(new Rectangle(oldRect.getX() + diffPos.getX(), oldRect.getY() + diffPos.getY(), oldRect.getWidth() + diffSize.getX(), oldRect.getHeight() + diffSize.getY()));
 		moveStickables(stickables, undoable, oldRect, stickingPolygonBeforeLocationChange, oldAddAttr);
 	}
 

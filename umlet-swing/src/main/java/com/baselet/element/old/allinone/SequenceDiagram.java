@@ -192,7 +192,7 @@ public class SequenceDiagram extends OldGridElement {
 		g2.setColor(fgColor);
 
 		// draw the border
-		g2.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 
 		levelNum = 1;
 
@@ -762,7 +762,7 @@ public class SequenceDiagram extends OldGridElement {
 		int pos11 = (pos1 + 1) * levelHeight + yOffsetforTitle;
 		int h = (pos2 - pos1) * levelHeight;
 		int x = (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() * 2 + recursionLevel * 4;
-		g2.drawRect(x, pos11, getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() * 4 - 1 - recursionLevel * 8, h);
+		g2.drawRect(x, pos11, getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() * 4 - 1 - recursionLevel * 8, h);
 		int uLinePos = pos11 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() + (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts());
 		int textPos = pos11 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
 

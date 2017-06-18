@@ -25,7 +25,7 @@ public class ElementUtils {
 		JComponent component = (JComponent) gridElement.getComponent();
 		java.awt.Rectangle rectangle = component.getVisibleRect();
 		Point absolute = new Point(gridElement.getRectangle().getX() + p.getX(), gridElement.getRectangle().getY() + p.getY());
-		if (!rectangle.contains(p.x, p.y)) {
+		if (!rectangle.contains(p.getX(), p.getY())) {
 			return false;
 		}
 
@@ -50,7 +50,7 @@ public class ElementUtils {
 			JComponent otherComponent = (JComponent) other.getComponent();
 			if (other.getLayer() > gridElement.getLayer()) { // elements with higher layer can "overwrite" contains-value of this
 				// move point to coordinate system of other entity
-				Point other_p = new Point(p.x + gridElement.getRectangle().x - other.getRectangle().x, p.y + gridElement.getRectangle().y - other.getRectangle().y);
+				Point other_p = new Point(p.getX() + gridElement.getRectangle().getX() - other.getRectangle().getX(), p.getY() + gridElement.getRectangle().getY() - other.getRectangle().getY());
 				if (otherComponent.contains(Converter.convert(other_p))) {
 					return false;
 				}
@@ -58,8 +58,10 @@ public class ElementUtils {
 
 			java.awt.Rectangle other_rectangle = otherComponent.getVisibleRect();
 			// move bounds to coordinate system of this component
-			other_rectangle.x += other.getRectangle().x - gridElement.getRectangle().x;
-			other_rectangle.y += other.getRectangle().y - gridElement.getRectangle().y;
+			other_rectangle.setLocation(
+					(int)other_rectangle.getX() + other.getRectangle().getX() - gridElement.getRectangle().getX(),
+					(int)other_rectangle.getY() + other.getRectangle().getY() - gridElement.getRectangle().getY()
+			);
 			// when elements intersect, select the smaller element except if it is an old relation (because they have a larger rectangle than they use). NOTE: Old Relations are not checked because they do not properly implement isSelectableOn
 			if (!(other instanceof com.baselet.element.old.element.Relation) && rectangle.intersects(other_rectangle) && firstSmallerThanSecond(other_rectangle, rectangle)) {
 				return false;
@@ -69,8 +71,8 @@ public class ElementUtils {
 	}
 
 	private static boolean firstSmallerThanSecond(java.awt.Rectangle first, java.awt.Rectangle second) {
-		int areaFirst = first.getSize().height * first.getSize().width;
-		int areaSecond = second.getSize().height * second.getSize().width;
+		int areaFirst = (int)(first.getSize().getHeight() * first.getSize().getWidth());
+		int areaSecond = (int)(second.getSize().getHeight() * second.getSize().getWidth());
 		if (areaFirst < areaSecond) {
 			return true;
 		}

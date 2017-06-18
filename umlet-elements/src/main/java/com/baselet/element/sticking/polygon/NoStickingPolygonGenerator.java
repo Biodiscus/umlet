@@ -11,6 +11,6 @@ public class NoStickingPolygonGenerator implements StickingPolygonGenerator {
 
 	@Override
 	public StickingPolygon generateStickingBorder(Rectangle rect) {
-		return new StickingPolygon(rect.x, rect.y);
+		return new StickingPolygon(rect.getX(), rect.getY());
 	}
 }

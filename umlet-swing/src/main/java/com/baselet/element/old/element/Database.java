@@ -41,13 +41,13 @@ public class Database extends OldGridElement {
 			String s = tmp.elementAt(i);
 			if (s.equals("--")) {
 				CENTER = false;
-				g2.drawLine(0, yPos, getRectangle().width, yPos);
+				g2.drawLine(0, yPos, getRectangle().getWidth(), yPos);
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else {
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
 				if (CENTER) {
-					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				}
 				else {
 					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() / 2), yPos, AlignHorizontal.LEFT);
@@ -58,10 +58,10 @@ public class Database extends OldGridElement {
 
 		// Finally, change other graphical attributes using
 		// drawLine, getWidth, getHeight..
-		g2.drawLine(0, getRectangle().height - 1 - inset / 2, 0, inset / 2);
-		g2.drawOval(0, 0, getRectangle().width, inset);
-		g2.drawArc(0, getRectangle().height - 1 - inset, getRectangle().width, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 180, 180);
-		g2.drawLine(getRectangle().width - 1, inset / 2, getRectangle().width - 1, getRectangle().height - 1 - inset / 2);
+		g2.drawLine(0, getRectangle().getHeight() - 1 - inset / 2, 0, inset / 2);
+		g2.drawOval(0, 0, getRectangle().getWidth(), inset);
+		g2.drawArc(0, getRectangle().getHeight() - 1 - inset, getRectangle().getWidth(), (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 180, 180);
+		g2.drawLine(getRectangle().getWidth() - 1, inset / 2, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1 - inset / 2);
 	}
 
 }

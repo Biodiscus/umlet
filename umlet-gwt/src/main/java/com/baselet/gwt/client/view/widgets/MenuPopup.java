@@ -41,7 +41,7 @@ public class MenuPopup extends MyPopupPanel {
 	}
 
 	public void show(Point p) {
-		setPopupPosition(p.x, p.y);
+		setPopupPosition(p.getX(), p.getY());
 		show();
 	}
 

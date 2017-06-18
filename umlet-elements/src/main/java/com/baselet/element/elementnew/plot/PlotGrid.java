@@ -210,7 +210,7 @@ public class PlotGrid extends NewGridElement {
 	private AbstractPlot createPlot(DrawHandler drawer, PlotState plotState, int xPos, int yPos, String info) {
 		String type = plotState.getValueValidated(PlotType.getKey(), PlotType.Bar.getValue(), PlotConstants.toStringList(PlotType.values()));
 		log.debug("PlotGrid insert : " + type + " (" + xPos + ";" + yPos + ") " + info);
-		PlotGridDrawConfig plotDrawConfig = new PlotGridDrawConfig(getRealSize(), new Dimension(getRectangle().width, getRectangle().height), minValue, maxValue);
+		PlotGridDrawConfig plotDrawConfig = new PlotGridDrawConfig(getRealSize(), new Dimension(getRectangle().getWidth(), getRectangle().getHeight()), minValue, maxValue);
 		if (PlotType.Pie.getValue().equals(type)) {
 			return new PiePlot(drawer, plotDrawConfig, plotState, xPos, yPos);
 		}
@@ -282,7 +282,7 @@ public class PlotGrid extends NewGridElement {
 		} catch (ParserException e) {
 			drawer.setForegroundColor(ColorOwn.RED);
 			drawer.setBackgroundColor(ColorOwn.WHITE);
-			drawer.drawRectangle(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+			drawer.drawRectangle(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 			float x = getRectangle().getWidth() / 2.0f;
 			drawer.print(e.getMessage(), x, getRealSize().height / 2.0, AlignHorizontal.CENTER);
 		}

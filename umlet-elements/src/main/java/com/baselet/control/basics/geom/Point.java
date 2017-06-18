@@ -2,15 +2,15 @@ package com.baselet.control.basics.geom;
 
 public class Point {
 
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 
 	public Point() {}
 
 	public Point(int x, int y) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.setX(x);
+		this.setY(y);
 	}
 
 	public int getX() {
@@ -30,27 +30,27 @@ public class Point {
 	}
 
 	public Point move(int diffX, int diffY) {
-		x += diffX;
-		y += diffY;
+		setX(getX() + diffX);
+		setY(getY() + diffY);
 		return this;
 	}
 
 	public double distance(Point o) {
-		double distX = o.getX() - getX();
-		double distY = o.getY() - getY();
+		double distX = (double)o.getX() - getX();
+		double distY = (double)o.getY() - getY();
 		return Math.sqrt(distX * distX + distY * distY);
 	}
 
 	public Point copy() {
-		return new Point(x, y);
+		return new Point(getX(), getY());
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
+		result = prime * result + getX();
+		result = prime * result + getY();
 		return result;
 	}
 
@@ -66,10 +66,10 @@ public class Point {
 			return false;
 		}
 		Point other = (Point) obj;
-		if (x != other.x) {
+		if (getX() != other.getX()) {
 			return false;
 		}
-		if (y != other.y) {
+		if (getY() != other.getY()) {
 			return false;
 		}
 		return true;
@@ -77,11 +77,11 @@ public class Point {
 
 	@Override
 	public String toString() {
-		return "p(x=" + x + ", y=" + y + ")";
+		return "p(x=" + getX() + ", y=" + getY() + ")";
 	}
 
 	public PointDouble toPointDouble() {
-		return new PointDouble(x, y);
+		return new PointDouble(getX(), getY());
 	}
 
 }
