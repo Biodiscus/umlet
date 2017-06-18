@@ -38,7 +38,7 @@ public class HierarchyFacet extends Facet {
 		private final List<ReferencePoint> points = new ArrayList<ReferencePoint>();
 	}
 
-	public static enum HierarchyType {
+	public enum HierarchyType {
 		Actor, Package, WorkProcess;
 	}
 

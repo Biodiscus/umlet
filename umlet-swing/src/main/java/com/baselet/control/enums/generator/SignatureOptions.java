@@ -4,7 +4,7 @@ public enum SignatureOptions {
 	ALL("all"), PARAMS_ONLY("parameters only"), RETURN_ONLY("return type only");
 	private final String label;
 
-	private SignatureOptions(String label) {
+	SignatureOptions(String label) {
 		this.label = label;
 	}
 

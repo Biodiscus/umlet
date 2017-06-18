@@ -125,7 +125,7 @@ public enum Shortcut {
 
 		private String header;
 
-		private Category(String header) {
+		Category(String header) {
 			this.header = header;
 		}
 

@@ -17,6 +17,8 @@ import com.baselet.data.MailMessage;
 import com.baselet.gui.MailPanel;
 
 /**
+ * TODO: Check mime message
+ *
  * © 2017, Gopper
  */
 public class MailTest {

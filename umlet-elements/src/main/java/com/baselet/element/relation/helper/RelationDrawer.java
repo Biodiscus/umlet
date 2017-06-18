@@ -69,7 +69,7 @@ public class RelationDrawer {
 		return r;
 	}
 
-	public static enum ArrowEndType {
+	public enum ArrowEndType {
 		NORMAL, CLOSED, DIAMOND, MEASURE
 	}
 

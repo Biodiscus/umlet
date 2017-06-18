@@ -30,7 +30,7 @@ public abstract class DrawHandler {
 	private final ArrayList<DrawFunction> drawablesBackground = new ArrayList<DrawFunction>();
 	private final ArrayList<DrawFunction> drawablesForeground = new ArrayList<DrawFunction>();
 
-	public static enum Layer {
+	public enum Layer {
 		Foreground, Background
 	}
 

@@ -10,7 +10,7 @@ public enum Browser {
 
 	private String[] browserFilters;
 
-	private Browser(String... browserFilters) {
+	Browser(String... browserFilters) {
 		this.browserFilters = browserFilters;
 	}
 

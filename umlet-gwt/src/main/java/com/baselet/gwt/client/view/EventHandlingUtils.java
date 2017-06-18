@@ -81,7 +81,7 @@ public class EventHandlingUtils {
 
 	}
 
-	private static enum DragStatus {
+	private enum DragStatus {
 		FIRST, CONTINUOUS, NO
 	}
 

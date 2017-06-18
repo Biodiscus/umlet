@@ -4,7 +4,7 @@ public enum FieldOptions {
 	ALL("all"), NONE("none"), PUBLIC("public only");
 	private final String label;
 
-	private FieldOptions(String label) {
+	FieldOptions(String label) {
 		this.label = label;
 	}
 

@@ -4,7 +4,7 @@ public enum SortOptions {
 	HEIGHT("by size"), PACKAGE("by package"), ALPHABET("alphabetically"), RELATIONS("with relations");
 	private final String label;
 
-	private SortOptions(String label) {
+	SortOptions(String label) {
 		this.label = label;
 	}
 

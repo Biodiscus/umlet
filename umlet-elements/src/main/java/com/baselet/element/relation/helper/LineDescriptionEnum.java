@@ -14,7 +14,7 @@ public enum LineDescriptionEnum {
 	private final int index;
 	private final Boolean start;
 
-	private LineDescriptionEnum(String key, int index, Boolean start) {
+	LineDescriptionEnum(String key, int index, Boolean start) {
 		this.key = key;
 		this.index = index;
 		this.start = start;
