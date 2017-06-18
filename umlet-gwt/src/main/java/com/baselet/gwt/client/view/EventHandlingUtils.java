@@ -45,7 +45,7 @@ public class EventHandlingUtils {
 
 	private static final List<DragStatus> DRAG_COMMANDS = Arrays.asList(DragStatus.FIRST, DragStatus.CONTINUOUS);
 
-	public static interface EventHandlingTarget {
+	public interface EventHandlingTarget {
 
 		HandlerRegistration addMouseOutHandler(MouseOutHandler mouseOutHandler);
 

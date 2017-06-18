@@ -2,7 +2,7 @@ package com.baselet.generator.java;
 
 public interface Accessible {
 
-	public enum AccessFlag {
+	enum AccessFlag {
 
 		PRIVATE {
 			@Override
@@ -27,8 +27,8 @@ public interface Accessible {
 			public String toString() {
 				return "+";
 			}
-		};
+		}
 	}
 
-	public AccessFlag getAccess();
+	AccessFlag getAccess();
 }

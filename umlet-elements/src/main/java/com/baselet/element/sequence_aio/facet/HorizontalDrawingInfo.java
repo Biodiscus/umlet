@@ -5,7 +5,7 @@ package com.baselet.element.sequence_aio.facet;
  */
 public interface HorizontalDrawingInfo {
 
-	public LifelineHorizontalDrawingInfo getHDrawingInfo(Lifeline lifeline);
+	LifelineHorizontalDrawingInfo getHDrawingInfo(Lifeline lifeline);
 
 	/**
 	 * Returns the distance between the starting point of the lifeline which starts first and the end point of the
@@ -23,17 +23,17 @@ public interface HorizontalDrawingInfo {
 	 * @param tick
 	 * @return the symmetric width which is spanned by the two lifelines at the given tick
 	 */
-	public double getSymmetricWidth(Lifeline ll1, Lifeline ll2, int tick);
+	double getSymmetricWidth(Lifeline ll1, Lifeline ll2, int tick);
 
-	public double getHorizontalStart(Container container);
+	double getHorizontalStart(Container container);
 
-	public double getHorizontalEnd(Container container);
+	double getHorizontalEnd(Container container);
 
-	public double getWidth(Container container);
+	double getWidth(Container container);
 
-	public double getDiagramHorizontalStart();
+	double getDiagramHorizontalStart();
 
-	public double getDiagramHorizontalEnd();
+	double getDiagramHorizontalEnd();
 
-	public double getDiagramWidth();
+	double getDiagramWidth();
 }

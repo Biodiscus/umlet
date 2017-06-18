@@ -114,8 +114,8 @@ public enum Shortcut {
 		}
 	}), ;
 
-	private static interface Check {
-		public boolean check(int code, KeyCodeEvent<? extends EventHandler> event);
+	private interface Check {
+		boolean check(int code, KeyCodeEvent<? extends EventHandler> event);
 	}
 
 	public enum Category {

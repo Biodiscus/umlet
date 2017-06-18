@@ -13,12 +13,12 @@ public interface LifelineSpanningTickSpanningOccurrence {
 	/**
 	 * @return the first lifeline (lowest index) which is covered by this occurrence
 	 */
-	public Lifeline getFirstLifeline();
+	Lifeline getFirstLifeline();
 
 	/**
 	 * @return the last lifeline (highest index) which is covered by this occurrence
 	 */
-	public Lifeline getLastLifeline();
+	Lifeline getLastLifeline();
 
 	/**
 	 * Draws the element and adds interrupted Areas to the LifelineDrawingInfo
@@ -26,7 +26,7 @@ public interface LifelineSpanningTickSpanningOccurrence {
 	 * @param drawHandler
 	 * @param drawingInfo
 	 */
-	public void draw(DrawHandler drawHandler, DrawingInfo drawingInfo);
+	void draw(DrawHandler drawHandler, DrawingInfo drawingInfo);
 
 	/**
 	 * Returns the minimum width between the start of the first lifeline and the end of the last lifeline.
@@ -35,7 +35,7 @@ public interface LifelineSpanningTickSpanningOccurrence {
 	 * (can be useful for calculating the exact minimum width)
 	 * @return the minimum width of the occurrence
 	 */
-	public double getOverallMinWidth(DrawHandler drawHandler, double lifelineHorizontalPadding);
+	double getOverallMinWidth(DrawHandler drawHandler, double lifelineHorizontalPadding);
 
 	/**
 	 * Returns the additional heights needed by this occurrence, the tick is the key
@@ -44,12 +44,12 @@ public interface LifelineSpanningTickSpanningOccurrence {
 	 * @param defaultTickHeight
 	 * @return a map with the additional heights, the keys are the ticks and the values is the additional height needed
 	 */
-	public Map<Integer, Double> getEveryAdditionalYHeight(DrawHandler drawHandler, HorizontalDrawingInfo hInfo,
+	Map<Integer, Double> getEveryAdditionalYHeight(DrawHandler drawHandler, HorizontalDrawingInfo hInfo,
 			double defaultTickHeight);
 
-	public ContainerPadding getPaddingInformation();
+	ContainerPadding getPaddingInformation();
 
-	public static class ContainerPadding {
+	class ContainerPadding {
 		private final Container container;
 
 		private final double leftPadding;

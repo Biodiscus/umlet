@@ -65,8 +65,8 @@ public class PlotConstants {
 	public static final String KEY_LIST_COLORS = "colors"; // DEFAULT: cycling through colors-list
 	public static final List<String> COLORS_DEFAULT = Collections.unmodifiableList(Arrays.asList("red", "blue", "green", "orange", "cyan", "magenta", "pink"));
 
-	public static interface PlotSetting {
-		public String getValue();
+	public interface PlotSetting {
+		String getValue();
 	}
 
 	public enum PlotType implements PlotSetting {

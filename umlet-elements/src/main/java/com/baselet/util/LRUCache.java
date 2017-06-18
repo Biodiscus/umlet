@@ -29,6 +29,6 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
 		// if size >= capacity * loadfactor then rehashing occurs (see implementation of LinkedHashMap.addEntry)
 		// this method is called before the size check, therefore remove the eldest entry if the threshold is reached
 		return size() >= this.cacheSize;
-	};
+	}
 
 }

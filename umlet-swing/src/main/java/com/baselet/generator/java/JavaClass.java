@@ -2,15 +2,15 @@ package com.baselet.generator.java;
 
 public interface JavaClass {
 
-	public String getName();
+	String getName();
 
-	public Field[] getFields();
+	Field[] getFields();
 
-	public Method[] getMethods();
+	Method[] getMethods();
 
-	public ClassRole getRole();
+	ClassRole getRole();
 
-	public enum ClassRole {
+	enum ClassRole {
 		ABSTRACT, CLASS, INTERFACE;
 
 		@Override
@@ -19,5 +19,5 @@ public interface JavaClass {
 		}
 	}
 
-	public String getPackage();
+	String getPackage();
 }

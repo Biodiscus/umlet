@@ -4,5 +4,5 @@ public enum RelationSelection {
 	RELATION_POINT,
 	DRAG_BOX,
 	LINE,
-	NOTHING;
+	NOTHING
 }

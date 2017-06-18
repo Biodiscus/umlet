@@ -39,7 +39,7 @@ public class HierarchyFacet extends Facet {
 	}
 
 	public enum HierarchyType {
-		Actor, Package, WorkProcess;
+		Actor, Package, WorkProcess
 	}
 
 	public static final HierarchyFacet INSTANCE = new HierarchyFacet();

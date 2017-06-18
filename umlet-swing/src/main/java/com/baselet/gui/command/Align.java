@@ -15,7 +15,7 @@ import com.baselet.element.interfaces.GridElement;
 public class Align extends Command {
 
 	private enum Edge {
-		RIGHT, LEFT, TOP, BOTTOM;
+		RIGHT, LEFT, TOP, BOTTOM
 	}
 
 	private Point origin;
