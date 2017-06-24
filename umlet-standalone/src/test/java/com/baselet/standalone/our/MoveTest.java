@@ -80,7 +80,7 @@ public class MoveTest {
 
 			// Elements behave a bit differently
 			if (element instanceof Class){
-				element.drag(direction, 200, 200, point, false, false, null, false);
+				element.drag(direction, new Point(200, 200), point, false, false, null, false);
 				Rectangle newRectangle = element.getRectangle();
 				assertNotEquals(oldRectangle.hashCode(), newRectangle.hashCode());
 			}
@@ -102,7 +102,7 @@ public class MoveTest {
 				Relation relation = (Relation) element;
 				Rectangle dragBox = relation.getRelationPoints().getDragBox();
 				Point dragPoint = new Point(dragBox.getX() + 2, dragBox.getY() + 2);
-				element.drag(direction, 100, 100, dragPoint, false, true, null, false);
+				element.drag(direction, new Point(100, 100), dragPoint, false, true, null, false);
 				Rectangle newRectangle = relation.getRectangle();
 				assertNotEquals(oldRectangle.hashCode(), newRectangle.hashCode());
 			}

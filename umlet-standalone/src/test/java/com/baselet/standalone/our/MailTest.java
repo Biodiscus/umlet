@@ -17,6 +17,8 @@ import com.baselet.data.MailMessage;
 import com.baselet.gui.MailPanel;
 
 /**
+ * TODO: Check mime message
+ *
  * © 2017, Gopper
  */
 public class MailTest {
@@ -66,7 +68,7 @@ public class MailTest {
 
 
 		MailMessage message = panel.getMailMessage();
-		assertEquals(panel.getSMTP().getText(), message.getHost());;
+		assertEquals(panel.getSMTP().getText(), message.getHost());
 		assertEquals(panel.getIsSMTPAuth().isSelected(), message.isUseAuthentication());
 		assertEquals(panel.getSMTPUser().getText(), message.getUser());
 		assertEquals(getPassword(panel.getSMTPPassword()), message.getPassword());

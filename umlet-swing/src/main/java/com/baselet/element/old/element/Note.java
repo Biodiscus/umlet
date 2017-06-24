@@ -32,14 +32,14 @@ public class Note extends OldGridElement {
 
 		Polygon poly = new Polygon();
 		poly.addPoint(0, 0);
-		poly.addPoint(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
-		poly.addPoint(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
-		poly.addPoint(getRectangle().width - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
-		poly.addPoint(getRectangle().width - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
-		poly.addPoint(getRectangle().width - 1, getRectangle().height - 1);
-		poly.addPoint(getRectangle().width - 1, getRectangle().height - 1);
-		poly.addPoint(0, getRectangle().height - 1);
-		poly.addPoint(0, getRectangle().height - 1);
+		poly.addPoint(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
+		poly.addPoint(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
+		poly.addPoint(getRectangle().getWidth() - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
+		poly.addPoint(getRectangle().getWidth() - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
+		poly.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+		poly.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+		poly.addPoint(0, getRectangle().getHeight() - 1);
+		poly.addPoint(0, getRectangle().getHeight() - 1);
 		poly.addPoint(0, 0);
 		// p.addPoint(this.getWidth()-Constants.getFontsize(),0); p.addPoint(this.getWidth()-Constants.getFontsize(), Constants.getFontsize());
 		// p.addPoint(this.getWidth()-Constants.getFontsize(),Constants.getFontsize()); p.addPoint(this.getWidth()-1, Constants.getFontsize());
@@ -62,12 +62,12 @@ public class Note extends OldGridElement {
 			yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 		}
 
-		g2.drawLine(0, 0, getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
-		g2.drawLine(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().width - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
-		g2.drawLine(getRectangle().width - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().width - 1, getRectangle().height - 1);
-		g2.drawLine(getRectangle().width - 1, getRectangle().height - 1, 0, getRectangle().height - 1);
-		g2.drawLine(0, getRectangle().height - 1, 0, 0);
-		g2.drawLine(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
-		g2.drawLine(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().width - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
+		g2.drawLine(0, 0, getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
+		g2.drawLine(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().getWidth() - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
+		g2.drawLine(getRectangle().getWidth() - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+		g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, 0, getRectangle().getHeight() - 1);
+		g2.drawLine(0, getRectangle().getHeight() - 1, 0, 0);
+		g2.drawLine(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
+		g2.drawLine(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().getWidth() - 1, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize());
 	}
 }

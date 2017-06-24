@@ -15,7 +15,7 @@ public class Converter {
 		if (in == null) {
 			return null;
 		}
-		return new java.awt.Rectangle(in.x, in.y, in.width, in.height);
+		return new java.awt.Rectangle(in.getX(), in.getY(), in.getWidth(), in.getHeight());
 	}
 
 	public static Rectangle convert(java.awt.Rectangle in) {
@@ -43,7 +43,7 @@ public class Converter {
 		if (in == null) {
 			return null;
 		}
-		return new java.awt.Point(in.x, in.y);
+		return new java.awt.Point(in.getX(), in.getY());
 	}
 
 	public static Point convert(java.awt.Point in) {

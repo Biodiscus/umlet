@@ -45,7 +45,7 @@ public class EventHandlingUtils {
 
 	private static final List<DragStatus> DRAG_COMMANDS = Arrays.asList(DragStatus.FIRST, DragStatus.CONTINUOUS);
 
-	public static interface EventHandlingTarget {
+	public interface EventHandlingTarget {
 
 		HandlerRegistration addMouseOutHandler(MouseOutHandler mouseOutHandler);
 
@@ -81,7 +81,7 @@ public class EventHandlingUtils {
 
 	}
 
-	private static enum DragStatus {
+	private enum DragStatus {
 		FIRST, CONTINUOUS, NO
 	}
 
@@ -269,7 +269,7 @@ public class EventHandlingUtils {
 		handlerTarget.setFocus(true);
 
 		event.preventDefault(); // necessary to avoid showing textcursor and selecting proppanel in chrome AND to avoid scrolling with touch move (problem is it also avoids scrolling with 2 fingers)
-		storage.moveStart = new Point(p.x, p.y);
+		storage.moveStart = new Point(p.getX(), p.getY());
 		storage.dragging = DragStatus.FIRST;
 		storage.elementToDrag = storage.activePanel.getGridElementOnPosition(storage.moveStart);
 		storage.activePanel.onMouseDownScheduleDeferred(storage.elementToDrag, event.isControlKeyDown());
@@ -279,8 +279,8 @@ public class EventHandlingUtils {
 		// Notification.showInfo("MOVE " + getPointAbsolute(event));
 		if (storage.activePanel != null && DRAG_COMMANDS.contains(storage.dragging)) {
 			Point p = getPoint(storage.activePanel, event);
-			int diffX = p.x - storage.moveStart.getX();
-			int diffY = p.y - storage.moveStart.getY();
+			int diffX = p.getX() - storage.moveStart.getX();
+			int diffY = p.getY() - storage.moveStart.getY();
 			diffX -= diffX % SharedConstants.DEFAULT_GRID_SIZE;
 			diffY -= diffY % SharedConstants.DEFAULT_GRID_SIZE;
 			if (diffX != 0 || diffY != 0) {

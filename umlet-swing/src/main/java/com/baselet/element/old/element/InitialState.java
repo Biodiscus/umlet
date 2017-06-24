@@ -18,7 +18,7 @@ public class InitialState extends OldGridElement {
 		colorize(g2); // enable colors
 		g2.setColor(fgColor);
 
-		g2.fillOval(0, 0, getRectangle().width, getRectangle().height);
+		g2.fillOval(0, 0, getRectangle().getWidth(), getRectangle().getHeight());
 	}
 
 	@Override

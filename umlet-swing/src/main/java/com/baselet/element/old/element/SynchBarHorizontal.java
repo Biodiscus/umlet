@@ -31,7 +31,7 @@ public class SynchBarHorizontal extends OldGridElement {
 
 		textWidth = 0; // reset
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
-		int yPos = getRectangle().height / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
+		int yPos = getRectangle().getHeight() / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
 		boolean ADAPT_SIZE_X = false;
 		int textHeight = tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts());
 
@@ -42,7 +42,7 @@ public class SynchBarHorizontal extends OldGridElement {
 			Rectangle2D r2d = l.getBounds();
 			textWidth = (int) r2d.getWidth() > textWidth ? (int) r2d.getWidth() : textWidth;
 
-			if (getRectangle().width - textWidth < 0) {
+			if (getRectangle().getWidth() - textWidth < 0) {
 				ADAPT_SIZE_X = true;
 				break;
 			}
@@ -57,15 +57,15 @@ public class SynchBarHorizontal extends OldGridElement {
 			return;
 		}
 
-		if (textHeight > getRectangle().height) {
+		if (textHeight > getRectangle().getHeight()) {
 			new OldResize(this, 0, 0, 0, 20).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
 
-		g2.fillRect(textWidth + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts(), getRectangle().height / 2 - (int) (3 * zoom), getRectangle().width - textWidth - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() * 2, (int) (5 * zoom));
+		g2.fillRect(textWidth + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts(), getRectangle().getHeight() / 2 - (int) (3 * zoom), getRectangle().getWidth() - textWidth - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() * 2, (int) (5 * zoom));
 	}
 
-	/* public int doesCoordinateAppearToBeConnectedToMe(Point p) { int ret=0; int tmpX=p.x-this.getX(); int tmpY=p.y-this.getY(); if (tmpX>(textWidth+4) && tmpX<this.getWidth()+4) { //if (tmpY>0 && tmpY<8) ret+=1; if (tmpY>this.getHeight()/2-8 && tmpY<this.getHeight()/2+8) ret+=4; } return ret; } */
+	/* public int doesCoordinateAppearToBeConnectedToMe(Point p) { int ret=0; int tmpX=p.getX()-this.getX(); int tmpY=p.getY()-this.getY(); if (tmpX>(textWidth+4) && tmpX<this.getWidth()+4) { //if (tmpY>0 && tmpY<8) ret+=1; if (tmpY>this.getHeight()/2-8 && tmpY<this.getHeight()/2+8) ret+=4; } return ret; } */
 	@Override
 	public StickingPolygon generateStickingBorder(int x, int y, int width, int height) {
 		StickingPolygon p = new StickingPolygon(0, 0);

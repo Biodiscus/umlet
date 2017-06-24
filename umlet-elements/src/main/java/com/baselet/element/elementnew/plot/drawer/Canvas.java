@@ -50,27 +50,27 @@ public class Canvas {
 	}
 
 	public void setBorderX(int x) {
-		outerBorder.setBounds(x, outerBorder.y, outerBorder.width, outerBorder.height);
+		outerBorder.setBounds(x, outerBorder.getY(), outerBorder.getWidth(), outerBorder.getHeight());
 		updateInnerBorder();
 	}
 
 	public void setBorderY(int y) {
-		outerBorder.setBounds(outerBorder.x, y, outerBorder.width, outerBorder.height);
+		outerBorder.setBounds(outerBorder.getX(), y, outerBorder.getWidth(), outerBorder.getHeight());
 		updateInnerBorder();
 	}
 
 	public void setBorderWidth(int width) {
-		outerBorder.setBounds(outerBorder.x, outerBorder.y, width, outerBorder.height);
+		outerBorder.setBounds(outerBorder.getX(), outerBorder.getY(), width, outerBorder.getHeight());
 		updateInnerBorder();
 	}
 
 	public void setBorderHeight(int height) {
-		outerBorder.setBounds(outerBorder.x, outerBorder.y, outerBorder.width, height);
+		outerBorder.setBounds(outerBorder.getX(), outerBorder.getY(), outerBorder.getWidth(), height);
 		updateInnerBorder();
 	}
 
 	private void updateInnerBorder() {
-		innerBorder.setBounds(outerBorder.x + borderspace, outerBorder.y + borderspace, outerBorder.width + borderspace, outerBorder.height + borderspace);
+		innerBorder.setBounds(outerBorder.getX() + borderspace, outerBorder.getY() + borderspace, outerBorder.getWidth() + borderspace, outerBorder.getHeight() + borderspace);
 	}
 
 	/**
@@ -82,11 +82,11 @@ public class Canvas {
 	 * </pre>
 	 */
 	public int getInnerLeftPos() {
-		return innerBorder.x;
+		return innerBorder.getX();
 	}
 
 	public int getInnerUpPos() {
-		return innerBorder.y;
+		return innerBorder.getY();
 	}
 
 	/**
@@ -98,11 +98,11 @@ public class Canvas {
 	 * </pre>
 	 */
 	public int getInnerRightBorderWidth() {
-		return innerBorder.width;
+		return innerBorder.getWidth();
 	}
 
 	public int getInnerDownBorderHeight() {
-		return innerBorder.height;
+		return innerBorder.getHeight();
 	}
 
 	/**
@@ -154,19 +154,19 @@ public class Canvas {
 	}
 
 	public int getOuterLeftPos() {
-		return outerBorder.x;
+		return outerBorder.getX();
 	}
 
 	public int getOuterUpPos() {
-		return outerBorder.y;
+		return outerBorder.getY();
 	}
 
 	public int getOuterRightBorderWidth() {
-		return outerBorder.width;
+		return outerBorder.getWidth();
 	}
 
 	public int getOuterDownBorderHeight() {
-		return outerBorder.height;
+		return outerBorder.getHeight();
 	}
 
 	public int getOuterRightPos() {

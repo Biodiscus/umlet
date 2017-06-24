@@ -16,7 +16,7 @@ public class HeightLayout extends Layout {
 
 		@Override
 		public int compare(SortableElement e1, SortableElement e2) {
-			return e2.getElement().getRectangle().height - e1.getElement().getRectangle().height;
+			return e2.getElement().getRectangle().getHeight() - e1.getElement().getRectangle().getHeight();
 		}
 	}
 }

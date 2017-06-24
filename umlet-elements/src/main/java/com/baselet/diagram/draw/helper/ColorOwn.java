@@ -9,12 +9,12 @@ public class ColorOwn {
 
 	public static final String EXAMPLE_TEXT = "color string (green,...) or code (#3c7a00,...)";
 
-	public static enum Transparency {
+	public enum Transparency {
 		FOREGROUND(255), FULL_TRANSPARENT(0), DEPRECATED_WARNING(175), BACKGROUND(125), SELECTION_BACKGROUND(20);
 
 		private int alpha;
 
-		private Transparency(int alpha) {
+		Transparency(int alpha) {
 			this.alpha = alpha;
 		}
 

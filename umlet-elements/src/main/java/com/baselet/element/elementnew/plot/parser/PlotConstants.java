@@ -65,11 +65,11 @@ public class PlotConstants {
 	public static final String KEY_LIST_COLORS = "colors"; // DEFAULT: cycling through colors-list
 	public static final List<String> COLORS_DEFAULT = Collections.unmodifiableList(Arrays.asList("red", "blue", "green", "orange", "cyan", "magenta", "pink"));
 
-	public static interface PlotSetting {
-		public String getValue();
+	public interface PlotSetting {
+		String getValue();
 	}
 
-	public static enum PlotType implements PlotSetting {
+	public enum PlotType implements PlotSetting {
 		Bar, Line, Pie, Scatter;
 
 		@Override
@@ -82,7 +82,7 @@ public class PlotConstants {
 		}
 	}
 
-	public static enum AxisShow implements PlotSetting {
+	public enum AxisShow implements PlotSetting {
 		Axis, Line, Marker, Text, Nothing("");
 
 		private final String value;
@@ -113,7 +113,7 @@ public class PlotConstants {
 		}
 	}
 
-	public static enum AxisList implements PlotSetting {
+	public enum AxisList implements PlotSetting {
 		Relevant, Nothing("");
 
 		private final String value;

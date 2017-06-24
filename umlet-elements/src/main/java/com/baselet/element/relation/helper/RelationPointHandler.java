@@ -69,7 +69,7 @@ public class RelationPointHandler implements ResizableObject {
 		}
 		Line lineOnPoint = getLineContaining(point);
 		if (lineOnPoint != null) {
-			relationPointOfCurrentDrag = points.addPointOnLine(lineOnPoint, SharedUtils.realignToGridRoundToNearest(false, point.x), SharedUtils.realignToGridRoundToNearest(false, point.y));
+			relationPointOfCurrentDrag = points.addPointOnLine(lineOnPoint, SharedUtils.realignToGridRoundToNearest(false, point.getX()), SharedUtils.realignToGridRoundToNearest(false, point.getY()));
 			relationPointOfCurrentDrag = movePointAndResizeRectangle(relationPointOfCurrentDrag, diffX, diffY);
 			return RelationSelection.LINE;
 		}

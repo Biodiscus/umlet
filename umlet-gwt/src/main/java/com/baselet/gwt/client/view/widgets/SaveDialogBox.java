@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class SaveDialogBox extends MyPopupPanel {
 
-	public static interface Callback {
+	public interface Callback {
 		void callback(String chosenName);
 	}
 

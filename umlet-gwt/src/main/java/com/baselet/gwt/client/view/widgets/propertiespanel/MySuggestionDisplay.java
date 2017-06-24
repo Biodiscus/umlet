@@ -102,4 +102,4 @@ public class MySuggestionDisplay extends DefaultSuggestionDisplay {
 	public boolean getPaletteShouldIgnoreMouseClicks() {
 		return paletteShouldIgnoreMouseClicks;
 	}
-};
+}

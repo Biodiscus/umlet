@@ -11,7 +11,7 @@ public enum LineType implements RegexValueHolder {
 
 	public static final List<LineType> LT_LIST = Collections.unmodifiableList(Arrays.asList(LineType.SOLID, LineType.DASHED, LineType.DOTTED));
 
-	private LineType(String value) {
+	LineType(String value) {
 		this.value = value;
 	}
 

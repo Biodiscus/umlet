@@ -66,7 +66,7 @@ public class PaletteEntityListener extends GridElementListener {
 		if (IS_DRAGGED_FROM_PALETTE) {
 			moveDraggedEntities();
 		}
-		else if (entity.getRectangle().x + entity.getRectangle().width <= 0) {
+		else if (entity.getRectangle().getX() + entity.getRectangle().getWidth() <= 0) {
 			resetEntities();
 			insertDraggedEntities(me);
 			handler.getDrawPanel().getSelector().deselectAllWithoutUpdatePropertyPanel();
@@ -75,8 +75,8 @@ public class PaletteEntityListener extends GridElementListener {
 
 	private void moveDraggedEntities() {
 		for (GridElement copiedEntity : copiedEntities) {
-			int x = getNewCoordinate().x - getOldCoordinate().x;
-			int y = getNewCoordinate().y - getOldCoordinate().y;
+			int x = getNewCoordinate().getX() - getOldCoordinate().getX();
+			int y = getNewCoordinate().getY() - getOldCoordinate().getY();
 			x = CurrentDiagram.getInstance().getDiagramHandler().realignToGrid(false, x);
 			y = CurrentDiagram.getInstance().getDiagramHandler().realignToGrid(false, y);
 			copiedEntity.setLocationDifference(x, y);
@@ -87,7 +87,7 @@ public class PaletteEntityListener extends GridElementListener {
 		List<GridElement> selectedEntities = handler.getDrawPanel().getSelector().getSelectedElements();
 		for (GridElement currentEntity : selectedEntities) {
 			Rectangle previousLocation = previousDraggingLocation.get(currentEntity);
-			currentEntity.setLocation(previousLocation.x, previousLocation.y);
+			currentEntity.setLocation(previousLocation.getX(), previousLocation.getY());
 		}
 	}
 
@@ -115,10 +115,10 @@ public class PaletteEntityListener extends GridElementListener {
 		for (GridElement currentEntity : selectedEntities) {
 			GridElement copiedEntity = copyEntity(currentEntity);
 			copiedEntities.add(copiedEntity);
-			int x = currentEntity.getRectangle().x - entity.getRectangle().x;
-			int y = currentEntity.getRectangle().y - entity.getRectangle().y;
-			x -= entity.getRectangle().width / 2;
-			y -= entity.getRectangle().height / 2;
+			int x = currentEntity.getRectangle().getX() - entity.getRectangle().getX();
+			int y = currentEntity.getRectangle().getY() - entity.getRectangle().getY();
+			x -= entity.getRectangle().getWidth() / 2;
+			y -= entity.getRectangle().getHeight() / 2;
 			copiedEntity.setLocation(x, y);
 		}
 		Selector.replaceGroupsWithNewGroups(copiedEntities, selector);
@@ -134,11 +134,11 @@ public class PaletteEntityListener extends GridElementListener {
 	private void updateEntityPositions(MouseEvent me) {
 		DiagramHandler currentHandler = CurrentDiagram.getInstance().getDiagramHandler();
 		Point mousePosition = me.getLocationOnScreen();
-		int mouseX = mousePosition.x - currentHandler.getDrawPanel().getLocationOnScreen().x;
-		int mouseY = mousePosition.y - currentHandler.getDrawPanel().getLocationOnScreen().y;
+		int mouseX = (int)(mousePosition.getX() - currentHandler.getDrawPanel().getLocationOnScreen().getX());
+		int mouseY = (int)(mousePosition.getY() - currentHandler.getDrawPanel().getLocationOnScreen().getY());
 		for (GridElement copiedEntity : copiedEntities) {
-			int x = copiedEntity.getRectangle().x;
-			int y = copiedEntity.getRectangle().y;
+			int x = copiedEntity.getRectangle().getX();
+			int y = copiedEntity.getRectangle().getY();
 			x += mouseX;
 			y += mouseY;
 			x = CurrentDiagram.getInstance().getDiagramHandler().realignToGrid(false, x);

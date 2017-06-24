@@ -25,7 +25,7 @@ public class Artefact extends OldGridElement {
 		// symbol outline
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.fillRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -33,7 +33,7 @@ public class Artefact extends OldGridElement {
 		else {
 			g2.setColor(fgColorBase);
 		}
-		g2.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 		int yPos = (int) (10 * zoom);
@@ -47,13 +47,13 @@ public class Artefact extends OldGridElement {
 		}
 
 		// small component symbol
-		g2.drawLine(getRectangle().width - (int) (30 * zoom), (int) (10 * zoom), getRectangle().width - (int) (30 * zoom), (int) (40 * zoom));
-		g2.drawLine(getRectangle().width - (int) (30 * zoom), (int) (40 * zoom), getRectangle().width - (int) (5 * zoom), (int) (40 * zoom));
-		g2.drawLine(getRectangle().width - (int) (5 * zoom), (int) (40 * zoom), getRectangle().width - (int) (5 * zoom), (int) (20 * zoom));
-		g2.drawLine(getRectangle().width - (int) (5 * zoom), (int) (20 * zoom), getRectangle().width - (int) (15 * zoom), (int) (10 * zoom));
-		g2.drawLine(getRectangle().width - (int) (15 * zoom), (int) (10 * zoom), getRectangle().width - (int) (30 * zoom), (int) (10 * zoom));
-		g2.drawLine(getRectangle().width - (int) (5 * zoom), (int) (20 * zoom), getRectangle().width - (int) (15 * zoom), (int) (20 * zoom));
-		g2.drawLine(getRectangle().width - (int) (15 * zoom), (int) (20 * zoom), getRectangle().width - (int) (15 * zoom), (int) (10 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (30 * zoom), (int) (10 * zoom), getRectangle().getWidth() - (int) (30 * zoom), (int) (40 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (30 * zoom), (int) (40 * zoom), getRectangle().getWidth() - (int) (5 * zoom), (int) (40 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (5 * zoom), (int) (40 * zoom), getRectangle().getWidth() - (int) (5 * zoom), (int) (20 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (5 * zoom), (int) (20 * zoom), getRectangle().getWidth() - (int) (15 * zoom), (int) (10 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (15 * zoom), (int) (10 * zoom), getRectangle().getWidth() - (int) (30 * zoom), (int) (10 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (5 * zoom), (int) (20 * zoom), getRectangle().getWidth() - (int) (15 * zoom), (int) (20 * zoom));
+		g2.drawLine(getRectangle().getWidth() - (int) (15 * zoom), (int) (20 * zoom), getRectangle().getWidth() - (int) (15 * zoom), (int) (10 * zoom));
 
 	}
 }

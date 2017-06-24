@@ -40,7 +40,7 @@ public class OwnTextArea extends TextArea {
 		this.handler = handler;
 	}
 
-	public static interface InstantValueChangeHandler {
+	public interface InstantValueChangeHandler {
 		void onValueChange(String value);
 	}
 

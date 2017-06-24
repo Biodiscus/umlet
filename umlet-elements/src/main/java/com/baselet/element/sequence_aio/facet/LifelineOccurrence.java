@@ -12,13 +12,13 @@ public interface LifelineOccurrence {
 	 * @param size of the rectangle in which the occurrence can draw.
 	 * @return if the lifeline is not interrupted then null, otherwise the Point contains the y start and y end of the interrupted area
 	 */
-	public Line1D draw(DrawHandler drawHandler, PointDouble topLeft, PointDouble size);
+	Line1D draw(DrawHandler drawHandler, PointDouble topLeft, PointDouble size);
 
 	/**
 	 * @param drawHandler
 	 * @return the minimum width which is needed by this element
 	 */
-	public double getMinWidth(DrawHandler drawHandler);
+	double getMinWidth(DrawHandler drawHandler);
 
 	/**
 	 * @param drawHandler
@@ -27,6 +27,6 @@ public interface LifelineOccurrence {
 	 * (e.g. a long constraint which is wrapped into  multiple lines).
 	 * If the return value is &lt;= 0 then the value is ignored.
 	 */
-	public double getAdditionalYHeight(DrawHandler drawHandler, PointDouble size);
+	double getAdditionalYHeight(DrawHandler drawHandler, PointDouble size);
 
 }

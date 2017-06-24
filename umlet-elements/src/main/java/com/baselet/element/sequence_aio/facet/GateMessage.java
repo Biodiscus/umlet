@@ -91,7 +91,7 @@ public class GateMessage extends Message {
 			double padding = lifelineHorizontalPadding * affectedLifelineCount;
 			return (neededWidth - padding) * (affectedLifelineCount + 1) / (affectedLifelineCount + 0.5);
 		}
-	};
+	}
 
 	@Override
 	protected void getEveryAdditionalYHeightSelfMessage(DrawHandler drawHandler, HorizontalDrawingInfo hInfo, double defaultTickHeight, Map<Integer, Double> ret) {

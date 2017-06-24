@@ -32,19 +32,19 @@ public class SeqSelfMessage extends OldGridElement {
 		int size_3d = (int) (10 * zoom);
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRect(0, size_3d, getRectangle().width - size_3d - 1, getRectangle().height - size_3d - 1);
+		g2.fillRect(0, size_3d, getRectangle().getWidth() - size_3d - 1, getRectangle().getHeight() - size_3d - 1);
 
 		Polygon p = new Polygon();
-		p.addPoint(getRectangle().width - size_3d - 1, getRectangle().height - 1);
-		p.addPoint(getRectangle().width - size_3d - 1, size_3d);
-		p.addPoint(getRectangle().width - 1, 0);
-		p.addPoint(getRectangle().width - 1, getRectangle().height - size_3d - 1);
+		p.addPoint(getRectangle().getWidth() - size_3d - 1, getRectangle().getHeight() - 1);
+		p.addPoint(getRectangle().getWidth() - size_3d - 1, size_3d);
+		p.addPoint(getRectangle().getWidth() - 1, 0);
+		p.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() - size_3d - 1);
 
 		Polygon p1 = new Polygon();
 		p1.addPoint(0, size_3d);
 		p1.addPoint(size_3d, 0);
-		p1.addPoint(getRectangle().width - 1, 0);
-		p1.addPoint(getRectangle().width - size_3d - 1, size_3d);
+		p1.addPoint(getRectangle().getWidth() - 1, 0);
+		p1.addPoint(getRectangle().getWidth() - size_3d - 1, size_3d);
 
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 		g2.setColor(new Color(230, 230, 230));
@@ -60,13 +60,13 @@ public class SeqSelfMessage extends OldGridElement {
 			g2.setColor(fgColorBase);
 		}
 
-		g2.drawRect(0, size_3d, getRectangle().width - size_3d - 1, getRectangle().height - size_3d - 1);
+		g2.drawRect(0, size_3d, getRectangle().getWidth() - size_3d - 1, getRectangle().getHeight() - size_3d - 1);
 		// draw polygons by hand to avoid double painted line
 		g2.drawLine(0, size_3d, size_3d, 0);
-		g2.drawLine(size_3d, 0, getRectangle().width - 1, 0);
-		g2.drawLine(getRectangle().width - 1, 0, getRectangle().width - 1, getRectangle().height - size_3d - 1);
-		g2.drawLine(getRectangle().width - 1, getRectangle().height - size_3d - 1, getRectangle().width - size_3d - 1, getRectangle().height - 1);
-		g2.drawLine(getRectangle().width - size_3d - 1, size_3d, getRectangle().width - 1, 0);
+		g2.drawLine(size_3d, 0, getRectangle().getWidth() - 1, 0);
+		g2.drawLine(getRectangle().getWidth() - 1, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - size_3d - 1);
+		g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - size_3d - 1, getRectangle().getWidth() - size_3d - 1, getRectangle().getHeight() - 1);
+		g2.drawLine(getRectangle().getWidth() - size_3d - 1, size_3d, getRectangle().getWidth() - 1, 0);
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 		int yPos = (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
@@ -76,7 +76,7 @@ public class SeqSelfMessage extends OldGridElement {
 			yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
 			if (s.startsWith("center:")) {
 				s = s.substring(7);
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().width - size_3d - 1) / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().getWidth() - size_3d - 1) / 2.0, yPos, AlignHorizontal.CENTER);
 			}
 			else {
 				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() / 2), yPos, AlignHorizontal.LEFT);

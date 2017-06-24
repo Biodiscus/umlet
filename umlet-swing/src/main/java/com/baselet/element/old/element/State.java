@@ -25,7 +25,7 @@ public class State extends OldGridElement {
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRoundRect(0, 0, getRectangle().width - 1, getRectangle().height - 1, (int) (30 * zoom), (int) (30 * zoom));
+		g2.fillRoundRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, (int) (30 * zoom), (int) (30 * zoom));
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -34,7 +34,7 @@ public class State extends OldGridElement {
 			g2.setColor(fgColorBase);
 		}
 
-		g2.drawRoundRect(0, 0, getRectangle().width - 1, getRectangle().height - 1, (int) (30 * zoom), (int) (30 * zoom));
+		g2.drawRoundRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, (int) (30 * zoom), (int) (30 * zoom));
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 		int yPos = 0;
@@ -44,7 +44,7 @@ public class State extends OldGridElement {
 		}
 		else {
 			// A.Mueller end
-			yPos = getRectangle().height / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
+			yPos = getRectangle().getHeight() / 2 - tmp.size() * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
 		}
 
 		boolean CENTER = true;
@@ -54,14 +54,14 @@ public class State extends OldGridElement {
 			// A.Mueller start
 			if (s.equals("--")) {
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
-				g2.drawLine(0, yPos, getRectangle().width, yPos);
+				g2.drawLine(0, yPos, getRectangle().getWidth(), yPos);
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 				CENTER = false;
 			}
 			else if (s.equals("-.")) {
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 				g2.setStroke(Utils.getStroke(LineType.DASHED, 1));
-				g2.drawLine(0, yPos, getRectangle().width, yPos);
+				g2.drawLine(0, yPos, getRectangle().getWidth(), yPos);
 				g2.setStroke(Utils.getStroke(LineType.SOLID, 1));
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 				CENTER = false;
@@ -69,7 +69,7 @@ public class State extends OldGridElement {
 			else {
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
 				if (CENTER) {
-					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				}
 				else {
 					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() / 2), yPos, AlignHorizontal.LEFT);

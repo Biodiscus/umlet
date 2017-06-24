@@ -9,13 +9,13 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @return the start (left) x coordinate of the lifeline without any padding,
 	 * i.e. the left x coordinate of the rectangular head (if created at start)
 	 */
-	public double getHorizontalStart();
+	double getHorizontalStart();
 
 	/**
 	 * @return the end (right) x coordinate of the lifeline without any padding,
 	 * i.e. the right x coordinate of the rectangular head (if created at start)
 	 */
-	public double getHorizontalEnd();
+	double getHorizontalEnd();
 
 	/**
 	 * Returns the left x coordinate with respect to the left padding.
@@ -24,7 +24,7 @@ public interface LifelineHorizontalDrawingInfo {
 	 * (e.g. from a combined fragment border on the left side) it is equal to getHorizontalStart()
 	 * @see #getHorizontalStart()
 	 */
-	public double getHorizontalStart(int tick);
+	double getHorizontalStart(int tick);
 
 	/**
 	 * Returns the right x coordinate with respect to the right padding.
@@ -33,14 +33,14 @@ public interface LifelineHorizontalDrawingInfo {
 	 * (e.g. from a combined fragment border on the right side) it is equal to getHorizontalEnd()
 	 * @see #getHorizontalEnd()
 	 */
-	public double getHorizontalEnd(int tick);
+	double getHorizontalEnd(int tick);
 
 	/**
 	 * Center of the lifeline i.e. the dashed line, this must not lie at <code>getHorizontalStart + getWidth / 2</code>
 	 * but always is <code>getSymmetricHorizontalStart + getSymmetricWidth / 2</code>
 	 * @return the center of the lifeline
 	 */
-	public double getHorizontalCenter();
+	double getHorizontalCenter();
 
 	/**
 	 * <code>getHorizontalEnd - getHorizontalStart</code>
@@ -48,7 +48,7 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @see #getHorizontalStart()
 	 * @see #getHorizontalEnd()
 	 */
-	public double getWidth();
+	double getWidth();
 
 	/**
 	 * <code>getHorizontalEnd - getHorizontalStart</code>
@@ -57,7 +57,7 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @see #getHorizontalStart(int)
 	 * @see #getHorizontalEnd(int)
 	 */
-	public double getWidth(int tick);
+	double getWidth(int tick);
 
 	/**
 	 * Returns the  left x coordinate with respect to the max(left padding, right padding).
@@ -70,7 +70,7 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @see #getHorizontalStart(int)
 	 * @see #getSymmetricHorizontalEnd(int)
 	 */
-	public double getSymmetricHorizontalStart(int tick);
+	double getSymmetricHorizontalStart(int tick);
 
 	/**
 	 * Returns the  right x coordinate with respect to the max(left padding, right padding).
@@ -83,7 +83,7 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @see #getHorizontalEnd(int)
 	 * @see #getSymmetricHorizontalStart(int)
 	 */
-	public double getSymmetricHorizontalEnd(int tick);
+	double getSymmetricHorizontalEnd(int tick);
 
 	/**
 	 * <code>getSymmetricHorizontalEnd - getSymmetricHorizontalStart</code>
@@ -92,6 +92,6 @@ public interface LifelineHorizontalDrawingInfo {
 	 * @see #getSymmetricHorizontalStart(int)
 	 * @see #getSymmetricHorizontalEnd(int)
 	 */
-	public double getSymmetricWidth(int tick);
+	double getSymmetricWidth(int tick);
 
 }

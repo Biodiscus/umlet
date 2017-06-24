@@ -42,7 +42,7 @@ public class PackageLayout extends Layout {
 
 		Rectangle x = new Rectangle();
 		for (SortableElement pack : packList.keySet()) {
-			pack.getElement().setLocation(10, 10 + x.y + x.height);
+			pack.getElement().setLocation(10, 10 + x.getY() + x.getHeight());
 			x = pack.getElement().getRectangle();
 		}
 
@@ -56,7 +56,7 @@ public class PackageLayout extends Layout {
 		for (SortableElement s : packElements) {
 			Rectangle loc = s.getElement().getRectangle();
 			Rectangle packLoc = pack.getElement().getRectangle();
-			s.getElement().setLocation(loc.x + packLoc.x, loc.y + packLoc.y + ADJUST_TO_PACKAGE_HEAD);
+			s.getElement().setLocation(loc.getX() + packLoc.getX(), loc.getY() + packLoc.getY() + ADJUST_TO_PACKAGE_HEAD);
 		}
 	}
 

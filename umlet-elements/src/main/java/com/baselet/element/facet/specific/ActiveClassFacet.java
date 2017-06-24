@@ -18,7 +18,7 @@ public class ActiveClassFacet extends FirstRunKeyValueFacet {
 
 	private ActiveClassFacet() {}
 
-	private static enum ClassTypeEnum {
+	private enum ClassTypeEnum {
 		ACTCLASS
 	}
 

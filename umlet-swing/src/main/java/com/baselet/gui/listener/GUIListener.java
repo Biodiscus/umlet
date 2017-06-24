@@ -86,7 +86,7 @@ public class GUIListener implements KeyListener {
 	}
 
 	private Point getOriginalPos(int diffx, int diffy, GridElement ge) {
-		return new Point(ge.getRectangle().x - diffx, ge.getRectangle().y - diffy);
+		return new Point(ge.getRectangle().getX() - diffx, ge.getRectangle().getY() - diffy);
 	}
 
 	@Override

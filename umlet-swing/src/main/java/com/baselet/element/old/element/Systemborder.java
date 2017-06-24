@@ -25,7 +25,7 @@ public class Systemborder extends OldGridElement {
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);
-		g2.fillRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.fillRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 		g2.setComposite(composites[0]);
 		if (HandlerElementMap.getHandlerForElement(this).getDrawPanel().getSelector().isSelected(this)) {
 			g2.setColor(fgColor);
@@ -33,7 +33,7 @@ public class Systemborder extends OldGridElement {
 		else {
 			g2.setColor(fgColorBase);
 		}
-		g2.drawRect(0, 0, getRectangle().width - 1, getRectangle().height - 1);
+		g2.drawRect(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 		int yPos = (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
@@ -44,10 +44,10 @@ public class Systemborder extends OldGridElement {
 			String s = tmp.elementAt(i);
 			if (s.startsWith("center:") && !s.equals("center:")) {
 				if (tmp.size() == 1) {
-					yPos = (getRectangle().height - 1) / 2 - (int) (10 * zoom);
+					yPos = (getRectangle().getHeight() - 1) / 2 - (int) (10 * zoom);
 				}
 				else {
-					yPos = (getRectangle().height - 1) / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * (tmp.size() / 2) - (int) (10 * zoom);
+					yPos = (getRectangle().getHeight() - 1) / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * (tmp.size() / 2) - (int) (10 * zoom);
 				}
 				center = true;
 				s = s.replace("center:", "");
@@ -55,7 +55,7 @@ public class Systemborder extends OldGridElement {
 			else if (s.startsWith("bottomleft:") && !s.equals("bottomleft:")) {
 				downleft = true;
 				s = s.replace("bottomleft:", "");
-				yPos = getRectangle().height - 1 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
+				yPos = getRectangle().getHeight() - 1 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
 			}
 			else if (s.startsWith("topcenter:") && !s.equals("topcenter:")) {
 				upcenter = true;
@@ -64,7 +64,7 @@ public class Systemborder extends OldGridElement {
 			}
 			if (center) {
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().width - 1) / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().getWidth() - 1) / 2.0, yPos, AlignHorizontal.CENTER);
 				yPos += 2 * HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else if (downleft) {
@@ -72,7 +72,7 @@ public class Systemborder extends OldGridElement {
 			}
 			else if (upcenter) {
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().width - 1) / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (getRectangle().getWidth() - 1) / 2.0, yPos, AlignHorizontal.CENTER);
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else {

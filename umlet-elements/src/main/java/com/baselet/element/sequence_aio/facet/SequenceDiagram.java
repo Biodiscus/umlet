@@ -216,7 +216,7 @@ public class SequenceDiagram {
 		return maxHeight;
 	}
 
-	public static interface DoubleConverter {
-		public double convert(double value);
+	public interface DoubleConverter {
+		double convert(double value);
 	}
 }

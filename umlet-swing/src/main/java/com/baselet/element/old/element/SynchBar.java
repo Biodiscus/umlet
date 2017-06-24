@@ -35,19 +35,19 @@ public class SynchBar extends OldGridElement {
 		}
 
 		// g2.fillRect(0,7,this.getWidth(),this.getHeight()-15);
-		g2.fillRect(0, (int) (7 * zoom), getRectangle().width, (int) (5 * zoom));
+		g2.fillRect(0, (int) (7 * zoom), getRectangle().getWidth(), (int) (5 * zoom));
 	}
 
 	public int doesCoordinateAppearToBeConnectedToMe(Point p) {
 		int ret = 0;
-		int tmpX = p.x - getRectangle().x;
-		int tmpY = p.y - getRectangle().y;
+		int tmpX = (int)p.getX() - getRectangle().getX();
+		int tmpY = (int)p.getY() - getRectangle().getY();
 
-		if (tmpX > -4 && tmpX < getRectangle().width + 4) {
+		if (tmpX > -4 && tmpX < getRectangle().getWidth() + 4) {
 			if (tmpY > 0 && tmpY < 8) {
 				ret += 1;
 			}
-			if (tmpY > getRectangle().height - 16 && tmpY < getRectangle().height + 0) {
+			if (tmpY > getRectangle().getHeight() - 16 && tmpY < getRectangle().getHeight() + 0) {
 				ret += 4;
 			}
 		}

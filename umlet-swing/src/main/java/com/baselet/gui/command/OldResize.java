@@ -72,7 +72,7 @@ public class OldResize extends Command {
 		StickingPolygon from = this.entity.generateStickingBorder(entityRect);
 
 		// AB: FIXED: Use this.diffw/this.diffh instead of diffw/diffh as calculation base
-		Rectangle newRect = new Rectangle(entityRect.x + diffx, entityRect.y + diffy, entityRect.width + getDiffw(), entityRect.height + getDiffh());
+		Rectangle newRect = new Rectangle(entityRect.getX() + diffx, entityRect.getY() + diffy, entityRect.getWidth() + getDiffw(), entityRect.getHeight() + getDiffh());
 		StickingPolygon to = this.entity.generateStickingBorder(newRect);
 
 		if (first != null) {
@@ -92,10 +92,10 @@ public class OldResize extends Command {
 			r = lp.getRelation();
 			p = r.getLinePoints().get(lp.getLinePointId());
 
-			diff = from.getLine(lp.getStickingLineId()).diffToLine(to.getLine(lp.getStickingLineId()), p.x + r.getRectangle().x, p.y + r.getRectangle().y);
+			diff = from.getLine(lp.getStickingLineId()).diffToLine(to.getLine(lp.getStickingLineId()), p.getX() + r.getRectangle().getX(), p.getY() + r.getRectangle().getY());
 
 			DiagramHandler handler = HandlerElementMap.getHandlerForElement(entity);
-			move_commands.add(new OldMoveLinePoint(lp.getRelation(), lp.getLinePointId(), handler.realignToGrid(diff.x), handler.realignToGrid(diff.y)));
+			move_commands.add(new OldMoveLinePoint(lp.getRelation(), lp.getLinePointId(), handler.realignToGrid(diff.getX()), handler.realignToGrid(diff.getY())));
 		}
 
 	}
@@ -105,7 +105,7 @@ public class OldResize extends Command {
 		super.execute(handler);
 
 		entity.setLocationDifference(getDiffx(), getDiffy());
-		entity.setSize(entity.getRectangle().width + getDiffw(), entity.getRectangle().height + getDiffh());
+		entity.setSize(entity.getRectangle().getWidth() + getDiffw(), entity.getRectangle().getHeight() + getDiffh());
 		if (SharedConfig.getInstance().isStickingEnabled()) {
 			for (OldMoveLinePoint c : move_commands) {
 				c.execute(handler);
@@ -117,7 +117,7 @@ public class OldResize extends Command {
 	public void undo(DiagramHandler handler) {
 		super.undo(handler);
 		entity.setLocationDifference(-getDiffx(), -getDiffy());
-		entity.setSize(entity.getRectangle().width + -getDiffw(), entity.getRectangle().height + -getDiffh());
+		entity.setSize(entity.getRectangle().getWidth() + -getDiffw(), entity.getRectangle().getHeight() + -getDiffh());
 		for (OldMoveLinePoint c : move_commands) {
 			c.undo(handler);
 		}

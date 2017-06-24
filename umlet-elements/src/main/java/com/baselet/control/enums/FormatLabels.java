@@ -7,7 +7,7 @@ public enum FormatLabels {
 
 	private String value;
 
-	private FormatLabels(String value) {
+	FormatLabels(String value) {
 		this.value = value;
 	}
 

@@ -87,7 +87,7 @@ public class OutputHandler {
 
 	private static void exportEps(OutputStream ostream, Collection<GridElement> entities, FontHandler diagramFont) throws IOException {
 		Rectangle bounds = DrawPanel.getContentBounds(Config.getInstance().getPrintPadding(), entities);
-		EpsGraphics2D graphics2d = new EpsGraphics2D(Program.getInstance().getProgramName() + " Diagram", ostream, 0, 0, bounds.width, bounds.height);
+		EpsGraphics2D graphics2d = new EpsGraphics2D(Program.getInstance().getProgramName() + " Diagram", ostream, 0, 0, bounds.getWidth(), bounds.getHeight());
 		setGraphicsBorders(bounds, graphics2d);
 		paintEntitiesIntoGraphics2D(graphics2d, entities, diagramFont);
 		graphics2d.flush();
@@ -127,7 +127,7 @@ public class OutputHandler {
 		paintEntitiesIntoGraphics2D(graphics2d, entities, diagramFont);
 
 		Element root = graphics2d.getRoot();
-		root.setAttributeNS(null, "viewBox", String.format("%d %d %d %d", bounds.x, bounds.y, bounds.width, bounds.height));
+		root.setAttributeNS(null, "viewBox", String.format("%d %d %d %d", bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()));
 		Writer out = new OutputStreamWriter(ostream, "UTF-8"); // Stream out SVG to the standard output using UTF-8 character to byte encoding
 		graphics2d.stream(root, out, false, false);
 		graphics2d.dispose();
@@ -142,7 +142,7 @@ public class OutputHandler {
 	public static BufferedImage createImageForGridElements(Collection<GridElement> entities, FontHandler diagramFont) {
 
 		Rectangle bounds = DrawPanel.getContentBounds(Config.getInstance().getPrintPadding(), entities);
-		BufferedImage im = new BufferedImage(bounds.width == 0 ? 1 : bounds.width, bounds.height == 0 ? 1 : bounds.height, BufferedImage.TYPE_INT_RGB);
+		BufferedImage im = new BufferedImage(bounds.getWidth() == 0 ? 1 : bounds.getWidth(), bounds.getHeight() == 0 ? 1 : bounds.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics2d = im.createGraphics();
 		graphics2d.setRenderingHints(Utils.getUxRenderingQualityHigh(true));
 
@@ -154,10 +154,10 @@ public class OutputHandler {
 	}
 
 	private static void setGraphicsBorders(Rectangle bounds, Graphics2D graphics2d) {
-		graphics2d.translate(-bounds.x, -bounds.y);
-		graphics2d.clipRect(bounds.x, bounds.y, bounds.width, bounds.height);
+		graphics2d.translate(-bounds.getX(), -bounds.getY());
+		graphics2d.clipRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		graphics2d.setColor(Color.white);
-		graphics2d.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+		graphics2d.fillRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 	}
 
 	private static boolean isImageExtension(String ext) {

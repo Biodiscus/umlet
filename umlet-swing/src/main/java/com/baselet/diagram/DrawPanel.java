@@ -152,10 +152,10 @@ public class DrawPanel extends JLayeredPane implements Printable {
 		int maxy = 0;
 
 		for (GridElement e : entities) {
-			minx = Math.min(minx, e.getRectangle().x - borderSpace);
-			miny = Math.min(miny, e.getRectangle().y - borderSpace);
-			maxx = Math.max(maxx, e.getRectangle().x + e.getRectangle().width + borderSpace);
-			maxy = Math.max(maxy, e.getRectangle().y + e.getRectangle().height + borderSpace);
+			minx = Math.min(minx, e.getRectangle().getX() - borderSpace);
+			miny = Math.min(miny, e.getRectangle().getY() - borderSpace);
+			maxx = Math.max(maxx, e.getRectangle().getX() + e.getRectangle().getWidth() + borderSpace);
+			maxy = Math.max(maxy, e.getRectangle().getY() + e.getRectangle().getHeight() + borderSpace);
 		}
 		return new Rectangle(minx, miny, maxx - minx, maxy - miny);
 	}
@@ -172,13 +172,13 @@ public class DrawPanel extends JLayeredPane implements Printable {
 			Rectangle bounds = getContentBounds(Config.getInstance().getPrintPadding(), getGridElements());
 			g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 			AffineTransform t = g2d.getTransform();
-			double scale = Math.min(pageFormat.getImageableWidth() / bounds.width,
-					pageFormat.getImageableHeight() / bounds.height);
+			double scale = Math.min(pageFormat.getImageableWidth() / bounds.getWidth(),
+					pageFormat.getImageableHeight() / bounds.getHeight());
 			if (scale < 1) {
 				t.scale(scale, scale);
 				g2d.setTransform(t);
 			}
-			g2d.translate(-bounds.x, -bounds.y);
+			g2d.translate(-bounds.getX(), -bounds.getY());
 			paint(g2d);
 			currentManager = RepaintManager.currentManager(this);
 			currentManager.setDoubleBufferingEnabled(true);
@@ -330,7 +330,7 @@ public class DrawPanel extends JLayeredPane implements Printable {
 		moveOrigin(newX, newY);
 
 		for (GridElement ge : getGridElements()) {
-			ge.setLocation(handler.realignToGrid(false, ge.getRectangle().x - newX), handler.realignToGrid(false, ge.getRectangle().y - newY));
+			ge.setLocation(handler.realignToGrid(false, ge.getRectangle().getX() - newX), handler.realignToGrid(false, ge.getRectangle().getY() - newY));
 		}
 
 		changeViewPosition(-newX, -newY);

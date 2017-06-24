@@ -22,10 +22,10 @@ public class ThreeWayRelation extends OldGridElement {
 		g2.setColor(fgColor);
 
 		Polygon poly = new Polygon();
-		poly.addPoint(getRectangle().width / 2, 0);
-		poly.addPoint(getRectangle().width, getRectangle().height / 2);
-		poly.addPoint(getRectangle().width / 2, getRectangle().height - 1);
-		poly.addPoint(0, getRectangle().height / 2);
+		poly.addPoint(getRectangle().getWidth() / 2, 0);
+		poly.addPoint(getRectangle().getWidth(), getRectangle().getHeight() / 2);
+		poly.addPoint(getRectangle().getWidth() / 2, getRectangle().getHeight() - 1);
+		poly.addPoint(0, getRectangle().getHeight() / 2);
 
 		g2.setComposite(composites[1]);
 		g2.setColor(bgColor);

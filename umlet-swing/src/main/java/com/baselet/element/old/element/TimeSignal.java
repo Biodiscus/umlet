@@ -33,9 +33,9 @@ public class TimeSignal extends OldGridElement {
 		boolean ADAPT_SIZE = false;
 
 		int x0, y0, b, h;
-		x0 = (int) (getRectangle().width / 2.0 - 20 * zoom);
+		x0 = (int) (getRectangle().getWidth() / 2.0 - 20 * zoom);
 		y0 = 0;
-		b = (int) (getRectangle().width / 2.0 + 20 * zoom);
+		b = (int) (getRectangle().getWidth() / 2.0 + 20 * zoom);
 		h = (int) (40 * zoom);
 
 		// g2.drawLine(x0,y0,b,y0);
@@ -71,7 +71,7 @@ public class TimeSignal extends OldGridElement {
 			String s = tmp.elementAt(i);
 			if (s.equals("--")) {
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
-				g2.drawLine(getRectangle().width / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos, getRectangle().width / 2 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos);
+				g2.drawLine(getRectangle().getWidth() / 2 - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos, getRectangle().getWidth() / 2 + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() * 4, yPos);
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 			else {
@@ -79,12 +79,12 @@ public class TimeSignal extends OldGridElement {
 				TextLayout l = new TextLayout(s, HandlerElementMap.getHandlerForElement(this).getFontHandler().getFont(), g2.getFontRenderContext());
 				Rectangle2D r2d = l.getBounds();
 				int width = (int) r2d.getWidth();
-				int xPos = getRectangle().width / 2 - width / 2;
+				int xPos = getRectangle().getWidth() / 2 - width / 2;
 				if (xPos < 0) {
 					ADAPT_SIZE = true;
 					break;
 				}
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 		}
@@ -94,7 +94,7 @@ public class TimeSignal extends OldGridElement {
 			new OldResize(this, 0, 0, HandlerElementMap.getHandlerForElement(this).getGridSize(), 0).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}
-		if (yPos > getRectangle().height) {
+		if (yPos > getRectangle().getHeight()) {
 			new OldResize(this, 0, 0, 0, 20).execute(HandlerElementMap.getHandlerForElement(this));
 			return;
 		}

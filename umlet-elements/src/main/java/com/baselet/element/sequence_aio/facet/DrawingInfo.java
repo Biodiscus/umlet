@@ -5,6 +5,6 @@ package com.baselet.element.sequence_aio.facet;
  */
 public interface DrawingInfo extends HorizontalDrawingInfo, VerticalDrawingInfo {
 
-	public LifelineDrawingInfo getDrawingInfo(Lifeline lifeline);
+	LifelineDrawingInfo getDrawingInfo(Lifeline lifeline);
 
 }

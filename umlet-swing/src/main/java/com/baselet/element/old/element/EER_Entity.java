@@ -57,17 +57,17 @@ public class EER_Entity extends OldGridElement {
 			}
 		}
 		poly.addPoint(0, 0);
-		poly.addPoint(getRectangle().width - 1, 0);
+		poly.addPoint(getRectangle().getWidth() - 1, 0);
 		if (CENTER) {
 			hasAttributes = false; // see getStickingBorder()
-			ySave = getRectangle().height;
-			poly.addPoint(getRectangle().width - 1, getRectangle().height - 1);
-			poly.addPoint(0, getRectangle().height - 1);
+			ySave = getRectangle().getHeight();
+			poly.addPoint(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+			poly.addPoint(0, getRectangle().getHeight() - 1);
 		}
 		else {
 			hasAttributes = true; // see getStickingBorder()
 			g.drawLine((int) (10 * zoom), ySave, (int) (10 * zoom), yPos + (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts());
-			poly.addPoint(getRectangle().width - 1, ySave);
+			poly.addPoint(getRectangle().getWidth() - 1, ySave);
 			poly.addPoint(0, ySave);
 		}
 
@@ -85,10 +85,10 @@ public class EER_Entity extends OldGridElement {
 
 		if (drawInnerRect) {
 			if (CENTER) {
-				g.drawRect((int) (3 * zoom), (int) (3 * zoom), getRectangle().width - (int) (7 * zoom), getRectangle().height - (int) (7 * zoom));
+				g.drawRect((int) (3 * zoom), (int) (3 * zoom), getRectangle().getWidth() - (int) (7 * zoom), getRectangle().getHeight() - (int) (7 * zoom));
 			}
 			else {
-				g.drawRect((int) (3 * zoom), (int) (3 * zoom), getRectangle().width - (int) (7 * zoom), ySave - (int) (6 * zoom));
+				g.drawRect((int) (3 * zoom), (int) (3 * zoom), getRectangle().getWidth() - (int) (7 * zoom), ySave - (int) (6 * zoom));
 			}
 		}
 
@@ -111,7 +111,7 @@ public class EER_Entity extends OldGridElement {
 						drawInnerRect = true;
 						s1 = s1.substring(2);
 					}
-					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s1, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s1, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				}
 				else {
 					HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), yPos, AlignHorizontal.LEFT);

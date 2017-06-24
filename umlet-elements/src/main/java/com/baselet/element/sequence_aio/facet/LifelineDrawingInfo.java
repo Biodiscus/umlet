@@ -9,7 +9,7 @@ import com.baselet.control.basics.SortedMergedLine1DList;
 public interface LifelineDrawingInfo extends LifelineHorizontalDrawingInfo, VerticalDrawingInfo {
 
 	// these two methods are not in the VerticalDrawingInfo because they are different for each lifeline
-	public SortedMergedLine1DList getInterruptedAreas();
+	SortedMergedLine1DList getInterruptedAreas();
 
-	public void addInterruptedArea(Line1D llInterruption);
+	void addInterruptedArea(Line1D llInterruption);
 }

@@ -30,8 +30,6 @@ public interface GridElement extends HasPanelAttributes {
 
 	Set<Direction> getResizeArea(int x, int y);
 
-	StickingPolygon generateStickingBorder(Rectangle rect);
-
 	StickingPolygon generateStickingBorder();
 
 	/**
@@ -63,7 +61,7 @@ public interface GridElement extends HasPanelAttributes {
 
 	ElementId getId();
 
-	void drag(Collection<Direction> resizeDirection, int diffX, int diffY, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable);
+	void drag(Collection<Direction> resizeDirection, Point diffPos, Point mousePosBeforeDrag, boolean isShiftKeyDown, boolean firstDrag, StickableMap stickables, boolean undoable);
 
 	boolean isSelectableOn(Point point);
 
@@ -71,7 +69,7 @@ public interface GridElement extends HasPanelAttributes {
 
 	List<String> getPanelAttributesAsList();
 
-	void setRectangleDifference(int diffx, int diffy, int diffw, int diffh, boolean firstDrag, StickableMap stickables, boolean undoable);
+	void setRectangleDifference(Point diffPos, Point diffSize, boolean firstDrag, StickableMap stickables, boolean undoable);
 
 	void undoDrag();
 

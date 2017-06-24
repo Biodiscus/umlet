@@ -20,7 +20,7 @@ public class Timer extends NewGridElement {
 	private final StickingPolygonGenerator timerStickingPolygonGenerator = new StickingPolygonGenerator() {
 		@Override
 		public StickingPolygon generateStickingBorder(Rectangle rect) {
-			StickingPolygon p = new StickingPolygon(rect.x, rect.y);
+			StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
 			p.addPoint(xClock(), 0);
 			p.addPoint(x2Clock(), CLOCK_DIM);
 			p.addPoint(xClock(), CLOCK_DIM);

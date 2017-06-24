@@ -4,7 +4,7 @@ public interface GridElementDeprecatedAddons {
 
 	void doBeforeExport();
 
-	public static final GridElementDeprecatedAddons NONE = new GridElementDeprecatedAddons() {
+	GridElementDeprecatedAddons NONE = new GridElementDeprecatedAddons() {
 		@Override
 		public void doBeforeExport() {}
 	};

@@ -11,8 +11,8 @@ public class SimpleStickingPolygonGenerator implements StickingPolygonGenerator 
 
 	@Override
 	public StickingPolygon generateStickingBorder(Rectangle rect) {
-		StickingPolygon p = new StickingPolygon(rect.x, rect.y);
-		p.addRectangle(0, 0, rect.width, rect.height);
+		StickingPolygon p = new StickingPolygon(rect.getX(), rect.getY());
+		p.addRectangle(0, 0, rect.getWidth(), rect.getHeight());
 		return p;
 	}
 }

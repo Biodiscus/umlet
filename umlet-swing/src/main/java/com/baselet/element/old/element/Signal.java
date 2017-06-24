@@ -21,7 +21,7 @@ public class Signal extends OldGridElement {
 
 		Vector<String> tmp = Utils.decomposeStrings(getPanelAttributes());
 		int yPos = 0;
-		yPos = getRectangle().height / 2 - (tmp.size() - 1) * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
+		yPos = getRectangle().getHeight() / 2 - (tmp.size() - 1) * (int) (HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() + HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts()) / 2;
 
 		int signalType = 0;
 
@@ -38,36 +38,36 @@ public class Signal extends OldGridElement {
 			}
 			else { // draw string
 				yPos += (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize();
-				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().width / 2.0, yPos, AlignHorizontal.CENTER);
+				HandlerElementMap.getHandlerForElement(this).getFontHandler().writeText(g2, s, getRectangle().getWidth() / 2.0, yPos, AlignHorizontal.CENTER);
 				yPos += HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts();
 			}
 		}
 
 		if (signalType == 1) { // send signal
-			g2.drawLine(0, 0, getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
-			g2.drawLine(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().height - 1, 0, getRectangle().height - 1);
-			g2.drawLine(getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().width - 1, getRectangle().height / 2);
-			g2.drawLine(getRectangle().width, getRectangle().height / 2, getRectangle().width - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().height);
-			g2.drawLine(0, getRectangle().height - 1, 0, 0);
+			g2.drawLine(0, 0, getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0);
+			g2.drawLine(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().getHeight() - 1, 0, getRectangle().getHeight() - 1);
+			g2.drawLine(getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), 0, getRectangle().getWidth() - 1, getRectangle().getHeight() / 2);
+			g2.drawLine(getRectangle().getWidth(), getRectangle().getHeight() / 2, getRectangle().getWidth() - (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize(), getRectangle().getHeight());
+			g2.drawLine(0, getRectangle().getHeight() - 1, 0, 0);
 		}
 		else if (signalType == 2) { // accept signal
-			g2.drawLine(0, 0, getRectangle().width, 0);
-			g2.drawLine(getRectangle().width - 1, getRectangle().height - 1, 0, getRectangle().height - 1);
-			g2.drawLine(0, 0, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() - 2, getRectangle().height / 2);
-			g2.drawLine((int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() - 2, getRectangle().height / 2, 0, getRectangle().height);
-			g2.drawLine(getRectangle().width - 1, getRectangle().height - 1, getRectangle().width - 1, 0);
+			g2.drawLine(0, 0, getRectangle().getWidth(), 0);
+			g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, 0, getRectangle().getHeight() - 1);
+			g2.drawLine(0, 0, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() - 2, getRectangle().getHeight() / 2);
+			g2.drawLine((int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getFontSize() - 2, getRectangle().getHeight() / 2, 0, getRectangle().getHeight());
+			g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, getRectangle().getWidth() - 1, 0);
 		}
 		else if (signalType == 3) { // time signal
-			g2.drawLine(0, 0, getRectangle().width, 0);
-			g2.drawLine(getRectangle().width - 1, getRectangle().height - 1, 0, getRectangle().height - 1);
-			g2.drawLine(0, 0, getRectangle().width - 1, getRectangle().height - 1);
-			g2.drawLine(getRectangle().width - 1, 0, 0, getRectangle().height - 1);
+			g2.drawLine(0, 0, getRectangle().getWidth(), 0);
+			g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, 0, getRectangle().getHeight() - 1);
+			g2.drawLine(0, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+			g2.drawLine(getRectangle().getWidth() - 1, 0, 0, getRectangle().getHeight() - 1);
 		}
 		else { // NO signal specified
-			g2.drawLine(0, 0, getRectangle().width, 0);
-			g2.drawLine(getRectangle().width - 1, getRectangle().height - 1, 0, getRectangle().height - 1);
-			g2.drawLine(getRectangle().width - 1, 0, getRectangle().width - 1, getRectangle().height - 1);
-			g2.drawLine(0, getRectangle().height - 1, 0, 0);
+			g2.drawLine(0, 0, getRectangle().getWidth(), 0);
+			g2.drawLine(getRectangle().getWidth() - 1, getRectangle().getHeight() - 1, 0, getRectangle().getHeight() - 1);
+			g2.drawLine(getRectangle().getWidth() - 1, 0, getRectangle().getWidth() - 1, getRectangle().getHeight() - 1);
+			g2.drawLine(0, getRectangle().getHeight() - 1, 0, 0);
 		}
 
 	}
@@ -75,22 +75,22 @@ public class Signal extends OldGridElement {
 	public int doesCoordinateAppearToBeConnectedToMe(Point p) {
 		int ret = 0;
 
-		int tmpX = p.x - getRectangle().x;
-		int tmpY = p.y - getRectangle().y;
+		int tmpX = p.x - getRectangle().getX();
+		int tmpY = p.y - getRectangle().getY();
 
-		if (tmpX > -4 && tmpX < getRectangle().width + 4) {
+		if (tmpX > -4 && tmpX < getRectangle().getWidth() + 4) {
 			if (tmpY > -4 && tmpY < 4) {
 				ret += 1;
 			}
-			if (tmpY > getRectangle().height - 4 && tmpY < getRectangle().height + 4) {
+			if (tmpY > getRectangle().getHeight() - 4 && tmpY < getRectangle().getHeight() + 4) {
 				ret += 4;
 			}
 		}
-		if (tmpY > -4 && tmpY < getRectangle().height + 4) {
+		if (tmpY > -4 && tmpY < getRectangle().getHeight() + 4) {
 			if (tmpX > -4 && tmpX < 12) {
 				ret += 8;
 			}
-			if (tmpX > getRectangle().width - 4 && tmpX < getRectangle().width + 4) {
+			if (tmpX > getRectangle().getWidth() - 4 && tmpX < getRectangle().getWidth() + 4) {
 				ret += 2;
 			}
 		}

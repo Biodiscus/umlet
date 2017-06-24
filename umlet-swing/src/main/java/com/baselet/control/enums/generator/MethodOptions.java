@@ -4,7 +4,7 @@ public enum MethodOptions {
 	ALL("all"), NONE("none"), PUBLIC("public only");
 	private final String label;
 
-	private MethodOptions(String label) {
+	MethodOptions(String label) {
 		this.label = label;
 	}
 
