@@ -55,7 +55,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- better assertions than junit and hamcrest; update to v2.3.0 if Umlet switches to Java7 -->
 		<dependency>
@@ -68,7 +67,6 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -288,7 +286,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.1</version>
+						<version>3.6.1</version>
 						<configuration>
 							<compilerId>javac-with-errorprone</compilerId>
 							<forceJavacCompilerUse>true</forceJavacCompilerUse>
