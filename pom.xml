@@ -323,6 +323,7 @@
 							</execution>
 						</executions>
 						<configuration>
+							<failOnError>false</failOnError>
 							<excludeFilterFile>${basedir}/src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
 						</configuration>
 					</plugin>
