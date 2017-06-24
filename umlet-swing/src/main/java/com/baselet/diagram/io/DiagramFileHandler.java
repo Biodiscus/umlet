@@ -319,7 +319,7 @@ public class DiagramFileHandler {
 		save(file, false); // If save is called without a parameter it uses the class variable "file"
 	}
 
-	private void save(File saveToFile, boolean tempFile) throws UnsupportedEncodingException, FileNotFoundException {
+	public void save(File saveToFile, boolean tempFile) throws UnsupportedEncodingException, FileNotFoundException {
 		String tmp = createStringToBeSaved();
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(saveToFile), "UTF-8"));
 		out.print(tmp);

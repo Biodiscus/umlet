@@ -1,4 +1,4 @@
-package com.baselet.our;
+package com.baselet.standalone.our;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

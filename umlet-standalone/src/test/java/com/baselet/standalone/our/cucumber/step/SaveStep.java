@@ -1,7 +1,6 @@
-package com.baselet.our.cucumber.step;
+package com.baselet.standalone.our.cucumber.step;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -9,7 +8,16 @@ import java.net.URL;
 import org.slf4j.LoggerFactory;
 
 import com.baselet.control.basics.geom.Rectangle;
+import com.baselet.control.config.handler.ConfigHandler;
+import com.baselet.control.enums.ElementId;
+import com.baselet.control.enums.Program;
+import com.baselet.control.enums.RuntimeType;
+import com.baselet.control.util.Utils;
 import com.baselet.diagram.DiagramHandler;
+import com.baselet.diagram.Notifier;
+import com.baselet.diagram.io.DiagramFileHandler;
+import com.baselet.element.ElementFactorySwing;
+import com.baselet.element.NewGridElement;
 import com.baselet.element.elementnew.uml.Class;
 import com.baselet.element.interfaces.GridElement;
 
@@ -25,12 +33,15 @@ public class SaveStep {
 
 	@Given("^a Diagram with a Element positioned at '(\\d+),(\\d+)'$")
 	public void aDiagramWithAElementPositionedAt(int arg0, int arg1) throws Throwable {
-		ufxTempFile = getFile("emptyWorkspace.ufx");
+		Utils.BuildInfo buildInfo = Utils.readBuildInfo();
+		Program.init(buildInfo.version, RuntimeType.BATCH);
+		ConfigHandler.loadConfig();
+
+		ufxTempFile = new File("src/test/resources/emptyWorkspace.uxf");
 		diagramToSave = new DiagramHandler(ufxTempFile);
 
-		Class classObject = new Class();
-		classObject.setRectangle(new Rectangle(arg0, arg1, 1000, 1000));
-		diagramToSave.getDrawPanel().addElement(classObject);
+		NewGridElement element = ElementFactorySwing.create(ElementId.UMLClass, new Rectangle(arg0, arg1, 1000, 1000), "", "", diagramToSave);
+		diagramToSave.getDrawPanel().addElement(element);
 	}
 
 	private File getFile(String name) {
@@ -42,8 +53,11 @@ public class SaveStep {
 
 	@When("^the Diagram has been saved$")
 	public void theDiagramHasBeenSaved() throws Throwable {
+		Notifier.getInstance();
 		LoggerFactory.getLogger(getClass()).info("Saving"); //Komt nergens voor in de console output
-		diagramToSave.doSaveAs("ufx");
+		ufxTempFile = File.createTempFile("temp", ".ufx");
+		DiagramFileHandler diagramFileHandler = DiagramFileHandler.createInstance(diagramToSave, ufxTempFile);
+		diagramFileHandler.doSave();
 	}
 
 	@Then("^load the Diagram again$")

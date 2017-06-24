@@ -1,4 +1,4 @@
-package com.baselet.our;
+package com.baselet.standalone.our;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -14,7 +14,11 @@ import org.junit.Before;
 import org.junit.Test;
 import com.baselet.control.basics.geom.Point;
 import com.baselet.control.basics.geom.Rectangle;
+import com.baselet.control.config.handler.ConfigHandler;
 import com.baselet.control.enums.Direction;
+import com.baselet.control.enums.Program;
+import com.baselet.control.enums.RuntimeType;
+import com.baselet.control.util.Utils;
 import com.baselet.diagram.DiagramHandler;
 import com.baselet.diagram.DrawPanel;
 import com.baselet.element.elementnew.uml.Class;
@@ -42,6 +46,10 @@ public class MoveTest {
 		DiagramHandler diagramHandler = new DiagramHandler(file);
 		drawPanel = diagramHandler.getDrawPanel();
 		elements = diagramHandler.getDrawPanel().getGridElements();
+
+		Utils.BuildInfo buildInfo = Utils.readBuildInfo();
+		Program.init(buildInfo.version, RuntimeType.BATCH);
+		ConfigHandler.loadConfig();
 	}
 
 

@@ -1,5 +1,9 @@
-package com.baselet.our;
+package com.baselet.standalone.our;
 
+import com.baselet.control.config.handler.ConfigHandler;
+import com.baselet.control.enums.Program;
+import com.baselet.control.enums.RuntimeType;
+import com.baselet.control.util.Utils;
 import com.baselet.standalone.MainStandalone;
 import com.google.common.io.Files;
 import org.junit.After;
@@ -44,11 +48,12 @@ public class ExportTest {
             file.getAbsolutePath().replace(name, outputName)
         );
 	    assertNotNull("The output JPG file shouldn't be null", outputFile);
+
     }
 
     @After
     public void cleanUp() {
-//        assertTrue("The generated output file should be deleted", outputFile.delete());
+        assertTrue("The generated output file should be deleted", outputFile.delete());
     }
 
 
