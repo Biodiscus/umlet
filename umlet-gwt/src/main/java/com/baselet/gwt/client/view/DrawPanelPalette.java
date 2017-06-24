@@ -106,7 +106,7 @@ public class DrawPanelPalette extends DrawPanel {
 				GridElement copy = ElementFactoryGwt.create(original, otherDrawFocusPanel.getDiagram());
 				int verticalScrollbarDiff = otherDrawFocusPanel.scrollPanel.getVerticalScrollPosition() - scrollPanel.getVerticalScrollPosition();
 				int horizontalScrollbarDiff = otherDrawFocusPanel.scrollPanel.getHorizontalScrollPosition() - scrollPanel.getHorizontalScrollPosition();
-				copy.setLocationDifference(otherDrawFocusPanel.getVisibleBounds().width + horizontalScrollbarDiff, paletteChooser.getOffsetHeight() + verticalScrollbarDiff);
+				copy.setLocationDifference(otherDrawFocusPanel.getVisibleBounds().getWidth() + horizontalScrollbarDiff, paletteChooser.getOffsetHeight() + verticalScrollbarDiff);
 
 				copy.setRectangle(SharedUtils.realignToGrid(copy.getRectangle(), false)); // realign location to grid (width and height should not be changed)
 				elementsToMove.add(copy);
