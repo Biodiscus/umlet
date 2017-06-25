@@ -316,7 +316,7 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 		return HandlerElementMap.getHandlerForElement(this);
 	}
 
-	@Override
+
 	public StickingPolygon generateStickingBorder(Rectangle rect) {
 		return generateStickingBorder(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}

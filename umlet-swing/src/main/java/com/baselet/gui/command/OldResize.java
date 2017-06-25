@@ -69,11 +69,11 @@ public class OldResize extends Command {
 		this.diffh = (diffh - diffy) / HandlerElementMap.getHandlerForElement(entity).getGridSize();
 
 		Rectangle entityRect = this.entity.getRectangle();
-		StickingPolygon from = this.entity.generateStickingBorder(entityRect);
+		StickingPolygon from = this.entity.generateStickingBorder();
 
 		// AB: FIXED: Use this.diffw/this.diffh instead of diffw/diffh as calculation base
 		Rectangle newRect = new Rectangle(entityRect.getX() + diffx, entityRect.getY() + diffy, entityRect.getWidth() + getDiffw(), entityRect.getHeight() + getDiffh());
-		StickingPolygon to = this.entity.generateStickingBorder(newRect);
+		StickingPolygon to = this.entity.generateStickingBorder();
 
 		if (first != null) {
 			id = first.id;
