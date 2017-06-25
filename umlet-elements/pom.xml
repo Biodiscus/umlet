@@ -61,7 +61,6 @@
 <!-- 							<goal>jjdoc</goal> -->
 						</goals>
 						<configuration>
-							<javadocFriendlyComments>true</javadocFriendlyComments>
 							<sourceDirectory>src/main/javacc</sourceDirectory>
 							<outputDirectory>${javacc.gen.dir}</outputDirectory>
 						</configuration>

@@ -1,11 +1,10 @@
-package com.baselet.standalone.our;
+package com.baselet.our;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import javax.swing.JPasswordField;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
