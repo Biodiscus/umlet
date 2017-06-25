@@ -389,7 +389,7 @@ public class SequenceDiagramBuilder {
 		checkState();
 		Lifeline[] lifelines;
 		if (startId == null && endId == null) {
-			lifelines = Arrays.<Lifeline> copyOf(dia.getLifelinesArray(), dia.getLifelinesArray().length);
+			lifelines = Arrays.copyOf(dia.getLifelinesArray(), dia.getLifelinesArray().length);
 		}
 		else {
 			lifelines = getLifelineIntervalException(startId, endId);
@@ -564,7 +564,7 @@ public class SequenceDiagramBuilder {
 			return "";
 		}
 		else {
-			StringBuffer strBuffer = new StringBuffer();
+			StringBuilder strBuffer = new StringBuilder();
 			strBuffer.append("Warnings:");
 			for (String w : warnings) {
 				strBuffer.append('\n');

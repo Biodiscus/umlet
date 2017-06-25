@@ -87,12 +87,7 @@ public class Class extends OldGridElement {
 			}
 			else if (s.startsWith("template") && i == 0) {
 				String[] template = s.split("=");
-				if (template.length != 2) {
-					_isTemplate = false;
-				}
-				else {
-					_isTemplate = true;
-				}
+				_isTemplate = template.length == 2;
 			}
 		}
 

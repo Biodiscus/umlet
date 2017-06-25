@@ -90,6 +90,7 @@ public class ComponentSwing extends JComponent implements Component {
 
 	@Override
 	public void setBoundsRect(Rectangle rect) {
+		System.out.println("Getting x of: "+rect);
 		this.setBounds(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 

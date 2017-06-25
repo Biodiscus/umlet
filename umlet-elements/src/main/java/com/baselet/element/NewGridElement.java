@@ -381,7 +381,14 @@ public abstract class NewGridElement implements GridElement {
 		Rectangle oldRect = getRectangle();
 		StickingPolygon stickingPolygonBeforeLocationChange = generateStickingBorder();
 		String oldAddAttr = getAdditionalAttributes();
-		setRectangle(new Rectangle(oldRect.getX() + diffPos.getX(), oldRect.getY() + diffPos.getY(), oldRect.getWidth() + diffSize.getX(), oldRect.getHeight() + diffSize.getY()));
+		setRectangle(
+			new Rectangle(
+				oldRect.getX() + diffPos.getX(),
+				oldRect.getY() + diffPos.getY(),
+				oldRect.getWidth() + diffSize.getX(),
+				oldRect.getHeight() + diffSize.getY()
+			)
+		);
 		moveStickables(stickables, undoable, oldRect, stickingPolygonBeforeLocationChange, oldAddAttr);
 	}
 

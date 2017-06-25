@@ -19,10 +19,7 @@ public class MoveEnd extends Command {
 
 	@Override
 	public boolean isMergeableTo(Command c) {
-		if (c instanceof Macro) {
-			return true;
-		}
-		return false;
+		return c instanceof Macro;
 	}
 
 	@Override

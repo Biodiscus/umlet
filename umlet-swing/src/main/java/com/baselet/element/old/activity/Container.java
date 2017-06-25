@@ -61,10 +61,7 @@ public class Container extends Element {
 	}
 
 	public boolean isRoot() {
-		if (parent == null) {
-			return true;
-		}
-		return false;
+		return parent == null;
 	}
 
 	public Container close() {

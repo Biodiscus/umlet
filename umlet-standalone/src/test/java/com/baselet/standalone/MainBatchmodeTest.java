@@ -90,7 +90,7 @@ public class MainBatchmodeTest {
 		assertTrue("The content of both files must match. Expected: " + expected + ", Actual: " + actual, Files.equal(expected, actual));
 	}
 
-	private File changeLines(File output, String excludedPrefix, boolean streamlineWhitespaces) throws FileNotFoundException, IOException {
+	private File changeLines(File output, String excludedPrefix, boolean streamlineWhitespaces) throws IOException {
 		FileReader fr = new FileReader(output);
 		String s;
 		String totalStr = "";

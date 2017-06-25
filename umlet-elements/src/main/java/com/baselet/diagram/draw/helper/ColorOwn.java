@@ -207,10 +207,7 @@ public class ColorOwn {
 		if (green != other.green) {
 			return false;
 		}
-		if (red != other.red) {
-			return false;
-		}
-		return true;
+		return red == other.red;
 	}
 
 	@Override

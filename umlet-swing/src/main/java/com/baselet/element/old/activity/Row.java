@@ -21,17 +21,11 @@ public class Row {
 	}
 
 	public boolean isLeft(Element e) {
-		if (e.equals(elements.get(0))) {
-			return true;
-		}
-		return false;
+		return e.equals(elements.get(0));
 	}
 
 	public boolean isRight(Element e) {
-		if (e.equals(elements.get(elements.size() - 1))) {
-			return true;
-		}
-		return false;
+		return e.equals(elements.get(elements.size() - 1));
 	}
 
 	public ArrayList<Row> makeExclusiveLeft(Element e, ArrayList<Row> rows) {

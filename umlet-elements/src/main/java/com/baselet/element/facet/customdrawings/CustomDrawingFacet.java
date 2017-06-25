@@ -25,12 +25,7 @@ public class CustomDrawingFacet extends Facet {
 		if (objIsActive instanceof Boolean && (Boolean) objIsActive) {
 			return true;
 		}
-		else if (CODE_SEP_START.equals(line)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		else return CODE_SEP_START.equals(line);
 	}
 
 	@Override

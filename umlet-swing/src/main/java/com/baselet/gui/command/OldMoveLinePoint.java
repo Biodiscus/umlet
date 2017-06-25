@@ -56,10 +56,7 @@ public class OldMoveLinePoint extends Command {
 		if (getRelation() != mlp.getRelation()) {
 			return false;
 		}
-		if (getLinePointId() != mlp.getLinePointId()) {
-			return false;
-		}
-		return true;
+		return getLinePointId() == mlp.getLinePointId();
 	}
 
 	@Override

@@ -69,10 +69,7 @@ public class Point {
 		if (getX() != other.getX()) {
 			return false;
 		}
-		if (getY() != other.getY()) {
-			return false;
-		}
-		return true;
+		return getY() == other.getY();
 	}
 
 	@Override

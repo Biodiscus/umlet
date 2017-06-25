@@ -101,10 +101,7 @@ public class Rectangle extends Point {
 		if (getX2() < other.getX()) {
 			return false;
 		}
-		if (getX() > other.getX2()) {
-			return false;
-		}
-		return true;
+		return getX() <= other.getX2();
 	}
 
 	/**
@@ -169,11 +166,7 @@ public class Rectangle extends Point {
 		if (height != other.height) {
 			return false;
 		}
-		if (width != other.width) {
-			return false;
-		}
-
-		return true;
+		return width == other.width;
 	}
 
 	@Override

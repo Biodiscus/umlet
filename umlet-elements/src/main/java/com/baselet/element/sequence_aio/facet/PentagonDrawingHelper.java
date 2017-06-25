@@ -135,11 +135,10 @@ public class PentagonDrawingHelper {
 				break;
 			}
 		}
-		drawHandler.drawLines(new PointDouble[] {
-				new PointDouble(topLeft.x, topLeft.y + height),
-				new PointDouble(slopeStartX, topLeft.y + height),
-				new PointDouble(slopeEndX, topLeft.y + height * (1 - HEADER_PENTAGON_SLOPE_HEIGHT_PERCENTAGE)),
-				new PointDouble(slopeEndX, topLeft.y) });
+		drawHandler.drawLines(new PointDouble(topLeft.x, topLeft.y + height),
+			new PointDouble(slopeStartX, topLeft.y + height),
+			new PointDouble(slopeEndX, topLeft.y + height * (1 - HEADER_PENTAGON_SLOPE_HEIGHT_PERCENTAGE)),
+			new PointDouble(slopeEndX, topLeft.y));
 		drawHandler.setLineType(oldLt);
 		return new PointDouble(slopeEndX - topLeft.x, height);
 	}

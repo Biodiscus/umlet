@@ -117,7 +117,7 @@ public class SelectorOld extends Selector {
 	@Override
 	public List<GridElement> getAllElements() {
 		if (CurrentDiagram.getInstance().getDiagramHandler() == null) {
-			return Collections.<GridElement> emptyList();
+			return Collections.emptyList();
 		}
 		return CurrentDiagram.getInstance().getDiagramHandler().getDrawPanel().getGridElements();
 	}

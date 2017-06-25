@@ -59,7 +59,7 @@ public abstract class Constants extends SharedConstants {
 	//@formatter:on
 
 	/**** EXPORT FORMATS ****/
-	public static final List<String> exportFormatList = Arrays.asList(new String[] { "bmp", "eps", "gif", "jpg", "pdf", "png", "svg" });
+	public static final List<String> exportFormatList = Arrays.asList("bmp", "eps", "gif", "jpg", "pdf", "png", "svg");
 
 	/**** ZOOM VALUES ****/
 	public static final ArrayList<String> zoomValueList = new ArrayList<String>();
@@ -94,7 +94,7 @@ public abstract class Constants extends SharedConstants {
 	public static final int PASTE_DISPLACEMENT_GRIDS = 2;
 	public static final Color GRID_COLOR = new Color(235, 235, 235);
 
-	public static final List<String> fontFamilyList = Arrays.asList(new String[] { Font.SANS_SERIF, Font.SERIF, Font.MONOSPACED });
+	public static final List<String> fontFamilyList = Arrays.asList(Font.SANS_SERIF, Font.SERIF, Font.MONOSPACED);
 
 	public static final List<LookAndFeelInfo> lookAndFeels = Arrays.asList(UIManager.getInstalledLookAndFeels());
 

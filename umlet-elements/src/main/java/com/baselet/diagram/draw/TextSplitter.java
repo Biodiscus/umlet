@@ -476,10 +476,7 @@ public class TextSplitter {
 			else if (!style.equals(other.style)) {
 				return false;
 			}
-			if (!Arrays.equals(words, other.words)) {
-				return false;
-			}
-			return true;
+			return Arrays.equals(words, other.words);
 		}
 
 	}
@@ -558,10 +555,7 @@ public class TextSplitter {
 			if (Double.doubleToLongBits(width) != Double.doubleToLongBits(other.width)) {
 				return false;
 			}
-			if (!Arrays.equals(words, other.words)) {
-				return false;
-			}
-			return true;
+			return Arrays.equals(words, other.words);
 		}
 
 	}
@@ -620,10 +614,7 @@ public class TextSplitter {
 			if (Double.doubleToLongBits(height) != Double.doubleToLongBits(other.height)) {
 				return false;
 			}
-			if (!Arrays.equals(wrappedLines, other.wrappedLines)) {
-				return false;
-			}
-			return true;
+			return Arrays.equals(wrappedLines, other.wrappedLines);
 		}
 	}
 }

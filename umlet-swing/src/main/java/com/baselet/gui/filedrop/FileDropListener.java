@@ -46,9 +46,6 @@ public class FileDropListener implements FileDrop.Listener {
 	private boolean isJavaFile(String filename) {
 		int dotPosition = filename.lastIndexOf(".");
 		String extension = filename.substring(dotPosition + 1, filename.length());
-		if (extension.equals("class") || extension.equals("java")) {
-			return true;
-		}
-		return false;
+		return extension.equals("class") || extension.equals("java");
 	}
 }

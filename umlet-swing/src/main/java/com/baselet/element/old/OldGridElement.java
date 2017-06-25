@@ -199,17 +199,15 @@ public abstract class OldGridElement extends JComponent implements GridElement, 
 		bgColor = getDefaultBackgroundColor();
 		fgColorBase = Converter.convert(ColorOwn.DEFAULT_FOREGROUND);
 		List<String> v = panelAttributes;
-		for (int i = 0; i < v.size(); i++) {
-			String line = v.get(i);
-			if (line.indexOf("bg=") >= 0) {
+		for (String line : v) {
+			if (line.contains("bg=")) {
 				bgColorString = line.substring("bg=".length());
 				// OldGridElements apply transparency for background explicitly, therefore don't apply it here
 				bgColor = Converter.convert(ColorOwn.forStringOrNull(bgColorString, Transparency.FOREGROUND));
 				if (bgColor == null) {
 					bgColor = getDefaultBackgroundColor();
 				}
-			}
-			else if (line.indexOf("fg=") >= 0) {
+			} else if (line.contains("fg=")) {
 				fgColorString = line.substring("fg=".length());
 				fgColorBase = Converter.convert(ColorOwn.forStringOrNull(fgColorString, Transparency.FOREGROUND));
 				if (fgColorBase == null) {

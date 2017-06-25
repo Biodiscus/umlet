@@ -155,7 +155,7 @@ public class NewWizardPage extends WizardPage {
 		if (dialog.open() == Window.OK) {
 			Object[] result = dialog.getResult();
 			if (result.length == 1) {
-				containerText.setText(((Path) result[0]).toString());
+				containerText.setText(result[0].toString());
 			}
 		}
 	}

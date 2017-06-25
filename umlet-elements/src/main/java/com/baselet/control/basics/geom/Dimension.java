@@ -55,10 +55,7 @@ public class Dimension {
 		if (height != other.height) {
 			return false;
 		}
-		if (width != other.width) {
-			return false;
-		}
-		return true;
+		return width == other.width;
 	}
 
 	@Override

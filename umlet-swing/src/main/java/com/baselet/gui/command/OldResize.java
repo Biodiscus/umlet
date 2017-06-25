@@ -130,10 +130,7 @@ public class OldResize extends Command {
 			return false;
 		}
 		OldResize r = (OldResize) c;
-		if (id == r.id) {
-			return true;
-		}
-		return false;
+		return id == r.id;
 	}
 
 	@Override

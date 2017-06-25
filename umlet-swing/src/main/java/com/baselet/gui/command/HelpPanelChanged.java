@@ -74,10 +74,7 @@ public class HelpPanelChanged extends Command {
 
 	@Override
 	public boolean isMergeableTo(Command c) {
-		if (c instanceof HelpPanelChanged) {
-			return true;
-		}
-		return false;
+		return c instanceof HelpPanelChanged;
 	}
 
 	@Override

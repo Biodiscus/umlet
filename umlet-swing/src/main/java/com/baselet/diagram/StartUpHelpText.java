@@ -89,7 +89,7 @@ public class StartUpHelpText extends JEditorPane implements ContainerListener, C
 		return StartUpHelpText.class.getClassLoader().getResourceAsStream("startuphelp.html");
 	}
 
-	private void showHTML(String filename) throws MalformedURLException, IOException {
+	private void showHTML(String filename) throws IOException {
 		this.setPage(new URL("file:///" + filename));
 		addHyperlinkListener(new HyperLinkActiveListener());
 		setEditable(false);

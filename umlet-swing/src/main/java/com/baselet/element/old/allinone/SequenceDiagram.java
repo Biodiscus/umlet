@@ -409,8 +409,8 @@ public class SequenceDiagram extends OldGridElement {
 				} // STOP LABLING ADD
 				boxStrings += ";" + group; // LME: get alive Objects
 
-				boolean srcObjHasControl = srcObj != null ? group.contains(String.valueOf(srcObj)) : false;
-				boolean destObjHasControl = destObj != null ? group.contains(String.valueOf(destObj)) : false;
+				boolean srcObjHasControl = srcObj != null && group.contains(String.valueOf(srcObj));
+				boolean destObjHasControl = destObj != null && group.contains(String.valueOf(destObj));
 
 				if (methodName == null || methodName.isEmpty()) {
 					methodName = methodNameFromText;

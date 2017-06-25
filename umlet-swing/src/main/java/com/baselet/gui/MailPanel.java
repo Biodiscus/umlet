@@ -198,7 +198,7 @@ public class MailPanel extends JPanel {
 		checkVisibilityOfSmtpAuth();
 	}
 
-	private List<File> getAttachments() throws IOException {
+	public List<File> getAttachments() throws IOException {
 		List<File> attachments = new LinkedList<File>();
 		final String diagramName = "diagram_" + new SimpleDateFormat("yyyyMMdd_hhmmss").format(new Date());
 		DiagramFileHandler fileHandler = CurrentDiagram.getInstance().getDiagramHandler().getFileHandler();
@@ -236,7 +236,7 @@ public class MailPanel extends JPanel {
 		);
 	}
 
-	private Properties getSMTPProperties(MailMessage message) {
+	public Properties getSMTPProperties(MailMessage message) {
 		Properties properties = System.getProperties();
 
 		// Set the SMTP Host
@@ -283,7 +283,7 @@ public class MailPanel extends JPanel {
 		return mailMessage;
 	}
 
-	private void sendMail() {
+	public void sendMail() {
 		MailMessage mail = getMailMessage();
 
 		// Set SMTP Authentication if the user or password field isn't empty
@@ -341,7 +341,7 @@ public class MailPanel extends JPanel {
 		}
 	}
 
-	private String validateMail(MailMessage mail) {
+	public String validateMail(MailMessage mail) {
 		if (mail.getHost().isEmpty()) {
 			return "The SMTP field must not be empty";
 		} else if (mail.getFrom().isEmpty()) {
@@ -353,7 +353,7 @@ public class MailPanel extends JPanel {
 		}
 	}
 
-	private void sendMail(MailMessage mail) throws MessagingException {
+	public void sendMail(MailMessage mail) throws MessagingException {
 		MimeMessage message = mail.getMessage();
 
 		if (mail.isUseAuthentication()) {
@@ -370,7 +370,7 @@ public class MailPanel extends JPanel {
 		}
 	}
 
-	private void setRecipients(MimeMessage mimeMessage, MailMessage mailMessage) throws MessagingException {
+	public void setRecipients(MimeMessage mimeMessage, MailMessage mailMessage) throws MessagingException {
 		mimeMessage.setFrom(
 			new InternetAddress(mailMessage.getFrom())
 		);
@@ -388,7 +388,7 @@ public class MailPanel extends JPanel {
 		}
 	}
 
-	private void setupMail(MailMessage mail) throws MessagingException, IOException {
+	public void setupMail(MailMessage mail) throws MessagingException, IOException {
 		MimeMessage message = getMimeMessage(mail);
 
 		// Set all recipients of any kind (TO, CC, BCC)

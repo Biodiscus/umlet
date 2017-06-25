@@ -24,7 +24,7 @@ public class CommentFacet extends FirstRunFacet {
 
 	@Override
 	public List<AutocompletionText> getAutocompletionStrings() {
-		return Collections.<AutocompletionText> emptyList();
+		return Collections.emptyList();
 	}
 
 	@Override

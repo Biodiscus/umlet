@@ -813,10 +813,7 @@ public class Relation extends OldGridElement {
 		if (p == null) {
 			return false;
 		}
-		if (p.contains(x, y)) {
-			return true;
-		}
-		return false;
+		return p.contains(x, y);
 	}
 
 	/* (non-Javadoc)
@@ -1915,7 +1912,7 @@ public class Relation extends OldGridElement {
 
 	@Override
 	public Set<Direction> getResizeArea(int x, int y) {
-		return Collections.<Direction> emptySet();
+		return Collections.emptySet();
 	}
 
 	@Override

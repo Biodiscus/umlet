@@ -73,10 +73,7 @@ public class ElementUtils {
 	private static boolean firstSmallerThanSecond(java.awt.Rectangle first, java.awt.Rectangle second) {
 		int areaFirst = (int)(first.getSize().getHeight() * first.getSize().getWidth());
 		int areaSecond = (int)(second.getSize().getHeight() * second.getSize().getWidth());
-		if (areaFirst < areaSecond) {
-			return true;
-		}
-		return false;
+		return areaFirst < areaSecond;
 	}
 
 }

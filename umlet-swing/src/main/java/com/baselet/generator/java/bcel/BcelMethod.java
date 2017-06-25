@@ -13,12 +13,7 @@ public class BcelMethod extends BcelAccessible implements com.baselet.generator.
 		super(method);
 		this.method = method;
 		this.className = className;
-		if (method.getName().equals("<init>") || method.getName().equals("<clinit>")) {
-			isConstructor = true;
-		}
-		else {
-			isConstructor = false;
-		}
+		isConstructor = method.getName().equals("<init>") || method.getName().equals("<clinit>");
 	}
 
 	@Override

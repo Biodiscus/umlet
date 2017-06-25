@@ -165,12 +165,7 @@ public abstract class CustomElement extends OldGridElement {
 		g2.setColor(fgColor);
 
 		zoom = HandlerElementMap.getHandlerForElement(this).getZoomFactor();
-		if (zoom < 0.25) {
-			bugfix = true;
-		}
-		else {
-			bugfix = false;
-		}
+		bugfix = zoom < 0.25;
 
 		// width and height must be zoomed back to 100% before any custom code is applied
 		temp = getRectangle().getWidth();
@@ -218,7 +213,7 @@ public abstract class CustomElement extends OldGridElement {
 	@CustomFunction(param_defaults = "text,x,y")
 	protected final int print(String text, int x, int inY) {
 		int y = inY;
-		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(new String[] { text });
+		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(text);
 		for (String s : list) {
 			texts.add(new Text(s, (int) (x * zoom), (int) (y * zoom), AlignHorizontal.LEFT));
 			y += textHeight();
@@ -229,7 +224,7 @@ public abstract class CustomElement extends OldGridElement {
 	@CustomFunction(param_defaults = "text,y")
 	protected final int printLeft(String text, int inY) {
 		int y = inY;
-		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(new String[] { text });
+		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(text);
 		for (String s : list) {
 			texts.add(new Text(s, (int) HandlerElementMap.getHandlerForElement(this).getFontHandler().getDistanceBetweenTexts(), (int) (y * zoom), AlignHorizontal.LEFT));
 			y += textHeight();
@@ -240,7 +235,7 @@ public abstract class CustomElement extends OldGridElement {
 	@CustomFunction(param_defaults = "text,y")
 	protected final int printRight(String text, int inY) {
 		int y = inY;
-		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(new String[] { text });
+		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(text);
 		for (String s : list) {
 			texts.add(new Text(s, (int) (width * zoom - textWidth(s, true)), (int) (y * zoom), AlignHorizontal.LEFT));
 			y += textHeight();
@@ -251,7 +246,7 @@ public abstract class CustomElement extends OldGridElement {
 	@CustomFunction(param_defaults = "text,y")
 	protected final int printCenter(String text, int inY) {
 		int y = inY;
-		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(new String[] { text });
+		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(text);
 		for (String s : list) {
 			texts.add(new Text(s, (int) ((onGrid(width) * zoom - textWidth(s, true)) / 2), (int) (y * zoom), AlignHorizontal.LEFT));
 			y += textHeight();
@@ -262,7 +257,7 @@ public abstract class CustomElement extends OldGridElement {
 	@CustomFunction(param_defaults = "text,x,y,fixedFontSize")
 	protected final int printFixedSize(String text, int x, int inY, int fixedFontSize) {
 		int y = inY;
-		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(new String[] { text });
+		List<String> list = wordWrap ? splitString(text, width, HandlerElementMap.getHandlerForElement(this)) : Arrays.asList(text);
 		for (String s : list) {
 			texts.add(new Text(s, x, y, AlignHorizontal.LEFT, fixedFontSize));
 			y += textHeight();

@@ -108,7 +108,7 @@ public class DiagramGwt implements Diagram {
 
 	@Override
 	public List<AutocompletionText> getAutocompletionList() {
-		return Collections.<AutocompletionText> emptyList();
+		return Collections.emptyList();
 	}
 
 }

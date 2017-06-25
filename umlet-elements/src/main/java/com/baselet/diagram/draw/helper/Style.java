@@ -130,10 +130,7 @@ public class Style {
 		if (Double.doubleToLongBits(lineWidth) != Double.doubleToLongBits(other.lineWidth)) {
 			return false;
 		}
-		if (lineType != other.lineType) {
-			return false;
-		}
-		return true;
+		return lineType == other.lineType;
 	}
 
 }
